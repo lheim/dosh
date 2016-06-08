@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 # additional (not standard) gems
 
-
+gem 'bootstrap-sass'
 
 #end my GEMS
 
