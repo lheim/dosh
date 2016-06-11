@@ -1,7 +1,11 @@
 source 'https://rubygems.org'
 # additional (not standard) gems
 
+#theme
 gem 'bootstrap-sass'
+
+#docker-api https://github.com/swipely/docker-api
+gem 'docker-api'
 
 #end my GEMS
 
