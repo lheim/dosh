@@ -1,2 +1,51 @@
 <h1>Containers#index</h1>
 <p>Find me in app/views/containers/index.html.erb</p>
+<h2 class="sub-header">Containers</h2>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                  ID
+                </th>
+                <th>
+                  name
+                </th>
+                <th>
+                  image
+                </th>
+                <th>
+                  status
+                </th>
+                <th>
+                  command
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @containers.each do |container| %>
+              <tr>
+                <td>
+                  <span class="glyphicon glyphicon-search"></span>
+                  <%= link_to container.id.truncate(12, omission:''), container_path(:id => container.id.truncate(12, omission: '')) %>
+                </td>
+                <td>
+                  <%= link_to container.info['Names'].join(''), container_path(:id => container.id.truncate(12, omission: '')) %>
+                </td>
+                <td>
+                  <span class="glyphicon glyphicon-search"></span>
+                  <%= link_to container.info['Image'], image_path(:id => container.info['ImageID'])%>
+                </td>
+                <td>
+                  <span class="glyphicon glyphicon-time"></span>
+                  <%= container.info['Status'] %>
+                </td>
+                <td>
+                  <span class="glyphicon glyphicon-console"></span>
+                  <%= container.info['Command'] %>
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>

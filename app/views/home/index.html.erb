@@ -29,7 +29,7 @@
     <span class="text-muted">Something else</span>
   </div>
 </div>
-  <h2 class="sub-header">Section title</h2>
+  <h2 class="sub-header">Containers</h2>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
@@ -55,13 +55,13 @@
                 <% @containers.each do |container| %>
                 <tr>
                   <td>
-                    <%= container.id.truncate(12, omission: '') %>
+                    <%= link_to container.id.truncate(12, omission:''), container_path(:id => container.id.truncate(12, omission: '')) %>
                   </td>
                   <td>
-                    <%= container.info['Names'].join('') %>
+                    <%= link_to container.info['Names'].join(''), container_path(:id => container.id.truncate(12, omission: '')) %>
                   </td>
                   <td>
-                    <%= container.info['Image'] %>
+                    <%= link_to container.info['Image'], image_path(:id => container.info['ImageID'])%>
                   </td>
                   <td>
                     <%= container.info['Status'] %>

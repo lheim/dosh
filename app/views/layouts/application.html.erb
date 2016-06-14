@@ -51,14 +51,13 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <%= link_to "Dashboard", :home %>
+              <%= link_to "Dashboard", home_path %>
             </li>
             <li>
-              <%= link_to "Settings", :home %>
-
+              <%= link_to "Settings", home_path %>
             </li>
             <li>
-              <%= link_to "Help", :home %>
+              <%= link_to "Help", home_path %>
             </li>
           </ul>
           <form class="navbar-form navbar-right">
@@ -72,17 +71,17 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active">
-              <%= link_to "Dashboard", :home %>
+            <li class="<%= 'active' if current_page?(home_path) %>">
+              <%= link_to "Dashboard", home_path %>
             </li>
-            <li>
-               <%= link_to "Images", :images %>
+            <li class="<%= 'active' if current_page?(images_path) %>">
+              <%= link_to "Images", images_path %>
             </li>
-            <li>
-              <%= link_to "Containers", :containers %>
+            <li class="<%= 'active' if current_page?(containers_path) %>">
+              <%= link_to "Containers", containers_path %>
             </li>
-            <li>
-               <%= link_to "Servers", :home %>
+            <li class="<%= 'active' if current_page?(images_path) %>">
+              <%= link_to "INCOMING", images_path %>
             </li>
           </ul>
         </div>

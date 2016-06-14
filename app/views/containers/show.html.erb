@@ -1,2 +1,60 @@
 <h1>Containers#show</h1>
 <p>Find me in app/views/containers/show.html.erb</p>
+<h2 class="sub-header">Containers</h2>
+
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class = "panel-title">
+              informations
+            </h3>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <tbody>
+                  <tr>
+                    <td>
+                      id:
+                    </td>
+                    <td>
+                      <%= @container.id.truncate(12, omission:'') %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      name
+                    </td>
+                    <td>
+                      <%= @container.info['Name'] %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      image
+                    </td>
+                    <td>
+                      <%= @container.info['Image'] %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      status
+                    </td>
+                    <td>
+                      <%= @container.info['Status'] %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      command
+                    </td>
+                    <td>
+                      <%= @container.info['Command'] %>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>

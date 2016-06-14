@@ -1,6 +1,11 @@
 class ContainersController < ApplicationController
 
+  def index
+    @containers = Docker::Container.all(:all => true)
+  end
+
   def show
+    @containers = Docker::Container.all(:all => true)
     @container = Docker::Container.get(params[:id])
   end
 
