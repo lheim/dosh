@@ -5,7 +5,6 @@ class ContainersController < ApplicationController
   end
 
   def show
-    @containers = Docker::Container.all(:all => true)
     @container = Docker::Container.get(params[:id])
   end
 
@@ -14,16 +13,23 @@ class ContainersController < ApplicationController
     @container = Docker::Container.get(params[:id])
     @container.start
 
-    state = @container.info['State']
-    if state == 'running'
-      flash[:success] = 'container sucessfully started.'
-    else
-      flash[:error] = 'container failed to start.'
-    end
+    redirect_to container_path, success: "container sucessfully started."
+
   end
 
   def stop
+    @container = Docker::Container.get(params[:id])
+    @container.stop
 
+
+    state = @container.info['State']['Status']
+    if state == 'exited'
+      flash[:success] = 'container sucessfully stopped.'
+      redirect_to container_path
+    else
+      flash[:error] = 'container failed to stop.'
+      redirect_to container_path
+    end
   end
 
   def restart

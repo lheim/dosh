@@ -98,14 +98,15 @@
 
 
 --------->
+  <% flash.each do |name, msg| -%>
+    <%= content_tag :div, msg, class: "alert #{flash_type(name)} fade in" %>
+  <% end -%>
+
 
         <div class="col-sm-12">
 
-            <li>Hey. I'm still from the application.html.erb </li>
             <!-- MAINCONTENT from pages-->
             <%= yield %>
-
-            <li>Hey. I'm back from the application.html.erb </li>
 
         </div>
       </div>

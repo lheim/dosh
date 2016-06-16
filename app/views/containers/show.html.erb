@@ -2,11 +2,35 @@
 <p>Find me in app/views/containers/show.html.erb</p>
 <h2 class="sub-header">Containers</h2>
 
+<div class="col-md-12">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class = "panel-title">
+            actions
+          </h3>
+        </div>
+        <div class="panel-body">
+        
+          <%= button_to "Start",{action: :start },{method: :get, class: "btn-lg btn-primary" } %>
+
+
+
+          <%= button_to "Stop",{action: :stop },{method: :get, class: "btn-lg btn-danger" }%>
+
+
+
+
+        </div>
+      </div>
+
+  </div>
+  <div class="col-md-8">
 
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class = "panel-title">
-              informations
+              basic informations
             </h3>
           </div>
           <div class="panel-body">
@@ -42,7 +66,7 @@
                       status
                     </td>
                     <td>
-                      <%= @container.info['Status'] %>
+                      <%= @container.info['State']['Status']%>
                     </td>
                   </tr>
                   <tr>
@@ -50,7 +74,7 @@
                       command
                     </td>
                     <td>
-                      <%= @container.info['Command'] %>
+                      <%= @container.info['Config']['Cmd'].join('') %>
                     </td>
                   </tr>
                 </tbody>
@@ -58,3 +82,112 @@
             </div>
           </div>
         </div>
+    </div>
+    <div class="col-md-4">
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class = "panel-title">
+                network
+              </h3>
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <tbody>
+                    <tr>
+                      <td>
+                        id:
+                      </td>
+                      <td>
+                        <%= @container.info['Name'] %>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+      </div>
+      <div class="col-md-6">
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class = "panel-title">
+                  network
+                </h3>
+              </div>
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr>
+                        <td>
+                          id:
+                        </td>
+                        <td>
+                          <%= @container.info %>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class = "panel-title">
+                    network
+                  </h3>
+                </div>
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <tbody>
+                        <tr>
+                          <td>
+                            id:
+                          </td>
+                          <td>
+                            <%= @container.info %>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+          </div>
+          <div class="col-md-12">
+
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class = "panel-title">
+                      log
+                    </h3>
+                  </div>
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <tbody>
+                          <tr>
+                            <td>
+                              LOOOOG
+                            </td>
+                            <td>
+                              LOOOG LOOOG
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+            </div>
