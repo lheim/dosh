@@ -49,9 +49,18 @@
           <a class="navbar-brand" href="#">dosh</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li>
+          <ul class="nav navbar-nav navbar-left">
+            <li class="<%= 'active' if current_page?(home_path) %>">
               <%= link_to "Dashboard", home_path %>
+            </li>
+            <li class="<%= 'active' if current_page?(images_path) %>">
+              <%= link_to "Images", images_path %>
+            </li>
+            <li class="<%= 'active' if current_page?(containers_path) %>">
+              <%= link_to "Containers", containers_path %>
+            </li>
+            <li class="<%= 'active' if current_page?(images_path) %>">
+              <%= link_to "INCOMING", images_path %>
             </li>
             <li>
               <%= link_to "Settings", home_path %>
@@ -67,6 +76,7 @@
       </div>
     </nav>
 
+<!----------------
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
@@ -85,8 +95,11 @@
             </li>
           </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
+
+--------->
+
+        <div class="col-sm-12">
 
             <li>Hey. I'm still from the application.html.erb </li>
             <!-- MAINCONTENT from pages-->
