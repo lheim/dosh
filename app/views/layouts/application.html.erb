@@ -76,39 +76,18 @@
       </div>
     </nav>
 
-<!----------------
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="<%= 'active' if current_page?(home_path) %>">
-              <%= link_to "Dashboard", home_path %>
-            </li>
-            <li class="<%= 'active' if current_page?(images_path) %>">
-              <%= link_to "Images", images_path %>
-            </li>
-            <li class="<%= 'active' if current_page?(containers_path) %>">
-              <%= link_to "Containers", containers_path %>
-            </li>
-            <li class="<%= 'active' if current_page?(images_path) %>">
-              <%= link_to "INCOMING", images_path %>
-            </li>
-          </ul>
-        </div>
 
-
---------->
   <% flash.each do |name, msg| -%>
     <%= content_tag :div, msg, class: "alert #{flash_type(name)} fade in" %>
   <% end -%>
 
 
         <div class="col-sm-12">
-
             <!-- MAINCONTENT from pages-->
             <%= yield %>
-
         </div>
+
+
       </div>
     </div>
   </body>

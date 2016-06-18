@@ -1,6 +1,6 @@
-<h1>Containers#show</h1>
-<p>Find me in app/views/containers/show.html.erb</p>
-<h2 class="sub-header">Containers</h2>
+<h1 class="header">Container:
+  <%= @container.info['Name'] %>
+</h2>
 
 <div class="col-md-12">
 
@@ -11,16 +11,25 @@
           </h3>
         </div>
         <div class="panel-body">
-        
-          <%= button_to "Start",{action: :start },{method: :get, class: "btn-lg btn-primary" } %>
+          <div style="float: left; width: auto;">
+            <%= button_to "Start",{action: :start },{method: :get, class: "btn-lg btn-success" } %>
+          </div>
 
+          <div style="float: left; width: auto;">
+            <%= button_to "Stop",{action: :stop },{method: :get, class: "btn-lg btn-danger" }%>
+          </div>
 
+          <div style="float: left; width: auto;">
+            <%= button_to "Restart",{action: :restart },{method: :get, class: "btn-lg btn-primary" }%>
+          </div>
 
-          <%= button_to "Stop",{action: :stop },{method: :get, class: "btn-lg btn-danger" }%>
+          <div style="float: left; width: auto;">
+            <%= button_to "Remove",{action: :remove },{method: :get, class: "btn-lg btn-warning" }%>
+          </div>
 
-
-
-
+          <div style="float: left; width: auto;">
+            <%= button_to "Commit",{action: :commit },{method: :get, class: "btn-lg btn-info" }%>
+          </div>
         </div>
       </div>
 
@@ -30,7 +39,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class = "panel-title">
-              basic informations
+              basic information
             </h3>
           </div>
           <div class="panel-body">
@@ -39,7 +48,7 @@
                 <tbody>
                   <tr>
                     <td>
-                      id:
+                      id
                     </td>
                     <td>
                       <%= @container.id.truncate(12, omission:'') %>
@@ -59,6 +68,14 @@
                     </td>
                     <td>
                       <%= @container.info['Image'] %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      image name
+                    </td>
+                    <td>
+                      <%= @container.info['Config']['Image'] %>
                     </td>
                   </tr>
                   <tr>
@@ -97,10 +114,43 @@
                   <tbody>
                     <tr>
                       <td>
-                        id:
+                        network mode
                       </td>
                       <td>
-                        <%= @container.info['Name'] %>
+                        <%= @container.info['HostConfig']['NetworkMode'] %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        port bindings
+                      </td>
+                      <td>
+                        <%= @container.info['NetworkSettings']['Ports'] %>
+
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        gateway
+                      </td>
+                      <td>
+                        <%= @container.info['NetworkSettings']['Gateway'] %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        ip-address
+                      </td>
+                      <td>
+                        <%= @container.info['NetworkSettings']['IPAddress'] %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        mac-address
+                      </td>
+                      <td>
+                        <%= @container.info['NetworkSettings']['MacAddress']%>
                       </td>
                     </tr>
                   </tbody>
@@ -115,7 +165,7 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h3 class = "panel-title">
-                  network
+                  information
                 </h3>
               </div>
               <div class="panel-body">
@@ -124,12 +174,69 @@
                     <tbody>
                       <tr>
                         <td>
-                          id:
+                          started at
                         </td>
                         <td>
-                          <%= @container.info %>
+                          <%= @container.info['State']['StartedAt'] %>
                         </td>
                       </tr>
+                      <tr>
+                        <td>
+                          finished at
+                        </td>
+                        <td>
+                          <%= @container.info['State']['FinishedAt'] %>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          PID
+                        </td>
+                        <td>
+                          <%= @container.info['State']['Pid'] %>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          restart count
+                        </td>
+                        <td>
+                          <%= @container.info['RestartCount'] %>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          attached stdin
+                        </td>
+                        <td>
+                          <%= @container.info['Config']['AttachedStdin'] %>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                            attached stdout
+                          </td>
+                        <td>
+                          <%= @container.info['Config']['AttachedStdout'] %>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                            attached stderr
+                          </td>
+                        <td>
+                          <%= @container.info['Config']['AttachedStderr'] %>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                            tty
+                          </td>
+                        <td>
+                          <%= @container.info['Config']['Tty'] %>
+                        </td>
+                      </tr>
+
                     </tbody>
                   </table>
                 </div>
@@ -142,7 +249,7 @@
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class = "panel-title">
-                    network
+                    volumes
                   </h3>
                 </div>
                 <div class="panel-body">
@@ -151,10 +258,26 @@
                       <tbody>
                         <tr>
                           <td>
-                            id:
+                            mounts
                           </td>
                           <td>
-                            <%= @container.info %>
+                            <%= @container.info['Config']['Volumes'] %>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            working directory
+                          </td>
+                          <td>
+                            <%= @container.info['Config']['WorkingDir'] %>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                              enviroment variables
+                            </td>
+                          <td>
+                            <%= @container.info['Config']['Env'] %>
                           </td>
                         </tr>
                       </tbody>
@@ -164,6 +287,59 @@
               </div>
 
           </div>
+          <div class="col-md-6">
+
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class = "panel-title">
+                      workload
+                    </h3>
+                  </div>
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <tbody>
+                          <tr>
+                            <td>
+                              memory
+                            </td>
+                            <td>
+                              <%= @container.info['Config']['Volumes'] %>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              memory swap
+                            </td>
+                            <td>
+                              <%= @container.info['Config']['WorkingDir'] %>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              cpu shares
+                            </td>
+                            <td>
+                              <%= @container.info['Config']['Env'] %>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              TOP
+                            </td>
+                            <td>
+                              <% if @container.info['State']['Status'] == 'running' %>
+                              <%= @container.top %>
+                              <% end %>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+            </div>
           <div class="col-md-12">
 
                 <div class="panel panel-default">
@@ -173,20 +349,9 @@
                     </h3>
                   </div>
                   <div class="panel-body">
-                    <div class="table-responsive">
-                      <table class="table table-hover">
-                        <tbody>
-                          <tr>
-                            <td>
-                              LOOOOG
-                            </td>
-                            <td>
-                              LOOOG LOOOG
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                    <pre>
+                      <%=  @logs %>
+                    </pre>
                   </div>
                 </div>
 
