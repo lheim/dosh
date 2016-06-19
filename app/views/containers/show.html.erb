@@ -35,6 +35,16 @@
           <div style="float: left; width: auto;">
             <%= button_to "Commit",{action: :commit },{method: :get, class: "btn-lg btn-info" }%>
           </div>
+
+          <div style="float: right; width: auto;">
+
+            <%= form_tag(container_path, method: "post") do %>
+              <%= text_field_tag :name, "",  placeholder: "new_name" %>
+              <%= submit_tag "rename", class:  "btn-lg btn-info"%>
+            <% end %>
+
+          </div>
+
         </div>
       </div>
 
@@ -65,6 +75,7 @@
                     </td>
                     <td>
                       <%= @container.info['Name'] %>
+
                     </td>
                   </tr>
                   <tr>
@@ -117,6 +128,14 @@
               <div class="table-responsive">
                 <table class="table table-hover">
                   <tbody>
+                    <tr>
+                      <td>
+                        hostname
+                      </td>
+                      <td>
+                        <%= @container.info['Config']['Hostname'] %>
+                      </td>
+                    </tr>
                     <tr>
                       <td>
                         network mode
@@ -361,3 +380,4 @@
                 </div>
 
             </div>
+<%= @hello %>

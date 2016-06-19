@@ -53,14 +53,14 @@
             <li class="<%= 'active' if current_page?(home_path) %>">
               <%= link_to "Dashboard", home_path %>
             </li>
-            <li class="<%= 'active' if current_page?(images_path) %>">
-              <%= link_to "Images", images_path %>
-            </li>
             <li class="<%= 'active' if current_page?(containers_path) %>">
               <%= link_to "Containers", containers_path %>
             </li>
             <li class="<%= 'active' if current_page?(images_path) %>">
-              <%= link_to "INCOMING", images_path %>
+              <%= link_to "Images", images_path %>
+            </li>
+            <li class="<%= 'active' if current_page?(home_path) %>">
+              <%= link_to "INCOMING", home_path %>
             </li>
             <li>
               <%= link_to "Settings", home_path %>

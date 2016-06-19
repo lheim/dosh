@@ -4,12 +4,14 @@ Rails.application.routes.draw do
 
 
   get 'containers/' => 'containers#index', as: :containers
+
   #first check container/new
   get 'container/new' => 'containers#new', as: :container_new
   post 'container/new' => 'containers#create', as: :container_create
+
   #then check container/:id
   get 'container/:id' => 'containers#show', as: :container
-
+  post 'container/:id' => 'containers#rename', as: :container_rename
 
   get 'container/:id/start' => 'containers#start', as: :container_start
   get 'container/:id/stop' => 'containers#stop', as: :container_stop
@@ -20,6 +22,8 @@ Rails.application.routes.draw do
 
   get 'images' => 'images#index', as: :images
   get 'image/:id' => 'images#show', as: :image
+  get 'image/:id/remove' => 'images#remove', as: :image_remove
+  post 'image/:id' => 'images#tag', as: :image_tag
 
 
 

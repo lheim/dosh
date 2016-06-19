@@ -10,38 +10,36 @@
 
   <div class="panel-body">
 
-    <form>
-
-    <%= form_tag(container_create_path, :method => :post) do %>
+    <%= form_tag(container_create_path, method: "post") do %>
 
       <fieldset class="form-group">
-        <%= label_tag(:hostname, "hostname:") %>
-        <%= text_field_tag :hostname, "", class: 'form-control', placeholder: "name" %>
+        <%= label_tag(:name, "container name") %>
+        <%= text_field_tag :name, "", class: 'form-control', placeholder: "name" %>
         <small class="text-muted">information</small>
       </fieldset>
 
       <fieldset class="form-group">
         <%= label_tag(:image, "image") %>
+        <%= select_tag(:image, options_for_select(@images.collect{ |i| [i.json['RepoTags'].join(''), i.json['RepoTags'].join('')]})) %>
+      </fieldset>
 
 
-
-        <select class="form-control" id="exampleSelect1">
-          <% @images.each do |image| -%>
-            <option>
-                <%= image.json['RepoTags'].join('') %>
-            </option>
-          <% end %>
-        </select>
-
+      <fieldset class="form-group">
+        <%= label_tag(:hostname, "hostname") %>
+        <%= text_field_tag :hostname, "", class: 'form-control', placeholder: "name" %>
         <small class="text-muted">information</small>
       </fieldset>
 
-      <%= submit_tag "submit", class:  "btn btn-primary"%>
+
+      <fieldset class="form-group">
+        <%= label_tag(:tty, "tty ") %>
+        <%= select_tag(:tty, options_for_select(['true', 'false'])) %>
+      </fieldset>
+
+
+
+      <%= submit_tag "create", class:  "btn btn-primary"%>
     <% end %>
-
-    </form>
-
-
 
   </div>
 </div>

@@ -16,9 +16,17 @@
           </div>
 
           <div style="float: left; width: auto;">
-            <%= button_to "BUTTON 2",{action: :show },{method: :get, class: "btn-lg btn-danger" }%>
+            <%= button_to "Delete",{action: :remove},{method: :get, class: "btn-lg btn-danger" }%>
           </div>
 
+
+          <div style="float: right; width: auto;">
+            <%= form_tag(image_path, method: "post") do %>
+              <%= text_field_tag :name, "",  placeholder: "repo" %>
+            <%= submit_tag "set repo", class:  "btn-lg btn-info"%>
+          <% end %>
+
+        </div>
 
         </div>
       </div>

@@ -7,6 +7,8 @@ class ContainersController < ApplicationController
   def show
     @container = Docker::Container.get(params[:id])
     @logs = @container.logs(stdout: true, stderr: true)
+
+    #@container.tap(&:start).attach(stdin: StringIO.new("foo\nbar\n"))
   end
 
 
@@ -52,7 +54,7 @@ class ContainersController < ApplicationController
   def remove
     @container = Docker::Container.get(params[:id])
     state = @container.info['State']['Status']
-    if state == 'exited'
+    if state == 'exited' || state == 'created'
     @container.remove
       redirect_to containers_path, success: "container was successfully removed."
     elsif state == 'running'
@@ -68,16 +70,38 @@ class ContainersController < ApplicationController
     redirect_to container_path, success: "container successfully committed."
   end
 
+
+  def rename
+
+    @container = Docker::Container.get(params[:id])
+    @container.rename(params[:name])
+
+    redirect_to container_path, success: "container succesfully renamed to '#{params[:name]}'."
+  end
+
+  #page to create a new container
   def new
     @images = Docker::Image.all
   end
 
   def create
 
-    @container = Docker::Container.create('Image' => 'params')
-    puts 'HALLLOOLLOLLOOLO'
 
-    redirect_to containers_path
+
+    container_params = Hash.new
+    container_params['Hostname'] = params[:hostname]
+    container_params['Image'] = params[:image]
+    container_params['Tty'] = true
+    puts params[:tty]
+
+
+    @container = Docker::Container.create(container_params)
+
+    #set the name of the container
+    @container.rename(params[:name])
+
+
+    redirect_to containers_path, success: "container '#{params[:name]}' was successfully created."
 
   end
 

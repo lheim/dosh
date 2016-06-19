@@ -1,16 +1,27 @@
-<h1 class="header">Containers</h1>
+<div class="row">
+
+  <h1 class="header">Containers
+
+    <div class="pull-right">
+
+      <%= button_to "create new container", container_create_path, {:method => "get",class: "btn btn-primary"} %>
+
+    </div>
+  </h1>
+</div>
+
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
       <tr>
         <th>
-          ID
+          id
         </th>
         <th>
-          name
+          container name
         </th>
         <th>
-          image repo tag
+          image repo:tag
         </th>
         <th>
           status
@@ -22,7 +33,8 @@
     </thead>
     <tbody>
       <% @containers.each do |container| %>
-      <tr>
+        <tr class="table-danger">
+
         <td>
           <span class="glyphicon glyphicon-search"></span>
           <%= link_to container.id.truncate(12, omission:''), container_path(:id => container.id.truncate(12, omission: '')) %>
@@ -36,7 +48,14 @@
         </td>
         <td>
           <span class="glyphicon glyphicon-time"></span>
+          <% if container.info['Status'].include? "Up" %>
+            <span class="label label-success">
+          <% else %>
+            <span class="label label-warning">
+          <% end %>
+
           <%= container.info['Status'] %>
+          </span>
         </td>
         <td>
           <span class="glyphicon glyphicon-console"></span>
