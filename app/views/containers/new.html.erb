@@ -1,2 +1,47 @@
 <h1>Containers#new</h1>
 <p>Find me in app/views/containers/new.html.erb</p>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class = "panel-title">
+      new container
+    </h3>
+  </div>
+
+  <div class="panel-body">
+
+    <form>
+
+    <%= form_tag(container_create_path, :method => :post) do %>
+
+      <fieldset class="form-group">
+        <%= label_tag(:hostname, "hostname:") %>
+        <%= text_field_tag :hostname, "", class: 'form-control', placeholder: "name" %>
+        <small class="text-muted">information</small>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <%= label_tag(:image, "image") %>
+
+
+
+        <select class="form-control" id="exampleSelect1">
+          <% @images.each do |image| -%>
+            <option>
+                <%= image.json['RepoTags'].join('') %>
+            </option>
+          <% end %>
+        </select>
+
+        <small class="text-muted">information</small>
+      </fieldset>
+
+      <%= submit_tag "submit", class:  "btn btn-primary"%>
+    <% end %>
+
+    </form>
+
+
+
+  </div>
+</div>

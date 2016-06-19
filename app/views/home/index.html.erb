@@ -4,7 +4,6 @@
 -->
 <div class="center-block">
 
-<h4> Oh! Hey you. I'm the beginning of the index.html.erb </h4>
 
 
 <h1 class="page-header">dosh</h1>
@@ -43,7 +42,7 @@
                     name
                   </th>
                   <th>
-                    image
+                    image repo tag
                   </th>
                   <th>
                     status
@@ -65,7 +64,7 @@
                   </td>
                   <td>
                     <span class="glyphicon glyphicon-search"></span>
-                    <%= link_to container.info['Image'], image_path(:id => container.info['ImageID'])%>
+                    <%= link_to container.info['Image'], image_path(:id => container.info['ImageID'].truncate(12, omission: ''))%>
                   </td>
                   <td>
                     <span class="glyphicon glyphicon-time"></span>
@@ -82,5 +81,4 @@
           </div>
 
 
-<h4> That's all I (index.html.erb) got. Have a nice day. </h4>
 </div>

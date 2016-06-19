@@ -4,9 +4,11 @@ Rails.application.routes.draw do
 
 
   get 'containers/' => 'containers#index', as: :containers
-  get 'container/:id' => 'containers#show', as: :container
+  #first check container/new
   get 'container/new' => 'containers#new', as: :container_new
   post 'container/new' => 'containers#create', as: :container_create
+  #then check container/:id
+  get 'container/:id' => 'containers#show', as: :container
 
 
   get 'container/:id/start' => 'containers#start', as: :container_start

@@ -1,2 +1,76 @@
-<h1>Images#show</h1>
-<p>Find me in app/views/images/show.html.erb</p>
+<h1 class="header">Image:
+  <%= @image.json['RepoTags'].join('') %>
+</h1>
+
+<div class="col-md-12">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class = "panel-title">
+            actions
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div style="float: left; width: auto;">
+            <%= button_to "BUTTON 1",{action: :show },{method: :get, class: "btn-lg btn-success" } %>
+          </div>
+
+          <div style="float: left; width: auto;">
+            <%= button_to "BUTTON 2",{action: :show },{method: :get, class: "btn-lg btn-danger" }%>
+          </div>
+
+
+        </div>
+      </div>
+
+  </div>
+  <div class="col-md-8">
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class = "panel-title">
+              basic information
+            </h3>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <tbody>
+                  <tr>
+                    <td>
+                      image id
+                    </td>
+                    <td>
+                      <%= @image.json['Id']%>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      repo tags
+                    </td>
+                    <td>
+                      <%= @image.info['RepoTags'].join('') %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      size
+                    </td>
+                    <td>
+                      <%= number_to_human_size(@image.info['Size']) %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      created at
+                    </td>
+                    <td>
+                      <%= (@image.info['Created']) %>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    </div>

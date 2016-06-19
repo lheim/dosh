@@ -1,6 +1,6 @@
 <h1 class="header">Container:
   <%= @container.info['Name'] %>
-</h2>
+</h1>
 
 <div class="col-md-12">
 
@@ -12,19 +12,24 @@
         </div>
         <div class="panel-body">
           <div style="float: left; width: auto;">
-            <%= button_to "Start",{action: :start },{method: :get, class: "btn-lg btn-success" } %>
+            <% if @container.info['State']['Status'] == 'running' %>
+              <%= button_to "Stop",{action: :stop },{method: :get, class: "btn-lg btn-danger" }%>
+            <% else %>
+              <%= button_to "Start",{action: :start },{method: :get, class: "btn-lg btn-success disabled"}%>
+            <% end %>
           </div>
 
           <div style="float: left; width: auto;">
-            <%= button_to "Stop",{action: :stop },{method: :get, class: "btn-lg btn-danger" }%>
-          </div>
-
-          <div style="float: left; width: auto;">
+            <% if @container.info['State']['Status'] == 'running' %>
             <%= button_to "Restart",{action: :restart },{method: :get, class: "btn-lg btn-primary" }%>
+            <% end %>
           </div>
 
           <div style="float: left; width: auto;">
-            <%= button_to "Remove",{action: :remove },{method: :get, class: "btn-lg btn-warning" }%>
+            <% if @container.info['State']['Status'] == 'running' %>
+            <% else %>
+              <%= button_to "Remove",{action: :remove },{method: :get, class: "btn-lg btn-warning" }%>
+            <% end %>
           </div>
 
           <div style="float: left; width: auto;">
@@ -67,7 +72,7 @@
                       image
                     </td>
                     <td>
-                      <%= @container.info['Image'] %>
+                      <%= link_to @container.info['Image'], image_path(:id => @container.info['Image'].truncate(12, omission: ''))%>
                     </td>
                   </tr>
                   <tr>
@@ -75,7 +80,7 @@
                       image name
                     </td>
                     <td>
-                      <%= @container.info['Config']['Image'] %>
+                      <%= link_to @container.info['Config']['Image'], image_path(:id => @container.info['Image'].truncate(12, omission: ''))%>
                     </td>
                   </tr>
                   <tr>

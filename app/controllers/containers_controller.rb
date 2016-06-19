@@ -53,12 +53,12 @@ class ContainersController < ApplicationController
     @container = Docker::Container.get(params[:id])
     state = @container.info['State']['Status']
     if state == 'exited'
-      @container.remove
+    @container.remove
       redirect_to containers_path, success: "container was successfully removed."
     elsif state == 'running'
       redirect_to container_path, error: "stop the container first before removing."
     else
-      redirect_to container_path, error: "error: couldn't be removed."
+      redirect_to container_path, error: "unknown error: couldn't be removed. container status is unknown."
     end
   end
 
@@ -69,6 +69,15 @@ class ContainersController < ApplicationController
   end
 
   def new
+    @images = Docker::Image.all
+  end
+
+  def create
+
+    @container = Docker::Container.create('Image' => 'params')
+    puts 'HALLLOOLLOLLOOLO'
+
+    redirect_to containers_path
 
   end
 
