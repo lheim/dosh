@@ -152,13 +152,15 @@
                         <% if ports = @container.info['NetworkSettings']['Ports'].to_a %>
                           <% ports.each do |port| %>
                             <%= port[0] %>
-                            from
+                            exposed to
                             <% if port[1] %>
                               <%= port[1][0]['HostIp'] %>
                               :
                               <%= port[1][0]['HostPort'] %>
                             <% else %>
-                              no port specified
+                              <span class="label label-warning">
+                                no port specified
+                              </span>
                             <% end %>
                           <% end %>
                         <% else %>

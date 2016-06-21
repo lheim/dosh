@@ -59,8 +59,8 @@
             <li class="<%= 'active' if current_page?(images_path) %>">
               <%= link_to "Images", images_path %>
             </li>
-            <li class="<%= 'active' if current_page?(home_path) %>">
-              <%= link_to "INCOMING", home_path %>
+            <li>
+              <%= link_to "usrp", home_path %>
             </li>
             <li>
               <%= link_to "Settings", home_path %>
@@ -77,9 +77,9 @@
     </nav>
 
 
-  <% flash.each do |name, msg| -%>
+  <% flash.each do |name, msg| %>
     <%= content_tag :div, msg, class: "alert #{flash_type(name)} fade in" %>
-  <% end -%>
+  <% end %>
 
 
         <div class="col-sm-12">
