@@ -91,6 +91,7 @@ class ContainersController < ApplicationController
     container_params = Hash.new
     container_params['Hostname'] = params[:hostname]
     container_params['Image'] = params[:image]
+    container_params['Cmd'] = params[:command]
     container_params['Tty'] = true
     puts params[:tty]
 

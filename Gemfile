@@ -7,6 +7,9 @@ gem 'bootstrap-sass'
 #docker-api https://github.com/swipely/docker-api
 gem 'docker-api'
 
+#http server
+gem 'puma'
+
 #end my GEMS
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
