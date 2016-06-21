@@ -15,7 +15,9 @@
       <fieldset class="form-group">
         <%= label_tag(:name, "container name") %>
         <%= text_field_tag :name, "", class: 'form-control', placeholder: "name" %>
-        <small class="text-muted">more information</small>
+        <small class="text-muted">
+          Assign the specified name to the container.
+        </small>
       </fieldset>
 
       <fieldset class="form-group">
@@ -27,13 +29,17 @@
       <fieldset class="form-group">
         <%= label_tag(:hostname, "hostname") %>
         <%= text_field_tag :hostname, "", class: 'form-control', placeholder: "name" %>
-        <small class="text-muted">more information</small>
+        <small class="text-muted">
+          A string value containing the hostname to use for the container.
+        </small>
       </fieldset>
 
       <fieldset class="form-group">
         <%= label_tag(:command, "command") %>
         <%= text_field_tag :command, "", class: 'form-control', placeholder: "/bin/bash" %>
-        <small class="text-muted">more information</small>
+        <small class="text-muted">
+          Command to run specified as a string or an array of strings.
+        </small>
       </fieldset>
 
 

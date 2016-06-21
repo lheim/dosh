@@ -353,7 +353,70 @@
                             </td>
                             <td>
                               <% if @container.info['State']['Status'] == 'running' %>
-                              <%= @container.top %>
+                              <div class="table-responsive">
+                                <table class="table table-striped">
+                                  <thead>
+                                    <tr>
+                                      <th>
+                                        UID
+                                      </th>
+                                      <th>
+                                        PID
+                                      </th>
+                                      <th>
+                                        PPID
+                                      </th>
+                                      <th>
+                                        C
+                                      </th>
+                                      <th>
+                                        STIME
+                                      </th>
+                                      <th>
+                                        TTY
+                                      </th>
+                                      <th>
+                                        Time
+                                      </th>
+                                      <th>
+                                        CMD
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <% @container.top.each do |process| %>
+                                      <tr class="table">
+                                      <td>
+                                        <%= process["UID"]%>
+                                      </td>
+                                      <td>
+                                        <%= process["PID"]%>
+                                      </td>
+                                      <td>
+                                        <%= process["PPID"]%>
+                                      </td>
+                                      <td>
+                                        <%= process["C"]%>
+                                      </td>
+                                      <td>
+                                        <%= process["STIME"]%>
+                                      </td>
+                                      <td>
+                                        <%= process["TTY"]%>
+                                      </td>
+                                      <td>
+                                        <%= process["TIME"]%>
+                                      </td>
+                                      <td>
+                                        <%= process["CMD"]%>
+                                      </td>
+                                    </tr>
+                                   <% end %>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <% else %>
+                                container is not running.
                               <% end %>
                             </td>
                           </tr>
