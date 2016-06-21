@@ -149,8 +149,21 @@
                         port bindings
                       </td>
                       <td>
-                        <%= @container.info['NetworkSettings']['Ports'] %>
-
+                        <% if ports = @container.info['NetworkSettings']['Ports'].to_a %>
+                          <% ports.each do |port| %>
+                            <%= port[0] %>
+                            from
+                            <% if port[1] %>
+                              <%= port[1][0]['HostIp'] %>
+                              :
+                              <%= port[1][0]['HostPort'] %>
+                            <% else %>
+                              no port specified
+                            <% end %>
+                          <% end %>
+                        <% else %>
+                          no open ports
+                        <% end %>
                       </td>
                     </tr>
                     <tr>
@@ -301,7 +314,11 @@
                               enviroment variables
                             </td>
                           <td>
-                            <%= @container.info['Config']['Env'] %>
+                            <% if envvars =  @container.info['Config']['Env'] %>
+                              <% envvars.each do |envvar| %>
+                                <%= envvar %>
+                              <% end %>
+                            <% end %>
                           </td>
                         </tr>
                       </tbody>
@@ -337,14 +354,6 @@
                             </td>
                             <td>
                               <%= @container.info['Config']['WorkingDir'] %>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              cpu shares
-                            </td>
-                            <td>
-                              <%= @container.info['Config']['Env'] %>
                             </td>
                           </tr>
                           <tr>
