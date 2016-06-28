@@ -1,6 +1,6 @@
 # dosh
 docker dashboard on rails
-by lennart.heim@rwth-aachen.de
+by lennart heim
 
 ## description
 
