@@ -93,7 +93,25 @@ class ContainersController < ApplicationController
     container_params['Image'] = params[:image]
     container_params['Cmd'] = params[:command]
     container_params['Tty'] = true
-    puts params[:tty]
+
+    # ports = Hash.new
+    # ports[1] = "22/tcp"
+    # ports[1][1] = "HostPort"
+    # ports[1[1][1]= "80"
+    # container_params['HostConfig']['PortBindings'] = ports
+
+
+
+    exposedports = {"22/tcp" => {}}
+    bindingports = {"PortBindings" => {"22/tcp" => [{"HostPort" => "88"}]}}
+
+
+    container_params['ExposedPorts'] = exposedports
+
+    container_params['HostConfig'] = bindingports
+
+  
+
 
 
     @container = Docker::Container.create(container_params)

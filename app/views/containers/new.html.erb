@@ -1,10 +1,9 @@
-<h1>Containers#new</h1>
-<p>Find me in app/views/containers/new.html.erb</p>
+<h1>New Container</h1>
 
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class = "panel-title">
-      new container
+      container settings
     </h3>
   </div>
 
@@ -40,6 +39,14 @@
         <small class="text-muted">
           Command to run specified as a string or an array of strings.
         </small>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <%= label_tag(:env, "enviroment variables") %>
+        <%= text_field_tag :env, "", class: 'form-control', placeholder: "FOO=bar, BAZ=quux" %>
+        <small class="text-muted">
+          A list of environment variables, seperated with a comma.
+         </small>
       </fieldset>
 
 
