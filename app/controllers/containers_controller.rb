@@ -89,38 +89,70 @@ class ContainersController < ApplicationController
 
 
     container_params = Hash.new
-    container_params['Hostname'] = params[:hostname]
+    if !params[:hostname].blank?
+      container_params['Hostname'] = params[:hostname]
+    end
+
     container_params['Image'] = params[:image]
-    container_params['Cmd'] = params[:command]
-    container_params['Tty'] = true
 
-    # ports = Hash.new
-    # ports[1] = "22/tcp"
-    # ports[1][1] = "HostPort"
-    # ports[1[1][1]= "80"
-    # container_params['HostConfig']['PortBindings'] = ports
+    if !params[:command].blank?
+      container_params['Cmd'] = params[:command]
+    end
 
 
 
-    exposedports = {"22/tcp" => {}}
-    bindingports = {"PortBindings" => {"22/tcp" => [{"HostPort" => "88"}]}}
+    #container_params['Env'] = params[:env]
+
+    puts params[:env]
 
 
-    container_params['ExposedPorts'] = exposedports
+    #tty enabled
+    if params[:tty] == 'true'
+      container_params['Tty'] = true
+    else
+      container_params['Tty'] = false
+    end
 
-    container_params['HostConfig'] = bindingports
+    #privileged mode
+    if params[:privileged] == 'true'
+      privi = {"Privileged" => true}
+    else
+      privi = {"Privileged" => false}
+    end
 
-  
+    container_params['HostConfig']= privi
 
+
+
+    networkmode = {"NetworkMode" => params[:network]}
+    container_params['HostConfig'].merge!(networkmode)
+
+
+    if !params[:port_in].blank?
+      exposedports = {"#{params[:port_in]}" => {}}
+      container_params['ExposedPorts'] = exposedports
+      if !params[:port_out].blank?
+        bindingports = {"PortBindings" => {"#{params[:port_in]}" => [{"HostPort" => "#{params[:port_out]}"}]}}
+        container_params['HostConfig'].merge!(bindingports)
+      end
+    end
+
+    puts container_params
 
 
     @container = Docker::Container.create(container_params)
 
     #set the name of the container
-    @container.rename(params[:name])
+    if !params[:name].blank?
+      @container.rename(params[:name])
+      name = params[:name]
+    #no name given, name is randomly chosen
+    else
+      name = @container.info['id'].truncate(12, omission: '')
+    end
 
 
-    redirect_to containers_path, success: "container '#{params[:name]}' was successfully created."
+    redirect_to containers_path, success: "container '#{name}' was successfully created."
 
   end
 

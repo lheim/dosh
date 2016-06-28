@@ -151,6 +151,7 @@
                       <td>
                         <% if ports = @container.info['NetworkSettings']['Ports'].to_a %>
                           <% ports.each do |port| %>
+                          <p>
                             <%= port[0] %>
                             exposed to
                             <% if port[1] %>
@@ -165,6 +166,7 @@
                           <% end %>
                         <% else %>
                           no open ports
+                        </p>
                         <% end %>
                       </td>
                     </tr>
@@ -273,6 +275,14 @@
                           </td>
                         <td>
                           <%= @container.info['Config']['Tty'] %>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                            privileged
+                          </td>
+                        <td>
+                          <%= @container.info['HostConfig']['Privileged'] %>
                         </td>
                       </tr>
 
