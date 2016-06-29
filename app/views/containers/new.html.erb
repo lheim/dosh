@@ -42,10 +42,11 @@
       </fieldset>
 
       <fieldset class="form-inline">
-        <%= label_tag(:volume_in, "volumes") %>
-        <%= text_field_tag :voulume_in, "", class: 'form-control', placeholder: "/dev/bus/usb", size: 10 %>
-        <%= label_tag(:volume_out, ":") %>
-        <%= text_field_tag :volume_out, "", class: 'form-control', placeholder: "/dev/bus/usb", size: 10 %>
+        <%= label_tag(:volume_host, "volumes") %>
+        <%= text_field_tag :volume_host, "", class: 'form-control', placeholder: "/dev/bus/usb", size: 10 %>
+        <%= label_tag(:volume_container, ":") %>
+        <%= text_field_tag :volume_container, "", class: 'form-control', placeholder: "/dev/bus/usb", size: 10 %>
+        <%= select_tag(:volume_mode, options_for_select(['read/write', 'read-only'])) %>
       </fieldset>
       <fieldset class="form-group">
         <small class="text-muted">
@@ -54,13 +55,7 @@
         </small>
       </fieldset>
 
-      <fieldset class="form-group">
-        <%= label_tag(:env, "enviroment variables") %>
-        <%= text_field_tag :env, "", class: 'form-control', placeholder: "FOO=bar, BAZ=quux" %>
-        <small class="text-muted">
-          A list of environment variables, seperated with a comma.
-         </small>
-      </fieldset>
+    
 
       <fieldset class="form-group">
         <%= label_tag(:network, "network mode ") %>

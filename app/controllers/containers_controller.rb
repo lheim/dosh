@@ -87,23 +87,29 @@ class ContainersController < ApplicationController
   def create
 
 
-
+    #create hash with all given options
     container_params = Hash.new
+
+    #hostname
     if !params[:hostname].blank?
       container_params['Hostname'] = params[:hostname]
     end
 
+    #image
     container_params['Image'] = params[:image]
 
+    #command
     if !params[:command].blank?
       container_params['Cmd'] = params[:command]
     end
 
+    #enviroment variables
+    if !params[:env].blank?
+      
+      container_params['Env'] = params[:env]
 
-
-    #container_params['Env'] = params[:env]
-
-    puts params[:env]
+      puts params[:env]
+    end
 
 
     #tty enabled
@@ -136,6 +142,17 @@ class ContainersController < ApplicationController
         container_params['HostConfig'].merge!(bindingports)
       end
     end
+
+    #volume binding
+    if ((!params[:volume_host].blank?) && (!params[:volume_container].blank?) && (params[:volume_mode] == "read/write"))
+      binds = {"Binds" => ["#{params[:volume_host]}:#{params[:volume_container]}"]}
+      container_params['HostConfig'].merge!(binds)
+    elsif ((!params[:volume_host].blank?) && (!params[:volume_container].blank?) && (params[:volume_mode] == "read-only"))
+      binds = {"Binds" => ["#{params[:volume_host]}:#{params[:volume_container]}:ro"]}
+      container_params['HostConfig'].merge!(binds)
+    end
+    puts binds
+
 
     puts container_params
 

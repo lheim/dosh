@@ -310,7 +310,9 @@
                             mounts
                           </td>
                           <td>
-                            <%= @container.info['Config']['Volumes'] %>
+                            <% if !@container.info['HostConfig']['Binds'].blank? %>
+                            <%= @container.info['HostConfig']['Binds'].join('') %>
+                            <% end %>
                           </td>
                         </tr>
                         <tr>
