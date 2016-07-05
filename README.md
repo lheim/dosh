@@ -14,8 +14,8 @@ running the rails application in a docker container is the easiest setup. just p
 ###using docker.io
 example usage for a linux system where you mount the docker socket from the host machine
 ```bash
-docker pull lheim/dosh:latest
-docker run --name dosh -d -p 3000:3000 -v /var/run/docker.sock:/var/run/docker.sock lheim/dosh:latest
+docker pull lheim/dosh-automated:latest
+docker run --name dosh -d -p 3000:3000 -v /var/run/docker.sock:/var/run/docker.sock lheim/dosh-automated:latest
 ```
 
 ###latest version
