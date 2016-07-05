@@ -10,12 +10,14 @@ dosh is a simple web dashboard built with ruby on rails. it is still under devel
 ## installation
 
 running the rails application in a docker container is the easiest setup. just pull the image and run it with the given settings.
+
 ###using docker.io
 example usage for a linux system where you mount the docker socket from the host machine
 ```bash
 docker pull lheim/dosh:latest
 docker run --name dosh -d -p 3000:3000 -v /var/run/docker.sock:/var/run/docker.sock lheim/dosh:latest
 ```
+
 ###latest version
 to run the latest version you can also clone the project and build the docker image with the given dockerfile.
 
