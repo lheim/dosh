@@ -1,497 +1,474 @@
 <h1 class="header">Container:
-  <%= @container.info['Name'] %>
+    <%= @container.info['Name'] %>
 </h1>
 
 <div class="col-md-12">
 
-      <div class="panel panel-default">
+    <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class = "panel-title">
-            actions
-          </h3>
+            <h3 class="panel-title">
+                actions
+            </h3>
         </div>
         <div class="panel-body">
-          <div style="float: left; width: auto;">
-            <% if @container.info['State']['Status'] == 'running' %>
-              <%= button_to "Stop",{action: :stop },{method: :get, class: "btn-lg btn-danger" }%>
+            <div style="float: left; width: auto;">
+                <% if @container.info['State']['Status'] == 'running' %>
+                <%= button_to "Stop",{action: :stop },{method: :get, class: "btn-lg btn-danger" }%>
             <% else %>
-              <%= button_to "Start",{action: :start },{method: :get, class: "btn-lg btn-success disabled"}%>
-            <% end %>
-          </div>
-
-          <div style="float: left; width: auto;">
-            <% if @container.info['State']['Status'] == 'running' %>
-            <%= button_to "Restart",{action: :restart },{method: :get, class: "btn-lg btn-primary" }%>
-            <% end %>
-          </div>
-
-          <div style="float: left; width: auto;">
-            <% if @container.info['State']['Status'] == 'running' %>
-            <% else %>
-              <%= button_to "Remove",{action: :remove },{method: :get, class: "btn-lg btn-warning" }%>
-            <% end %>
-          </div>
-
-          <div style="float: left; width: auto;">
-            <%= button_to "Commit",{action: :commit },{method: :get, class: "btn-lg btn-info" }%>
-          </div>
-
-          <div style="float: right; width: auto;">
-
-            <%= form_tag(container_path, method: "post") do %>
-              <%= text_field_tag :name, "",  placeholder: "new_name" %>
-              <%= submit_tag "rename", class:  "btn-lg btn-info"%>
-            <% end %>
-
-          </div>
-
-        </div>
-      </div>
-
-  </div>
-  <div class="col-md-8">
-
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class = "panel-title">
-              basic information
-            </h3>
-          </div>
-          <div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <tbody>
-                  <tr>
-                    <td>
-                      id
-                    </td>
-                    <td>
-                      <%= @container.id.truncate(12, omission:'') %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      name
-                    </td>
-                    <td>
-                      <%= @container.info['Name'] %>
-
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      image
-                    </td>
-                    <td>
-                      <%= link_to @container.info['Image'], image_path(:id => @container.info['Image'].truncate(12, omission: ''))%>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      image name
-                    </td>
-                    <td>
-                      <%= link_to @container.info['Config']['Image'], image_path(:id => @container.info['Image'].truncate(12, omission: ''))%>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      status
-                    </td>
-                    <td>
-                      <%= @container.info['State']['Status']%>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      command
-                    </td>
-                    <td>
-                      <%= @container.info['Config']['Cmd'].join('') %>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                <%= button_to "Start",{action: :start },{method: :get, class: "btn-lg btn-success disabled"}%>
+                <% end %>
             </div>
-          </div>
+
+            <div style="float: left; width: auto;">
+                <% if @container.info['State']['Status'] == 'running' %>
+                <%= button_to "Restart",{action: :restart },{method: :get, class: "btn-lg btn-primary" }%>
+                <% end %>
+            </div>
+
+            <div style="float: left; width: auto;">
+                <% if @container.info['State']['Status'] == 'running' %>
+            <% else %>
+                <%= button_to "Remove",{action: :remove },{method: :get, class: "btn-lg btn-warning" }%>
+                <% end %>
+            </div>
+
+            <div style="float: left; width: auto;">
+                <%= button_to "Commit",{action: :commit },{method: :get, class: "btn-lg btn-info" }%>
+            </div>
+
+            <div style="float: right; width: auto;">
+
+                <%= form_tag(container_path, method: "post") do %>
+                <%= text_field_tag :name, "",  placeholder: "new_name" %>
+                <%= submit_tag "rename", class:  "btn-lg btn-info"%>
+                <% end %>
+
+            </div>
+
         </div>
     </div>
-    <div class="col-md-4">
 
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class = "panel-title">
-                network
-              </h3>
-            </div>
-            <div class="panel-body">
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <tbody>
-                    <tr>
-                      <td>
-                        hostname
-                      </td>
-                      <td>
-                        <%= @container.info['Config']['Hostname'] %>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        network mode
-                      </td>
-                      <td>
-                        <%= @container.info['HostConfig']['NetworkMode'] %>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        port bindings
-                      </td>
-                      <td>
-                        <% if ports = @container.info['NetworkSettings']['Ports'].to_a %>
-                          <% ports.each do |port| %>
-                          <p>
-                            <%= port[0] %>
-                            exposed to
-                            <% if port[1] %>
-                              <%= port[1][0]['HostIp'] %>
-                              :
-                              <%= port[1][0]['HostPort'] %>
-                            <% else %>
-                              <span class="label label-warning">
-                                no port specified
-                              </span>
-                            <% end %>
-                          <% end %>
-                        <% else %>
-                          no open ports
-                        </p>
-                        <% end %>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        gateway
-                      </td>
-                      <td>
-                        <%= @container.info['NetworkSettings']['Gateway'] %>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        ip-address
-                      </td>
-                      <td>
-                        <%= @container.info['NetworkSettings']['IPAddress'] %>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        mac-address
-                      </td>
-                      <td>
-                        <%= @container.info['NetworkSettings']['MacAddress']%>
-                      </td>
-                    </tr>
+</div>
 
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a data-toggle="tab" href="#home">information</a>
+    </li>
+    <li>
+        <a data-toggle="tab" href="#menu1">bash</a>
+    </li>
+</ul>
 
-      </div>
-      <% if !@container.info['Node'].blank? %>
-      <div class="col-md-6">
+<div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+        <p></p>
+
+        <div class="col-md-8">
 
             <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class = "panel-title">
-                  NODE INFOS
-                </h3>
-              </div>
-              <div class="panel-body">
-                <div class="table-responsive">
-                  <table class="table table-hover">
-                    <tbody>
-
-                      <tr>
-                        <td>
-                          node ip
-                        </td>
-                        <td>
-                          <%= @container.info['Node']['Addr']%>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          node name
-                        </td>
-                        <td>
-                          <%= @container.info['Node']['Name']%>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          node cpus
-                        </td>
-                        <td>
-                          <%= @container.info['Node']['Cpus']%>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          node memory
-                        </td>
-                        <td>
-                          <%= number_to_human_size(@container.info['Node']['Memory']) %>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          node operating system
-                        </td>
-                        <td>
-                          <%= @container.info['Node']['Labels']['operatingsystem']%>
-                        </td>
-                      </tr>
-
-                    </tbody>
-                  </table>
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        basic information
+                    </h3>
                 </div>
-              </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        id
+                                    </td>
+                                    <td>
+                                        <%= @container.id.truncate(12, omission:'') %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        name
+                                    </td>
+                                    <td>
+                                        <%= @container.info['Name'] %>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        image
+                                    </td>
+                                    <td>
+                                        <%= link_to @container.info['Image'], image_path(:id => @container.info['Image'].truncate(12, omission: ''))%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        image name
+                                    </td>
+                                    <td>
+                                        <%= link_to @container.info['Config']['Image'], image_path(:id => @container.info['Image'].truncate(12, omission: ''))%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        status
+                                    </td>
+                                    <td>
+                                        <%= @container.info['State']['Status']%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        command
+                                    </td>
+                                    <td>
+                                        <%= @container.info['Config']['Cmd'].join('') %>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        network
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        hostname
+                                    </td>
+                                    <td>
+                                        <%= @container.info['Config']['Hostname'] %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        network mode
+                                    </td>
+                                    <td>
+                                        <%= @container.info['HostConfig']['NetworkMode'] %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        port bindings
+                                    </td>
+                                    <td>
+                                        <% if ports = @container.info['NetworkSettings']['Ports'].to_a %>
+                                        <% ports.each do |port| %>
+                                        <p>
+                                            <%= port[0] %>
+                                            exposed to
+                                            <% if port[1] %>
+                                            <%= port[1][0]['HostIp'] %>
+                                            :
+                                            <%= port[1][0]['HostPort'] %>
+                                        <% else %>
+                                            <span class="label label-warning">
+                                                no port specified
+                                            </span>
+                                            <% end %>
+                                            <% end %>
+                                        <% else %>
+                                            no open ports
+                                        </p>
+                                        <% end %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        gateway
+                                    </td>
+                                    <td>
+                                        <%= @container.info['NetworkSettings']['Gateway'] %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        ip-address
+                                    </td>
+                                    <td>
+                                        <%= @container.info['NetworkSettings']['IPAddress'] %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        mac-address
+                                    </td>
+                                    <td>
+                                        <%= @container.info['NetworkSettings']['MacAddress']%>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <% if !@container.info['Node'].blank? %>
+        <div class="col-md-6">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        node information
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <tbody>
+
+                                <tr>
+                                    <td>
+                                        node ip
+                                    </td>
+                                    <td>
+                                        <%= @container.info['Node']['Addr']%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        node name
+                                    </td>
+                                    <td>
+                                        <%= @container.info['Node']['Name']%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        node cpus
+                                    </td>
+                                    <td>
+                                        <%= @container.info['Node']['Cpus']%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        node memory
+                                    </td>
+                                    <td>
+                                        <%= number_to_human_size(@container.info['Node']['Memory']) %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        node operating system
+                                    </td>
+                                    <td>
+                                        <%= @container.info['Node']['Labels']['operatingsystem']%>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
         </div>
         <% end %>
         <div class="col-md-6">
-
-              <div class="panel panel-default">
+            <div class="panel panel-default">
                 <div class="panel-heading">
-                  <h3 class = "panel-title">
-                    volumes
-                  </h3>
+                    <h3 class="panel-title">
+                        volumes
+                    </h3>
                 </div>
                 <div class="panel-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover">
-                      <tbody>
-                        <tr>
-                          <td>
-                            mounts
-                          </td>
-                          <td>
-                            <% if !@container.info['HostConfig']['Binds'].blank? %>
-                            <%= @container.info['HostConfig']['Binds'].join('') %>
-                            <% end %>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            working directory
-                          </td>
-                          <td>
-                            <%= @container.info['Config']['WorkingDir'] %>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                              enviroment variables
-                            </td>
-                          <td>
-                            <% if envvars =  @container.info['Config']['Env'] %>
-                              <% envvars.each do |envvar| %>
-                                <%= envvar %>
-                              <% end %>
-                            <% end %>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        mounts
+                                    </td>
+                                    <td>
+                                        <% if !@container.info['HostConfig']['Binds'].blank? %>
+                                        <%= @container.info['HostConfig']['Binds'].join('') %>
+                                        <% end %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        working directory
+                                    </td>
+                                    <td>
+                                        <%= @container.info['Config']['WorkingDir'] %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        enviroment variables
+                                    </td>
+                                    <td>
+                                        <% if envvars =  @container.info['Config']['Env'] %>
+                                        <% envvars.each do |envvar| %>
+                                        <%= envvar %>
+                                        <% end %>
+                                        <% end %>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-              </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        more information
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        started at
+                                    </td>
+                                    <td>
+                                        <%= @container.info['State']['StartedAt'].to_time.strftime('%a. %d %b %Y, %H:%M:%S') %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        finished at
+                                    </td>
+                                    <td>
+                                        <%= @container.info['State']['FinishedAt'].to_time.strftime('%a. %d %b %Y, %H:%M:%S') %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        attached stdin
+                                    </td>
+                                    <td>
+                                        <%= @container.info['Config']['AttachedStdin'] %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        attached stdout
+                                    </td>
+                                    <td>
+                                        <%= @container.info['Config']['AttachedStdout'] %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        attached stderr
+                                    </td>
+                                    <td>
+                                        <%= @container.info['Config']['AttachedStderr'] %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        tty
+                                    </td>
+                                    <td>
+                                        <%= @container.info['Config']['Tty'] %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        privileged
+                                    </td>
+                                    <td>
+                                        <%= @container.info['HostConfig']['Privileged'] %>
+                                    </td>
+                                </tr>
 
-          </div>
-      <div class="col-md-6">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
 
             <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class = "panel-title">
-                  more information
-                </h3>
-              </div>
-              <div class="panel-body">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        processes
+                    </h3>
+                </div>
+                <% if @container.info['State']['Status'] == 'running' %>
                 <div class="table-responsive">
-                  <table class="table table-hover">
-                    <tbody>
-                      <tr>
-                        <td>
-                          started at
-                        </td>
-                        <td>
-                          <%= @container.info['State']['StartedAt'].to_time.strftime('%a. %d %b %Y, %H:%M:%S') %>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          finished at
-                        </td>
-                        <td>
-                          <%= @container.info['State']['FinishedAt'].to_time.strftime('%a. %d %b %Y, %H:%M:%S') %>
-\                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          PID
-                        </td>
-                        <td>
-                          <%= @container.info['State']['Pid'] %>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          attached stdin
-                        </td>
-                        <td>
-                          <%= @container.info['Config']['AttachedStdin'] %>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            attached stdout
-                          </td>
-                        <td>
-                          <%= @container.info['Config']['AttachedStdout'] %>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            attached stderr
-                          </td>
-                        <td>
-                          <%= @container.info['Config']['AttachedStderr'] %>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            tty
-                          </td>
-                        <td>
-                          <%= @container.info['Config']['Tty'] %>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            privileged
-                          </td>
-                        <td>
-                          <%= @container.info['HostConfig']['Privileged'] %>
-                        </td>
-                      </tr>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
 
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-
-        </div>
-
-          <div class="col-md-6">
-
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h3 class = "panel-title">
-                      workload
-                    </h3>
-                  </div>
-                  <!-- <div class="panel-body">
-                    <div class="table-responsive">
-                      <table class="table table-hover">
+                                <th>
+                                    PID
+                                </th>
+                                <th>
+                                    user
+                                </th>
+                                <th>
+                                    command
+                                </th>
+                            </tr>
+                        </thead>
                         <tbody>
-                          <tr>
-                            <td>
-                              memory
-                            </td>
-                            <td>
-                              <%= @container.info['Config']['Volumes'] %>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              memory swap
-                            </td>
-                            <td>
-                              <%= @container.info['Config']['WorkingDir'] %>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              TOP
-                            </td>
-                            <td> -->
-                              <% if @container.info['State']['Status'] == 'running' %>
-                              <div class="table-responsive">
-                                <table class="table table-striped">
-                                  <thead>
-                                    <tr>
-
-                                      <th>
-                                        PID
-                                      </th>
-                                      <th>
-                                        user
-                                      </th>
-                                      <th>
-                                        command
-                                      </th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <% @container.top.each do |process| %>
-                                      <tr class="table">
-                                      <td>
-                                        <%= process["PID"]%>
-                                      </td>
-                                      <td>
-                                        <%= process["USER"]%>
-                                      </td>
-                                      <td>
-                                        <%= process["COMMAND"]%>
-                                      </td>
-                                    </tr>
-                                   <% end %>
-                                  </tbody>
-                                </table>
-                              </div>
-                              <% else %>
-                                container is not running.
-                              <% end %>
-                            <!-- </td>
-                          </tr>
-                        </tbody> -->
-                      <!-- </table> -->
-                    </div>
-                  </div>
+                            <% @container.top.each do |process| %>
+                            <tr class="table">
+                                <td>
+                                    <%= process["PID"]%>
+                                </td>
+                                <td>
+                                    <%= process["USER"]%>
+                                </td>
+                                <td>
+                                    <%= process["COMMAND"]%>
+                                </td>
+                            </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
                 </div>
-
+            <% else %>
+                container is not running.
+                <% end %>
             </div>
-          <div class="col-md-12">
+        </div>
+    </div>
+    <!-- BASH TAP -->
+    <div id="menu1" class="tab-pane fade">
+        <h3>bash</h3>
+        <p>BASH HERE</p>
+    </div>
+</div>
 
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h3 class = "panel-title">
-                      log
-                    </h3>
-                  </div>
-                  <div class="panel-body">
-                    <pre>
+<div class="col-md-12">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                log
+            </h3>
+        </div>
+        <div class="panel-body">
+            <pre>
                       <%=  @logs %>
                     </pre>
-                  </div>
-                </div>
+        </div>
+    </div>
 
-            </div>
+</div>
 <%= @hello %>

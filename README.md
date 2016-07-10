@@ -3,12 +3,10 @@ docker dashboard on rails
 by lennart heim
 
 ##description
-
 dosh is a simple web dashboard built with ruby on rails. it is still under development and part of my bachelor thesis **'Network Virtualization for Automatic Deployment of SDR-Based Wireless Experiments'** at the Institute for Networked Systems, RWTH Aachen University.
 
 
 ##installation
-
 running the rails application in a docker container is the easiest setup. just pull the image and run it with the given settings.
 
 ###using docker.io
@@ -29,7 +27,7 @@ docker run --name dosh -d -p 3000:3000 -v /var/run/docker.sock:/var/run/docker.s
 ```
 
 ###example usage for macOS
-when you run the project on a macOS or windows machine make sure that environment variable 'DOCKER_HOST' is set to the ip of your VM. mounting the docker socket is not necessary.
+when you run the project on a macOS or windows machine make sure that the environment variable 'DOCKER_HOST' is set to the ip of your VM. mounting the docker socket is not necessary.
 
 ```bash
 docker-machine start default
@@ -40,9 +38,6 @@ rails s
 [...]
 ```
 
-
-
 ##usage
-
 http://localhost:3000
 pretty straight forward.

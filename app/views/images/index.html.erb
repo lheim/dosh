@@ -1,49 +1,49 @@
 <h1 class="header">Images</h1>
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <thead>
-              <tr>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
                 <th>
-                  id
+                    id
                 </th>
                 <th>
-                  repo tags
+                    repo tags
                 </th>
                 <th>
-                  created at
+                    created at
                 </th>
                 <th>
-                  virtual size
+                    virtual size
                 </th>
                 <th>
-                  real size
+                    real size
                 </th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @images.each do |image| %>
-              <tr>
+            </tr>
+        </thead>
+        <tbody>
+            <% @images.each do |image| %>
+            <tr>
                 <td>
-                  <span class="glyphicon glyphicon-search"></span>
-                  <%= link_to image.json['Id'].truncate(12, omission: ''), image_path(:id => image.json['Id'].truncate(12, omission: '')) %>
+                    <span class="glyphicon glyphicon-search"></span>
+                    <%= link_to image.json['Id'].truncate(12, omission: ''), image_path(:id => image.json['Id'].truncate(12, omission: '')) %>
 
                 </td>
                 <td>
-                  <%= image.json['RepoTags'].join('') %>
+                    <%= image.json['RepoTags'].join('') %>
                 </td>
                 <td>
-                  <span class="glyphicon glyphicon-calendar"></span>
-                  <%= Time.at(image.info['Created']) %>
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    <%= Time.at(image.info['Created']) %>
                 </td>
                 <td>
-                  <%= number_to_human_size(image.info['Size']) %>
+                    <%= number_to_human_size(image.info['Size']) %>
                 </td>
                 <td>
-                  <%= number_to_human_size(image.info['VirtualSize']) %>
+                    <%= number_to_human_size(image.info['VirtualSize']) %>
                 </td>
 
-              </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
