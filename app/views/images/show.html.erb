@@ -73,7 +73,7 @@
                       created at
                     </td>
                     <td>
-                      <%= (@image.info['Created']) %>
+                      <%= @image.info['Created'].to_time.strftime('%a. %d %b %Y, %H:%M:%S') %>
                     </td>
                   </tr>
                 </tbody>

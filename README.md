@@ -1,13 +1,13 @@
-# dosh
+#dosh
 docker dashboard on rails
 by lennart heim
 
-## description
+##description
 
 dosh is a simple web dashboard built with ruby on rails. it is still under development and part of my bachelor thesis **'Network Virtualization for Automatic Deployment of SDR-Based Wireless Experiments'** at the Institute for Networked Systems, RWTH Aachen University.
 
 
-## installation
+##installation
 
 running the rails application in a docker container is the easiest setup. just pull the image and run it with the given settings.
 
@@ -34,6 +34,9 @@ when you run the project on a macOS or windows machine make sure that environmen
 ```bash
 docker-machine start default
 eval $(docker-machine env)
+git clone https://github.com/lheim/dosh
+cd dosh
+rails s
 [...]
 ```
 
@@ -41,4 +44,5 @@ eval $(docker-machine env)
 
 ##usage
 
+http://localhost:3000
 pretty straight forward.

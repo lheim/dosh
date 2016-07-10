@@ -194,6 +194,7 @@
                         <%= @container.info['NetworkSettings']['MacAddress']%>
                       </td>
                     </tr>
+
                   </tbody>
                 </table>
               </div>
@@ -201,12 +202,124 @@
           </div>
 
       </div>
+      <% if !@container.info['Node'].blank? %>
       <div class="col-md-6">
 
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h3 class = "panel-title">
-                  information
+                  NODE INFOS
+                </h3>
+              </div>
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <tbody>
+
+                      <tr>
+                        <td>
+                          node ip
+                        </td>
+                        <td>
+                          <%= @container.info['Node']['Addr']%>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          node name
+                        </td>
+                        <td>
+                          <%= @container.info['Node']['Name']%>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          node cpus
+                        </td>
+                        <td>
+                          <%= @container.info['Node']['Cpus']%>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          node memory
+                        </td>
+                        <td>
+                          <%= number_to_human_size(@container.info['Node']['Memory']) %>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          node operating system
+                        </td>
+                        <td>
+                          <%= @container.info['Node']['Labels']['operatingsystem']%>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+        </div>
+        <% end %>
+        <div class="col-md-6">
+
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class = "panel-title">
+                    volumes
+                  </h3>
+                </div>
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <tbody>
+                        <tr>
+                          <td>
+                            mounts
+                          </td>
+                          <td>
+                            <% if !@container.info['HostConfig']['Binds'].blank? %>
+                            <%= @container.info['HostConfig']['Binds'].join('') %>
+                            <% end %>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            working directory
+                          </td>
+                          <td>
+                            <%= @container.info['Config']['WorkingDir'] %>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                              enviroment variables
+                            </td>
+                          <td>
+                            <% if envvars =  @container.info['Config']['Env'] %>
+                              <% envvars.each do |envvar| %>
+                                <%= envvar %>
+                              <% end %>
+                            <% end %>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+          </div>
+      <div class="col-md-6">
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class = "panel-title">
+                  more information
                 </h3>
               </div>
               <div class="panel-body">
@@ -218,7 +331,7 @@
                           started at
                         </td>
                         <td>
-                          <%= @container.info['State']['StartedAt'] %>
+                          <%= @container.info['State']['StartedAt'].to_time.strftime('%a. %d %b %Y, %H:%M:%S') %>
                         </td>
                       </tr>
                       <tr>
@@ -226,8 +339,8 @@
                           finished at
                         </td>
                         <td>
-                          <%= @container.info['State']['FinishedAt'] %>
-                        </td>
+                          <%= @container.info['State']['FinishedAt'].to_time.strftime('%a. %d %b %Y, %H:%M:%S') %>
+\                        </td>
                       </tr>
                       <tr>
                         <td>
@@ -235,14 +348,6 @@
                         </td>
                         <td>
                           <%= @container.info['State']['Pid'] %>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          restart count
-                        </td>
-                        <td>
-                          <%= @container.info['RestartCount'] %>
                         </td>
                       </tr>
                       <tr>
@@ -293,55 +398,7 @@
             </div>
 
         </div>
-        <div class="col-md-6">
 
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h3 class = "panel-title">
-                    volumes
-                  </h3>
-                </div>
-                <div class="panel-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover">
-                      <tbody>
-                        <tr>
-                          <td>
-                            mounts
-                          </td>
-                          <td>
-                            <% if !@container.info['HostConfig']['Binds'].blank? %>
-                            <%= @container.info['HostConfig']['Binds'].join('') %>
-                            <% end %>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            working directory
-                          </td>
-                          <td>
-                            <%= @container.info['Config']['WorkingDir'] %>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                              enviroment variables
-                            </td>
-                          <td>
-                            <% if envvars =  @container.info['Config']['Env'] %>
-                              <% envvars.each do |envvar| %>
-                                <%= envvar %>
-                              <% end %>
-                            <% end %>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-
-          </div>
           <div class="col-md-6">
 
                 <div class="panel panel-default">
