@@ -407,7 +407,7 @@
                       workload
                     </h3>
                   </div>
-                  <div class="panel-body">
+                  <!-- <div class="panel-body">
                     <div class="table-responsive">
                       <table class="table table-hover">
                         <tbody>
@@ -431,35 +431,21 @@
                             <td>
                               TOP
                             </td>
-                            <td>
+                            <td> -->
                               <% if @container.info['State']['Status'] == 'running' %>
                               <div class="table-responsive">
                                 <table class="table table-striped">
                                   <thead>
                                     <tr>
-                                      <th>
-                                        UID
-                                      </th>
+
                                       <th>
                                         PID
                                       </th>
                                       <th>
-                                        PPID
+                                        user
                                       </th>
                                       <th>
-                                        C
-                                      </th>
-                                      <th>
-                                        STIME
-                                      </th>
-                                      <th>
-                                        TTY
-                                      </th>
-                                      <th>
-                                        Time
-                                      </th>
-                                      <th>
-                                        CMD
+                                        command
                                       </th>
                                     </tr>
                                   </thead>
@@ -467,28 +453,13 @@
                                     <% @container.top.each do |process| %>
                                       <tr class="table">
                                       <td>
-                                        <%= process["UID"]%>
-                                      </td>
-                                      <td>
                                         <%= process["PID"]%>
                                       </td>
                                       <td>
-                                        <%= process["PPID"]%>
+                                        <%= process["USER"]%>
                                       </td>
                                       <td>
-                                        <%= process["C"]%>
-                                      </td>
-                                      <td>
-                                        <%= process["STIME"]%>
-                                      </td>
-                                      <td>
-                                        <%= process["TTY"]%>
-                                      </td>
-                                      <td>
-                                        <%= process["TIME"]%>
-                                      </td>
-                                      <td>
-                                        <%= process["CMD"]%>
+                                        <%= process["COMMAND"]%>
                                       </td>
                                     </tr>
                                    <% end %>
@@ -498,10 +469,10 @@
                               <% else %>
                                 container is not running.
                               <% end %>
-                            </td>
+                            <!-- </td>
                           </tr>
-                        </tbody>
-                      </table>
+                        </tbody> -->
+                      <!-- </table> -->
                     </div>
                   </div>
                 </div>
