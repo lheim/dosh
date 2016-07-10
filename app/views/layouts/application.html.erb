@@ -81,7 +81,24 @@
             <%= yield %>
         </div>
 
-    </div>
-</div>
-</body>
+        <!-- FOOTER -->
+
+        <footer class="footer">
+            <div class="container">
+                Docker Server Version:
+                <strong>
+                    <%= Docker.version['Version'] %>
+                </strong>
+                Docker API Version:
+                <strong>
+                    <%= Docker.version['ApiVersion'] %>
+                </strong>
+                OS:
+                <strong>
+                    <%= Docker.version['Os'] %>
+                    <%= Docker.version['Arch'] %>
+                </strong>
+            </div>
+        </footer>
+    </body>
 </html>
