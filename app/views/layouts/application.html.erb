@@ -52,11 +52,11 @@
                         <li class="<%= 'active' if current_page?(images_path) %>">
                             <%= link_to "Images", images_path %>
                         </li>
-                        <li>
-                            <%= link_to "Node discovery", home_path %>
+                        <li class="<%= 'active' if current_page?(nodes_path) %>">
+                            <%= link_to "Node discovery", nodes_path %>
                         </li>
-                        <li>
-                            <%= link_to "USRP discovery", home_path %>
+                        <li class="<%= 'active' if current_page?(usrp_path) %>">
+                            <%= link_to "USRP discovery", usrp_path %>
                         </li>
                         <li>
                             <%= link_to "Settings", home_path %>

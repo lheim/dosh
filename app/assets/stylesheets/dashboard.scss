@@ -17,6 +17,14 @@
  }
 
 
+ .footer {
+   position: absolute;
+   bottom: 0;
+   width: 90%;
+   /* Set the fixed height of the footer here */
+   height: 20px;
+   background-color: #f5f5f5;
+ }
  /*
   * Global add-ons
   */
@@ -112,7 +120,7 @@
    margin-bottom: 0;
  }
  .placeholder {
-   margin-bottom: 20px;
+   margin-bottom: 40px;
  }
  .placeholder img {
    display: inline-block;

@@ -19,14 +19,18 @@ Rails.application.routes.draw do
   get 'container/:id/commit' => 'containers#commit', as: :container_commit
   get 'container/:id/remove' => 'containers#remove', as: :container_remove
 
-
+  #images
   get 'images' => 'images#index', as: :images
   get 'image/:id' => 'images#show', as: :image
   get 'image/:id/remove' => 'images#remove', as: :image_remove
   post 'image/:id' => 'images#tag', as: :image_tag
 
+  #usrp
+  get 'usrp/' => 'usrp#index', as: :usrp
 
 
+  #nodes
+  get 'nodes/' => 'nodes#index', as: :nodes
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
