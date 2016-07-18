@@ -1,18 +1,95 @@
 <h1>USRP discovery</h1>
-<p>using uhd</p>
-<p> <%= @value %> </p>
-OUT1:
-<p> <%=   @stdout  %> </p>
-ERR1:
-<p> <%=   @stderr %> </p>
-STAT1:
-<p> <%=   @status %> </p>
 
-<p> </p>
-<p></p>
-<p>  </p>
+<div class="col-md-6">
 
-OUT2:
-<p> <%=   @out  %> </p>
-ERR2:
-<p> <%=   @err %> </p>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                USRP discovery
+                <div class="pull-right">
+                  <%= button_to "refresh",{action: :index },{method: :get, class: "btn-md btn-primary" }%>
+                </div>
+
+            </h3>
+        </div>
+        <div class="panel-body">
+
+          <p>using uhd</p>
+          <p> <%= @value %> </p>
+          OUT1:
+          <p> <%=   @stdout  %> </p>
+          ERR1:
+          <p> <%=   @stderr %> </p>
+          STAT1:
+          <p> <%=   @status %> </p>
+
+
+
+          <div style="float: left; width: auto;">
+              <%= button_to "Add to database",{action: :index },{method: :get, class: "btn btn-info" }%>
+          </div>
+        </div>
+    </div>
+
+</div>
+<div class="col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                USRP database
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                      <tr>
+                          <th>
+                              ip
+                          </th>
+                          <th>
+                              model
+                          </th>
+                          <th>
+                              alive?
+                          </th>
+                          <th>
+                              start container
+                          </th>
+                          <th>
+                              delete
+                          </th>
+                      </tr>
+                  </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                              10.0.0.0
+                            </td>
+                            <td>
+                              ettus bla
+                            </td>
+                            <td>
+                              <% if 1 %>
+                                <span class="label label-success">
+                                  up
+                              <% else %>
+                                <span class="label label-warning">
+                                  down
+                              <% end %>
+                              </span>
+                            </td>
+                            <td>
+                              <%= button_to "create",{action: :index },{method: :get, class: "btn-xs btn-primary" }%>
+
+                            </td>
+                            <td>
+                              <%= button_to "remove",{action: :index },{method: :get, class: "btn-xs btn-danger" }%>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
