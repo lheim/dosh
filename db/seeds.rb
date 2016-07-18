@@ -5,3 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+radio1 = Usrp.create(ip: "10.0.0.0", model: "ettus v0.1.23")
+radio2 = Usrp.create(ip: "10.0.0.1", model: "ettus v0.2.24")
+radio3 = Usrp.create(ip: "10.0.0.2", model: "ettus v0.3.25")
+radio4 = Usrp.create(ip: "10.0.0.3", model: "ettus v0.4.26")

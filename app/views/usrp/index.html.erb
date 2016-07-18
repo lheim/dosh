@@ -15,7 +15,6 @@
         <div class="panel-body">
 
           <p>using uhd</p>
-          <p> <%= @value %> </p>
           OUT1:
           <p> <%=   @stdout  %> </p>
           ERR1:
@@ -25,9 +24,23 @@
 
 
 
-          <div style="float: left; width: auto;">
-              <%= button_to "Add to database",{action: :index },{method: :get, class: "btn btn-info" }%>
-          </div>
+
+
+          <%= form_for(:usrp) do |f| %>
+            <div class="field">
+              <%= f.label :ip %><br>
+              <%= f.text_field :ip %>
+            </div>
+            <div class="field">
+              <%= f.label :model %><br>
+              <%= f.text_field :model %>
+            </div>
+            <div class="actions">
+              <%= f.submit "Create", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+
+
         </div>
     </div>
 
@@ -62,14 +75,16 @@
                       </tr>
                   </thead>
                     <tbody>
+                      <% @usrps.each do |u| %>
                         <tr>
                             <td>
-                              10.0.0.0
+                              <%= u.ip %>
                             </td>
                             <td>
-                              ettus bla
+                              <%= u.model %>
                             </td>
                             <td>
+                              <%= u.created_at %>
                               <% if 1 %>
                                 <span class="label label-success">
                                   up
@@ -84,12 +99,13 @@
 
                             </td>
                             <td>
-                              <%= button_to "remove",{action: :index },{method: :get, class: "btn-xs btn-danger" }%>
+                              <%= button_to "remove",{action: u.destroy},{method: :get, class: "btn-xs btn-danger" }%>
                             </td>
                         </tr>
+                        <% end %>
                     </tbody>
                 </table>
             </div>
-        </div>
+      </div>
     </div>
 </div>

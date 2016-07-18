@@ -26,11 +26,12 @@ Rails.application.routes.draw do
   post 'image/:id' => 'images#tag', as: :image_tag
 
   #usrp
-  get 'usrp/' => 'usrp#index', as: :usrp
+  get 'usrp' => 'usrp#index', as: :usrp
+  post 'usrp' => 'usrp#create', as: :usrp_create
 
 
   #nodes
-  get 'nodes/' => 'nodes#index', as: :nodes
+  get 'nodes' => 'nodes#index', as: :nodes
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
