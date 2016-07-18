@@ -1,5 +1,7 @@
-class UsrpController < ApplicationController
+class UsrpsController < ApplicationController
   def index
+
+    require 'open3'
 
     @stdout, @stdeerr, @status = Open3.capture3('uhd_find_devices')
 
@@ -21,15 +23,15 @@ class UsrpController < ApplicationController
   def create
     @usrp = Usrp.new(usrp_params)
     if @usrp.save
-      redirect_to '/usrp'
+      redirect_to '/usrps'
     else
-      render 'new'
+      render 'index'
     end
   end
 
   #delete usrp entry from database
-  def delete
-  #  @usrp = 
+  def remove
+    @usrp = Usrp.get(params[:id])
   end
 
   #create a new container with given usrp

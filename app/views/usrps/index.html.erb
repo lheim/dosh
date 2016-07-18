@@ -26,7 +26,7 @@
 
 
 
-          <%= form_for(:usrp) do |f| %>
+          <%= form_for(@usrp) do |f| %>
             <div class="field">
               <%= f.label :ip %><br>
               <%= f.text_field :ip %>
@@ -95,11 +95,11 @@
                               </span>
                             </td>
                             <td>
-                              <%= button_to "create",{action: :index },{method: :get, class: "btn-xs btn-primary" }%>
+                              <%= button_to "create",{action: :index},{method: :get, class: "btn-xs btn-primary" }%>
 
                             </td>
                             <td>
-                              <%= button_to "remove",{action: u.destroy},{method: :get, class: "btn-xs btn-danger" }%>
+                              <%= button_to "remove",{action: :index},{method: :get, class: "btn-xs btn-danger" }%>
                             </td>
                         </tr>
                         <% end %>

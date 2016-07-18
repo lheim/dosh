@@ -25,9 +25,10 @@ Rails.application.routes.draw do
   get 'image/:id/remove' => 'images#remove', as: :image_remove
   post 'image/:id' => 'images#tag', as: :image_tag
 
-  #usrp
-  get 'usrp' => 'usrp#index', as: :usrp
-  post 'usrp' => 'usrp#create', as: :usrp_create
+  #usrps
+  get 'usrps' => 'usrps#index', as: :usrps
+  get 'usrp/:id/remove' => 'usrps#remove', as: :usrp_remove
+  post 'usrps' => 'usrps#create', as: :usrps_create
 
 
   #nodes
