@@ -8,4 +8,14 @@ class NodesController < ApplicationController
     @info = Docker.info
 
   end
+
+
+  def removefromswarm
+
+  end
+
+  def addtoswarm
+
+  end
+  
 end

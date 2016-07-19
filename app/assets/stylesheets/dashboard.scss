@@ -14,11 +14,12 @@
    padding-left: 50px;
    padding-right: 50px;
 
+   margin-bottom: 20px;
  }
 
 
- .footer {
-   position: absolute;
+ footer {
+   position: fixed;
    bottom: 0;
    width: 90%;
    /* Set the fixed height of the footer here */

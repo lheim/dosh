@@ -7,7 +7,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">
-                Active Nodes
+                active nodes
 
             </h3>
         </div>
@@ -39,6 +39,9 @@
                             </th>
                             <th>
                                 server docker version
+                            </th>
+                            <th>
+                                remove from swarm
                             </th>
 
                         </tr>
@@ -72,6 +75,9 @@
                             <td>
                                 <%=  @info['DriverStatus'][(i*9)+11][1] %>
                             </td>
+                            <td>
+                              <%= button_to "remove from swarm",{action: :index},{method: :get, class: "btn btn-danger btn-md" }%>
+                            </td>
                           </tr>
                           <% end %>
                         <% else %>
@@ -91,7 +97,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">
-                Node database
+                node database
             </h3>
         </div>
         <div class="panel-body">
@@ -111,6 +117,12 @@
                             <th>
                                 cert
                             </th>
+                            <th>
+                                alive
+                            </th>
+                            <th>
+                                add to swarm
+                            </th>
 
                         </tr>
                     </thead>
@@ -128,6 +140,23 @@
                             </td>
                             <td>
                                 <%= n.cert %>
+                            </td>
+                            <td>
+                              <% if n.os == 'Ubuntu 14.04' %>
+                                <span class="label label-success">
+                                  <%= status = 'up' %>
+                              <% else %>
+                                <span class="label label-warning">
+                                  <%= status = 'down' %>
+                              <% end %>
+                                </span>
+                          </td>
+                            <td>
+                              <% if status == 'up' %>
+                                <%= button_to "add to swarm",{action: :index},{method: :get, class: "btn btn-success" }%>
+                              <% else %>
+                                <button type="button" class="btn btn-warning disabled">node down</button>
+                              <% end %>
                             </td>
                         </tr>
                         <% end %>
