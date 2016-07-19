@@ -1,2 +1,139 @@
-<h1>Node discovery</h1>
-<p>Find me in app/views/nodes/index.html.erb</p>
+
+    <h1 class="header">Nodes
+    </h1>
+
+<div class="col-md-12">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Active Nodes
+
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                node name
+                            </th>
+                            <th>
+                                ip
+                            </th>
+                            <th>
+                                status
+                            </th>
+                            <th>
+                                containers#
+                            </th>
+                            <th>
+                                reserved cpu cores
+                            </th>
+                            <th>
+                                reserved memory
+                            </th>
+                            <th>
+                                os
+                            </th>
+                            <th>
+                                server docker version
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if !@info['DriverStatus'][3][1].blank? %>
+                          <% numberofnodes = @info['DriverStatus'][3][1].to_i %>
+                          <% for i in 0..(numberofnodes-1) %>
+                          <tr>
+                            <td>
+                                <%=  @info['DriverStatus'][(i*9)+4][0] %>
+                            </td>
+                            <td>
+                                <%=  @info['DriverStatus'][(i*9)+4][1] %>
+                            </td>
+                            <td>
+                                <%=  @info['DriverStatus'][(i*9)+6][1] %>
+                            </td>
+                            <td>
+                                <%=  @info['DriverStatus'][(i*9)+7][1] %>
+                            </td>
+                            <td>
+                                <%=  @info['DriverStatus'][(i*9)+8][1] %>
+                            </td>
+                            <td>
+                                <%=  @info['DriverStatus'][(i*9)+9][1] %>
+                            </td>
+                            <td>
+                                <%=  @info['DriverStatus'][(i*9)+10][1].truncate(10) %>
+                            </td>
+                            <td>
+                                <%=  @info['DriverStatus'][(i*9)+11][1] %>
+                            </td>
+                          </tr>
+                          <% end %>
+                        <% else %>
+                          error, no nodes found
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="col-md-12">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Node database
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                node name
+                            </th>
+                            <th>
+                                ip
+                            </th>
+                            <th>
+                                os
+                            </th>
+                            <th>
+                                cert
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @nodes.each do |n| %>
+                        <tr>
+                            <td>
+                                <%= n.nodename %>
+                            </td>
+                            <td>
+                                <%= n.ip %>
+                            </td>
+                            <td>
+                                <%= n.os %>
+                            </td>
+                            <td>
+                                <%= n.cert %>
+                            </td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
