@@ -27,12 +27,16 @@ Rails.application.routes.draw do
 
   #usrps
   get 'usrps' => 'usrps#index', as: :usrps
-  get 'usrp/:id/remove' => 'usrps#remove', as: :usrp_remove
+  post 'usrp/:id/remove' => 'usrps#remove', as: :usrp_remove
   post 'usrps' => 'usrps#create', as: :usrps_create
 
 
   #nodes
   get 'nodes' => 'nodes#index', as: :nodes
+  post 'node/:id/addtodb' => 'nodes#addtodb', as: :node_addtodb
+  get 'node/:id/removefromswarm' => 'nodes#removefromswarm', as: :node_removefromswarm
+  get 'node/:id/addtoswarm' => 'nodes#addtoswarm', as: :node_addtoswarm
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

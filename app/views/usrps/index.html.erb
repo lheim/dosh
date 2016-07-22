@@ -78,6 +78,7 @@
                       <% @usrps.each do |u| %>
                         <tr>
                             <td>
+
                               <%= u.ip %>
                             </td>
                             <td>
@@ -95,11 +96,10 @@
                               </span>
                             </td>
                             <td>
-                              <%= button_to "create",{action: :index},{method: :get, class: "btn-xs btn-primary" }%>
-
+                              <%= button_to "create",{action: :index, :id => u.id},{method: :get, class: "btn-xs btn-primary" }%>
                             </td>
                             <td>
-                              <%= button_to "remove",{action: :index},{method: :get, class: "btn-xs btn-danger" }%>
+                              <%= button_to "remove",{action: :remove, :id => u.id},{method: :post, class: "btn-xs btn-danger" }%>
                             </td>
                         </tr>
                         <% end %>

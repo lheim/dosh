@@ -43,6 +43,9 @@
                             <th>
                                 remove from swarm
                             </th>
+                            <th>
+                                add to database
+                            </th>
 
                         </tr>
                     </thead>
@@ -52,10 +55,10 @@
                           <% for i in 0..(numberofnodes-1) %>
                           <tr>
                             <td>
-                                <%=  @info['DriverStatus'][(i*9)+4][0] %>
+                                <%= nodename = @info['DriverStatus'][(i*9)+4][0] %>
                             </td>
                             <td>
-                                <%=  @info['DriverStatus'][(i*9)+4][1] %>
+                                <%= ip = @info['DriverStatus'][(i*9)+4][1] %>
                             </td>
                             <td>
                                 <%=  @info['DriverStatus'][(i*9)+6][1] %>
@@ -70,13 +73,16 @@
                                 <%=  @info['DriverStatus'][(i*9)+9][1] %>
                             </td>
                             <td>
-                                <%=  @info['DriverStatus'][(i*9)+10][1].truncate(10) %>
+                                <%= os = @info['DriverStatus'][(i*9)+10][1].truncate(10) %>
                             </td>
                             <td>
-                                <%=  @info['DriverStatus'][(i*9)+11][1] %>
+                                <%=  @info['DriverStatus'][(i*9)+12][1] %>
                             </td>
                             <td>
-                              <%= button_to "remove from swarm",{action: :index},{method: :get, class: "btn btn-danger btn-md" }%>
+                              <%= button_to "remove",{action: :index, :id => i, :nodename => nodename,:ip => ip, :os => os },{method: :post, class: "btn btn-danger btn-md" }%>
+                            </td>
+                            <td>
+                              <%= button_to "add to db",{action: :addtodb,:id => i, :nodename => nodename, :ip => ip, :os => os },{method: :post, class: "btn btn-success btn-md" }%>
                             </td>
                           </tr>
                           <% end %>

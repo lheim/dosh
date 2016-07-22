@@ -23,15 +23,21 @@ class UsrpsController < ApplicationController
   def create
     @usrp = Usrp.new(usrp_params)
     if @usrp.save
-      redirect_to '/usrps'
+      redirect_to '/usrps', success: "usrp '#{usrp_params['ip']}' added to db"
     else
-      render 'index'
+      render 'index', error: "failed to add usrp to db"
     end
+
+
   end
 
   #delete usrp entry from database
   def remove
-    @usrp = Usrp.get(params[:id])
+    if Usrp.destroy(params[:id])
+      redirect_to '/usrps', success: "usrp (id: '#{params['id']}') was removed from db."
+    else
+      render 'index', error: "failed to remove usrp."
+    end
   end
 
   #create a new container with given usrp
