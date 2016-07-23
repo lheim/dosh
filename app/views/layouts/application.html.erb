@@ -80,10 +80,10 @@
             <!-- MAINCONTENT from pages-->
             <%= yield %>
         </div>
-
+      </body>
         <!-- FOOTER -->
 
-        <div class="footer">
+        <div id="footer">
             <div class="container">
                 Docker Server Version:
                 <strong>
@@ -99,6 +99,5 @@
                     <%= Docker.version['Arch'] %>
                 </strong>
             </div>
-        </footer>
-    </body>
+          </div>
 </html>

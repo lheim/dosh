@@ -2,8 +2,11 @@ class UsrpsController < ApplicationController
   def index
 
     require 'open3'
-
-    @stdout, @stdeerr, @status = Open3.capture3('uhd_find_devices')
+    begin
+      @stdout, @stdeerr, @status = Open3.capture3('uhd_find_devices')
+    rescue Errno::ENOENT
+      redirect_to '/', error: "uhd is not installed on the system."
+    end
 
     @usrp = Usrp.new
     @usrps = Usrp.all
