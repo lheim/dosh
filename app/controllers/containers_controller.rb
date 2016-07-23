@@ -131,27 +131,59 @@ class ContainersController < ApplicationController
     container_params['HostConfig'].merge!(networkmode)
 
 
-    if !params[:port_in].blank?
-      exposedports = {"#{params[:port_in]}" => {}}
+    if !params[:port_in1].blank?
+      exposedports = {"#{params[:port_in1]}" => {}}
       container_params['ExposedPorts'] = exposedports
-      if !params[:port_out].blank?
-        bindingports = {"PortBindings" => {"#{params[:port_in]}" => [{"HostPort" => "#{params[:port_out]}"}]}}
-        container_params['HostConfig'].merge!(bindingports)
+      if !params[:port_out1].blank?
+        portbindings = {"PortBindings" => 0}
+        container_params['HostConfig'].merge!(portbindings)
+        bindingports = {"#{params[:port_in1]}" => [{"HostPort" => "#{params[:port_out1]}"}]}
+        container_params['HostConfig']['PortBindings'] = (bindingports)
       end
     end
 
-    #volume binding
-    if ((!params[:volume_host].blank?) && (!params[:volume_container].blank?) && (params[:volume_mode] == "read/write"))
-      binds = {"Binds" => ["#{params[:volume_host]}:#{params[:volume_container]}"]}
-      container_params['HostConfig'].merge!(binds)
-    elsif ((!params[:volume_host].blank?) && (!params[:volume_container].blank?) && (params[:volume_mode] == "read-only"))
-      binds = {"Binds" => ["#{params[:volume_host]}:#{params[:volume_container]}:ro"]}
-      container_params['HostConfig'].merge!(binds)
+
+    if !params[:port_in2].blank?
+      exposedports = {"#{params[:port_in2]}" => {}}
+      container_params['ExposedPorts'].merge! exposedports
+      if !params[:port_out2].blank?
+        bindingports = {"#{params[:port_in2]}" => [{"HostPort" => "#{params[:port_out2]}"}]}
+        container_params['HostConfig']['PortBindings'].merge!(bindingports)
+      end
     end
-    puts binds
 
 
-    puts container_params
+
+    #volume binding
+    if ((!params[:volume_host1].blank?) && (!params[:volume_container1].blank?) && (params[:volume_mode1] == "read/write"))
+      bindsvalue = {"Binds" => 0}
+      container_params['HostConfig'].merge!(bindsvalue)
+      binds = ["#{params[:volume_host1]}:#{params[:volume_container1]}"]
+      container_params['HostConfig']['Binds'] = (binds)
+    elsif ((!params[:volume_host1].blank?) && (!params[:volume_container1].blank?) && (params[:volume_mode1] == "read-only"))
+      bindsvalue = {"Binds" => 0}
+      container_params['HostConfig'].merge!(bindsvalue)
+      binds = ["#{params[:volume_host1]}:#{params[:volume_container1]}:ro"]
+      container_params['HostConfig']['Binds'] = (binds)
+    end
+
+    puts 'VOLUMES1'
+    puts container_params['HostConfig']
+
+
+    # if ((!params[:volume_host2].blank?) && (!params[:volume_container2].blank?) && (params[:volume_mode2] == "read/write"))
+    #   binds = ["#{params[:volume_host2]}:#{params[:volume_container2]}"]
+    #   container_params['HostConfig']['Binds'].merge!(binds)
+    # elsif ((!params[:volume_host2].blank?) && (!params[:volume_container2].blank?) && (params[:volume_mode2] == "read-only"))
+    #   binds = ["#{params[:volume_host2]}:#{params[:volume_container2]}:ro"]
+    #   container_params['HostConfig']['Binds'].merge!(binds)
+    # end
+
+
+    puts 'VOLUMES2'
+    puts container_params['HostConfig']
+
+
 
 
     @container = Docker::Container.create(container_params)
