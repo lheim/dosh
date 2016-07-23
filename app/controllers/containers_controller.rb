@@ -105,10 +105,7 @@ class ContainersController < ApplicationController
 
     #enviroment variables
     if !params[:env].blank?
-      
       container_params['Env'] = params[:env]
-
-      puts params[:env]
     end
 
 

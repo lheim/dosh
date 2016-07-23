@@ -79,7 +79,7 @@
                                 <%=  @info['DriverStatus'][(i*9)+12][1] %>
                             </td>
                             <td>
-                              <%= button_to "remove",{action: :index, :id => i, :nodename => nodename,:ip => ip, :os => os },{method: :post, class: "btn btn-danger btn-md" }%>
+                              <%= button_to "remove",{action: :removefromswarm, :name => nodename, :nodename => nodename,:ip => ip, :os => os },{method: :post, class: "btn btn-danger btn-md" }%>
                             </td>
                             <td>
                               <%= button_to "add to db",{action: :addtodb,:id => i, :nodename => nodename, :ip => ip, :os => os },{method: :post, class: "btn btn-success btn-md" }%>
@@ -129,6 +129,9 @@
                             <th>
                                 add to swarm
                             </th>
+                            <th>
+                                remove from db
+                            </th>
 
                         </tr>
                     </thead>
@@ -159,9 +162,16 @@
                           </td>
                             <td>
                               <% if status == 'up' %>
-                                <%= button_to "add to swarm",{action: :index},{method: :get, class: "btn btn-success" }%>
+                                <%= button_to "add to swarm",{action: :addtoswarm, :id => n.id},{method: :get, class: "btn btn-success" }%>
                               <% else %>
                                 <button type="button" class="btn btn-warning disabled">node down</button>
+                              <% end %>
+                            </td>
+                            <td>
+                              <% if status == 'up' %>
+                                <button type="button" class="btn btn-warning disabled">node is up</button>
+                              <% else %>
+                                <%= button_to "remove from db",{action: :delete, :id => n.id},{method: :post, class: "btn btn-danger" }%>
                               <% end %>
                             </td>
                         </tr>

@@ -12,13 +12,6 @@ class NodesController < ApplicationController
   def addtodb
 
 
-
-    #puts i = params[:id]
-
-
-
-
-
     node_params = Hash.new
     node_params['nodename'] = params['nodename']
     node_params['ip'] = params['ip']
@@ -36,16 +29,31 @@ class NodesController < ApplicationController
   end
 
   def removefromswarm
-
-    redirect_to container_path, success: "node was removed from swarm. wait a minute."
+    @container = Docker::Container.get(params[:name])
+    @container.stop
+    #redefine @container
+    @container = Docker::Container.get(params[:name])
+    state = @container.info['State']['Status']
+    if state == 'exited'
+      redirect_to nodes_path, success: "swarm container successfully stopped. it may take some minutes."
+    else
+      redirect_to nodes_path, error: "swarm container failed to stop."
+    end
   end
 
   def addtoswarm
-
-    redirect_to container_path, success: "node was added to swarm. wait a minute."
+    Docker::Connection.new('tcp://192.168.99.103:2376', {})
+    redirect_to nodes_path, success: "node was added to swarm. wait a minute."
   end
 
+  def delete
+    if Node.destroy(params[:id])
+      redirect_to '/nodes', success: "node (id: '#{params['id']}') was removed from db."
+    else
+      render 'index', error: "failed to remove node from db."
+    end
 
+  end
 
 
 
