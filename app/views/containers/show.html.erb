@@ -352,24 +352,8 @@
                                         <%= @container.info['State']['FinishedAt'].to_time.strftime('%a. %d %b %Y, %H:%M:%S') %>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        memory
-                                    </td>
-                                    <td>
-                                        <%= number_to_human_size(@container.info['HostConfig']['Memory']) %>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                      cpushares
-                                    </td>
-                                    <td>
-                                        <%= @container.info['HostConfig']['CpuShares'] %>
-                                        of 1024 (default)
-                                    </td>
-                                </tr>
-                                <tr>
+
+                                <!-- <tr>
                                     <td>
                                         attached stdin
                                     </td>
@@ -392,7 +376,7 @@
                                     <td>
                                         <%= @container.info['Config']['AttachedStderr'] %>
                                     </td>
-                                </tr>
+                                </tr> -->
                                 <tr>
                                     <td>
                                         tty
@@ -463,12 +447,50 @@
                 <% end %>
             </div>
         </div>
+        <!-- RESSOURCES TABLE -->
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        hardware ressources                                     (0 means no limit)
+
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <tbody>
+
+                                <td>
+                                    memory
+                                </td>
+                                <td>
+                                    <%= number_to_human_size(@container.info['HostConfig']['Memory']) %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    cpushares
+                                </td>
+                                <td>
+                                    <%= @container.info['HostConfig']['CpuShares'] %>
+                                    of 1024 (default)
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- BASH TAP -->
-    <div id="bash" class="tab-pane fade">
-        <h3>bash</h3>
-        <p>to access a terminal of the container. just run 'docker exec -ti name_container bash' on the machine</p>
-    </div>
+
+</div>
+<!-- BASH TAP -->
+<div id="bash" class="tab-pane fade">
+    <h3>bash</h3>
+    <p>to access a terminal of the container. just run 'docker exec -ti name_container bash' on the machine</p>
+</div>
 
 <div class="col-md-12">
 
