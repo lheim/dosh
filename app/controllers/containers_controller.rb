@@ -202,7 +202,13 @@ class ContainersController < ApplicationController
 
     puts container_params
 
-    @container = Docker::Container.create(container_params)
+
+    begin
+      @container = Docker::Container.create(container_params)
+    rescue
+      redirect_to '/containers', error: "error no. X, lazy programer"
+      return
+    end
 
     #set the name of the container
     if !params[:name].blank?
