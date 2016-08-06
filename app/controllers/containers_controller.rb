@@ -180,11 +180,27 @@ class ContainersController < ApplicationController
     # end
 
 
-    puts 'VOLUMES2'
-    puts container_params['HostConfig']
+    #memory Reservation
+    if !params[:memory].blank?
+        metric = params[:memory].last(1)
+        if metric == 'M'
+          memory = 1024*1024 * params[:memory].to_i
+        elsif metric == 'G'
+          memory = 1024*1024*1024 * params[:memory].to_i
+        else
+          memory = params[:memory].to_i
+        end
+        container_params['HostConfig']['Memory'] = memory
+    end
 
 
 
+    #cpu share
+    if !params[:cpushare].blank?
+        container_params['HostConfig']['CpuShares'] = params[:cpushare].to_i
+    end
+
+    puts container_params
 
     @container = Docker::Container.create(container_params)
 

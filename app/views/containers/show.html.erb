@@ -89,7 +89,6 @@
                                     </td>
                                     <td>
                                         <%= @container.info['Name'] %>
-
                                     </td>
                                 </tr>
                                 <tr>
@@ -355,6 +354,23 @@
                                 </tr>
                                 <tr>
                                     <td>
+                                        memory
+                                    </td>
+                                    <td>
+                                        <%= number_to_human_size(@container.info['HostConfig']['Memory']) %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                      cpushares
+                                    </td>
+                                    <td>
+                                        <%= @container.info['HostConfig']['CpuShares'] %>
+                                        of 1024 (default)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
                                         attached stdin
                                     </td>
                                     <td>
@@ -452,9 +468,7 @@
     <div id="bash" class="tab-pane fade">
         <h3>bash</h3>
         <p>to access a terminal of the container. just run 'docker exec -ti name_container bash' on the machine</p>
-
-
-</div>
+    </div>
 
 <div class="col-md-12">
 

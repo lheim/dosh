@@ -40,6 +40,28 @@
             </small>
         </fieldset>
         <br>
+
+        <fieldset class="form-group">
+            <%= label_tag(:memory, "Memory Reservation") %>
+            <%= text_field_tag :memory, "", class: 'form-control', placeholder: "512M" , size: 20 %>
+            <small class="text-muted">
+                Memory soft limit in bytes.
+            </small>
+        </fieldset>
+        <br>
+
+        <fieldset class="form-group">
+            <%= label_tag(:cpushare, "CPU shares") %>
+            <%= text_field_tag :cpushare, "", class: 'form-control', placeholder: "612" , size: 20 %>
+            <small class="text-muted">
+              'relative weight', relative to the default setting of 1024
+              CpuShares - An integer value containing the container’s CPU Shares (ie. the relative weight vs other containers).
+            </small>
+        </fieldset>
+        <br>
+
+
+
         <fieldset class="form-inline">
             <%= label_tag(:volume_host1, "volume 1") %>
             <%= text_field_tag :volume_host1, "", class: 'form-control', placeholder: "/dev/bus/usb", size: 20 %>
