@@ -1,28 +1,50 @@
 <div class="center-block">
 <h1 class="page-header">dosh</h1>
 
-<div class="row placeholders">
-  <div class="col-xs-6 col-sm-3 placeholder">
-    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-    <h4>Label</h4>
-    <span class="text-muted">Something else</span>
+
+<%= pie_chart({"Containers running" => Docker.info['ContainersRunning'].to_i, "Containers stopped" => Docker.info['ContainersStopped'].to_i, "Containers paused" => Docker.info['ContainersPaused']}, width: "200px", height: "200px") %>
+
+
+<% if @info['DriverStatus'][3][1] != 'true' %>
+  <% numberofnodes = @info['DriverStatus'][3][1].to_i %>
+  <% for i in 0..(numberofnodes-1) %>
+
+  <div class="col-md-<%=12/numberofnodes%>">
+
+  <%= @info['DriverStatus'][(i*9)+4][0] %>
+  <%= @info['DriverStatus'][(i*9)+4][1] %>
+  <!-- core -->
+  <%=  @info['DriverStatus'][(i*9)+8][1] %>
+  <%= pie_chart({"Allocated Cores" => 2, "Free Cores" => 3}) %>
+
+  <!-- memory -->
+  <%=  @info['DriverStatus'][(i*9)+9][1] %>
+
+  <%= pie_chart({"Allocated Memory" => 5, "Free Memory" => 3}) %>
+
+
   </div>
-  <div class="col-xs-6 col-sm-3 placeholder">
-    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-    <h4>Label</h4>
-    <span class="text-muted">Something else</span>
-  </div>
-  <div class="col-xs-6 col-sm-3 placeholder">
-    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-    <h4>Label</h4>
-    <span class="text-muted">Something else</span>
-  </div>
-  <div class="col-xs-6 col-sm-3 placeholder">
-    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-    <h4>Label</h4>
-    <span class="text-muted">Something else</span>
-  </div>
-</div>
+
+
+
+
+
+    <% end %>
+  <% else %>
+    error, no nodes found
+<% end %>
+
+<br>
+<%= Docker.info %>
+Total: <%= Docker.info['Containers'] %>
+Running: <%= Docker.info['ContainersRunning'] %>
+Paused: <%= Docker.info['ContainersPaused'] %>
+Stopped: <%= Docker.info['ContainersStopped'] %>
+Images: <%= Docker.info['Images'] %>
+NCPU: <%= Docker.info['NCPU'] %>
+MEMORY: <%= number_to_human_size(Docker.info['MemTotal']) %>
+
+
 
 
 <div class="row">

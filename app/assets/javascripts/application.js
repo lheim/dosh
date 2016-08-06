@@ -16,6 +16,10 @@
 
 //ADDING BOOTSTRAP
 //= require bootstrap-sprockets
+//= require Chart.bundle
+//= require chartkick
+
+
 //END MY EDIT
 
 //= require_tree .

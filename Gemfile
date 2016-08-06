@@ -10,6 +10,8 @@ gem 'docker-api'
 #http server
 gem 'puma'
 
+#pie charts
+gem 'chartkick'
 
 #execute commands (find usrp, ping nodes)
 #using open3

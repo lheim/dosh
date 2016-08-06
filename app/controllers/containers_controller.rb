@@ -202,11 +202,11 @@ class ContainersController < ApplicationController
 
     puts container_params
 
-
+    #try to create container
     begin
       @container = Docker::Container.create(container_params)
-    rescue
-      redirect_to '/containers', error: "error no. X, lazy programer"
+    rescue => error
+      redirect_to '/containers', error: "error message: '#{error}'"
       return
     end
 
@@ -214,6 +214,7 @@ class ContainersController < ApplicationController
     if !params[:name].blank?
       @container.rename(params[:name])
       name = params[:name]
+
     #no name given, name is randomly chosen
     else
       name = @container.info['id'].truncate(12, omission: '')
