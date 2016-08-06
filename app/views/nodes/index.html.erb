@@ -50,7 +50,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% if !@info['DriverStatus'][3][1].blank? %>
+                        <% if @info['DriverStatus'][3][1] != 'true' %>
                           <% numberofnodes = @info['DriverStatus'][3][1].to_i %>
                           <% for i in 0..(numberofnodes-1) %>
                           <tr>
@@ -87,7 +87,11 @@
                           </tr>
                           <% end %>
                         <% else %>
+                        <tr>
+                          <td>
                           error, no nodes found
+                          </td>
+                        </tr>
                         <% end %>
                     </tbody>
                 </table>
