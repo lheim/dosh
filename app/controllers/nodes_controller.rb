@@ -5,7 +5,12 @@ class NodesController < ApplicationController
     @nodes = Node.all
     @node = Node.new
 
-    @info = Docker.info
+    begin
+      @info = Docker.info
+    rescue => error
+      redirect_to '/error', error: "error: #{error}"
+      return
+    end
 
   end
 

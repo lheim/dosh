@@ -85,6 +85,7 @@
 
         <div id="footer">
             <div class="container">
+                <% begin Docker.version %>
                 Docker Server Version:
                 <strong>
                     <%= Docker.version['Version'] %>
@@ -98,6 +99,11 @@
                     <%= Docker.version['Os'] %>
                     <%= Docker.version['Arch'] %>
                 </strong>
+                <% rescue %>
+                <strong>
+                    no docker engine found.
+                </strong>
+                <% end %>
             </div>
           </div>
 </html>

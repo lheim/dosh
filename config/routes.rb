@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   root 'home#index', as: :home
 
 
@@ -37,6 +38,10 @@ Rails.application.routes.draw do
   post 'node/:name/removefromswarm' => 'nodes#removefromswarm', as: :node_removefromswarm
   get 'node/:id/addtoswarm' => 'nodes#addtoswarm', as: :node_addtoswarm
   post 'node/:id/delete' => 'nodes#delete', as: :node_delete
+
+
+  #error
+  get 'error' => 'error#index', as: :error
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

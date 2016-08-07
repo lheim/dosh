@@ -1,7 +1,12 @@
 class ImagesController < ApplicationController
 
   def index
-    @images = Docker::Image.all
+    begin
+      @images = Docker::Image.all
+    rescue => error
+      redirect_to '/error', error: "error: #{error}"
+      return
+    end
   end
 
   def show
