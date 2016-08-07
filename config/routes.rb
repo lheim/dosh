@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   get 'nodes' => 'nodes#index', as: :nodes
   post 'node/:id/addtodb' => 'nodes#addtodb', as: :node_addtodb
   post 'node/:name/removefromswarm' => 'nodes#removefromswarm', as: :node_removefromswarm
-  get 'node/:id/addtoswarm' => 'nodes#addtoswarm', as: :node_addtoswarm
+  post 'node/:id/addtoswarm' => 'nodes#addtoswarm', as: :node_addtoswarm
   post 'node/:id/delete' => 'nodes#delete', as: :node_delete
 
 

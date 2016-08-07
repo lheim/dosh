@@ -141,6 +141,7 @@
                     </thead>
                     <tbody>
                         <% @nodes.each do |n| %>
+                        <% running = up(n.ip)  #check the status at the beginning %>
                         <tr>
                             <td>
                                 <%= n.nodename %>
@@ -155,7 +156,7 @@
                                 <%= n.cert %>
                             </td>
                             <td>
-                              <% if n.os == 'Ubuntu 14.04' %>
+                              <% if running %>
                                 <span class="label label-success">
                                   <%= status = 'up' %>
                               <% else %>
@@ -165,14 +166,14 @@
                                 </span>
                           </td>
                             <td>
-                              <% if status == 'up' %>
-                                <%= button_to "add to swarm",{action: :addtoswarm, :id => n.id},{method: :get, class: "btn btn-success" }%>
+                              <% if running %>
+                                <%= button_to "add to swarm",{action: :addtoswarm, :id => n.id, :ip => n.ip},{method: :post, class: "btn btn-success" }%>
                               <% else %>
                                 <button type="button" class="btn btn-warning disabled">node down</button>
                               <% end %>
                             </td>
                             <td>
-                              <% if status == 'up' %>
+                              <% if running %>
                                 <button type="button" class="btn btn-warning disabled">node is up</button>
                               <% else %>
                                 <%= button_to "remove from db",{action: :delete, :id => n.id},{method: :post, class: "btn btn-danger" }%>

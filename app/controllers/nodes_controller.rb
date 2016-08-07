@@ -14,41 +14,95 @@ class NodesController < ApplicationController
 
   end
 
+
+
+
   def addtodb
 
-
-    node_params = Hash.new
-    node_params['nodename'] = params['nodename']
-    node_params['ip'] = params['ip']
-    node_params['os'] = params['os']
-
-
-    @node = Node.new(node_params)
-
-    if @node.save
-      redirect_to '/nodes', success: "node '#{node_params['nodename']}' added to db"
+    #node is already in db
+    if Node.find_by(ip: params[:ip])
+      redirect_to nodes_path, error: "node with ip '#{params[:ip]}'"
+    #new node
     else
-      render 'index', error: "failed to add node to db"
-    end
+      node_params = Hash.new
+      node_params['nodename'] = params['nodename']
+      node_params['ip'] = params['ip']
+      node_params['os'] = params['os']
 
+      @node = Node.new(node_params)
+
+      if @node.save
+        redirect_to nodes_path, success: "node '#{node_params['nodename']}' added to db"
+      else
+        redirect_to nodes_path, error: "failed to add node to db"
+      end
+    end
   end
 
   def removefromswarm
-    @container = Docker::Container.get(params[:name])
-    @container.stop
-    #redefine @container
-    @container = Docker::Container.get(params[:name])
-    state = @container.info['State']['Status']
-    if state == 'exited'
-      redirect_to nodes_path, success: "swarm container successfully stopped. it may take some minutes."
-    else
-      redirect_to nodes_path, error: "swarm container failed to stop."
+
+    #save manager url
+    manager_url = Docker.url
+    #connect to docker engine of node
+    puts Docker.url = "tcp://#{params[:ip]}"
+
+    #check for existing agent (norm: is named 'swarm-agent'), jep it's that bad.
+    begin
+      Timeout.timeout(10) do
+        agent_container = Docker::Container.get('swarm-agent')
+
+        state = agent_container.info['State']['Status']
+        if state == 'exited'
+          redirect_to nodes_path, error: "swarm-agent container is already stopped."
+        else
+          agent_container.stop
+          agent_container = Docker::Container.get('swarm-agent')
+          state = agent_container.info['State']['Status']
+          if state == 'exited'
+            redirect_to nodes_path, success: "swarm container from '#{params[:ip]}' successfully stopped. it may take some minutes."
+          else
+            redirect_to nodes_path, error: "swarm container from from '#{params[:ip]}' failed to stop."
+          end
+        end
+      end
+    #OOPS
+    rescue => error
+        redirect_to nodes_path, error: "error: '#{error}'"
     end
+
+    #go back to manager engine
+    Docker.url = manager_url
   end
 
   def addtoswarm
-    Docker::Connection.new('tcp://192.168.99.103:2376', {})
-    redirect_to nodes_path, success: "node was added to swarm. wait a minute."
+
+
+    #save manager url
+    manager_url = Docker.url
+    #connect to docker engine of node
+    puts Docker.url = "tcp://#{params[:ip]}"
+
+    #check for existing agent (norm: is named 'swarm-agent'), jep it's that bad.
+    begin
+      Timeout.timeout(10) do
+        agent_container = Docker::Container.get('swarm-agent')
+
+        state = agent_container.info['State']['Status']
+        if state == 'running'
+          redirect_to nodes_path, error: "swarm-agent container is already running."
+        else
+          agent_container.start
+          redirect_to nodes_path, success: "node from '#{params[:ip]}' was added to swarm. wait a minute."
+        end
+      end
+    #OOPS
+    rescue => error
+        redirect_to nodes_path, error: "error: '#{error}'"
+    end
+
+    #go back to manager engine
+    Docker.url = manager_url
+
   end
 
   def delete
