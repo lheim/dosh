@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
   #images
   get 'images' => 'images#index', as: :images
+  post 'images' => 'images#pull', as: :images_pull
   get 'image/:id' => 'images#show', as: :image
   get 'image/:id/remove' => 'images#remove', as: :image_remove
   post 'image/:id' => 'images#tag', as: :image_tag

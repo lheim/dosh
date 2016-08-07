@@ -9,6 +9,17 @@ class ImagesController < ApplicationController
     end
   end
 
+  def pull
+
+    puts params[:name]
+    Thread.new do
+      image = Docker::Image.create('fromImage' => params[:name])
+    end
+
+    redirect_to images_path, success: "image is being pulled. wait some minutes."
+  end
+
+
   def show
     @image = Docker::Image.get(params[:id])
   end

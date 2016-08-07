@@ -1,4 +1,21 @@
 <h1 class="header">Images</h1>
+
+<div class="col-md-12">
+
+
+
+
+<div style="float: right; width: auto;">
+
+    <%= form_tag(images_path, method: "post") do %>
+      <%= text_field_tag :name, "",  placeholder: "ubuntu:latest" %>
+      <%= submit_tag "pull", class:  "btn-lg btn-info"%>
+    <% end %>
+</div>
+</div>
+
+<div class="col-md-12">
+
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
@@ -46,4 +63,5 @@
             <% end %>
         </tbody>
     </table>
+</div>
 </div>

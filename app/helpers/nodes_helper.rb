@@ -5,7 +5,7 @@ module NodesHelper
 
     manager_url = Docker.url
     #connect to docker engine of node
-    puts Docker.url = "tcp://#{ip}"
+    Docker.url = "tcp://#{ip}"
 
     #try to connect to docker engine
     begin
