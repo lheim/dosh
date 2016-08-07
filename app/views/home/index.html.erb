@@ -3,39 +3,50 @@
 
 
 <%= pie_chart({"Containers running" => Docker.info['ContainersRunning'].to_i, "Containers stopped" => Docker.info['ContainersStopped'].to_i, "Containers paused" => Docker.info['ContainersPaused']}, width: "200px", height: "200px") %>
-
-
 <% if @info['DriverStatus'][3][1] != 'true' %>
   <% numberofnodes = @info['DriverStatus'][3][1].to_i %>
-  <% for i in 0..(numberofnodes-1) %>
 
-  <div class="col-md-<%=12/numberofnodes%>">
+  <!-- <div class="col-md-<%=12/numberofnodes%>"> -->
 
-  <%= @info['DriverStatus'][(i*9)+4][0] %>
-  <%= @info['DriverStatus'][(i*9)+4][1] %>
-  <!-- core -->
-  <%=  @info['DriverStatus'][(i*9)+8][1] %>
-  <%= pie_chart({"Allocated Cores" => 2, "Free Cores" => 3}) %>
+<div class="col-md-12">
 
-  <!-- memory -->
-  <%=  @info['DriverStatus'][(i*9)+9][1] %>
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <% for i in 0..(numberofnodes-1) %>
+        <th>
+          <%= @info['DriverStatus'][(i*9)+4][0] %>
+          <%= @info['DriverStatus'][(i*9)+4][1] %>
+        </th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <% for i in 0..(numberofnodes-1) %>
+        <td>
+          <!-- <td width="40%"> -->
+          <!-- cores -->
+          <%=  @info['DriverStatus'][(i*9)+8][1] %>
+          <%= pie_chart({"Allocated Cores" => 2, "Free Cores" => 3},width: "200px", height: "200px") %>
 
-  <%= pie_chart({"Allocated Memory" => 5, "Free Memory" => 3}) %>
+          <!-- memory -->
+          <%=  @info['DriverStatus'][(i*9)+9][1] %>
 
-
-  </div>
-
-
-
-
-
-    <% end %>
-  <% else %>
-    error, no nodes found
+          <%= pie_chart({"Allocated Memory" => 5, "Free Memory" => 3},width: "200px", height: "200px") %>
+        </td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+<% else %>
+error, no nodes found
 <% end %>
 
 <br>
-<%= Docker.info %>
 Total: <%= Docker.info['Containers'] %>
 Running: <%= Docker.info['ContainersRunning'] %>
 Paused: <%= Docker.info['ContainersPaused'] %>
