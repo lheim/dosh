@@ -11,22 +11,33 @@
             </h3>
         </div>
         <div class="panel-body">
+              <% status = @container.info['State']['Status'] %>
             <div style="float: left; width: auto;">
-                <% if @container.info['State']['Status'] == 'running' %>
-                <%= button_to "Stop",{action: :stop },{method: :get, class: "btn-lg btn-danger" }%>
-            <% else %>
-                <%= button_to "Start",{action: :start },{method: :get, class: "btn-lg btn-success disabled"}%>
+                <% if status == 'running' %>
+                  <%= button_to "Stop",{action: :stop },{method: :get, class: "btn-lg btn-danger" }%>
+                <% elsif status == 'paused' %>
+                  <!-- NOTHING -->
+                <% else %>
+                  <%= button_to "Start",{action: :start },{method: :get, class: "btn-lg btn-success"}%>
                 <% end %>
             </div>
 
             <div style="float: left; width: auto;">
-                <% if @container.info['State']['Status'] == 'running' %>
+                <% if status  == 'running' %>
+                  <%= button_to "Pause",{action: :pause },{method: :get, class: "btn-lg btn-warning" }%>
+                <% elsif status == 'paused' %>
+                  <%= button_to "Unpause",{action: :unpause },{method: :get, class: "btn-lg btn-success" }%>
+                <% end %>
+            </div>
+
+            <div style="float: left; width: auto;">
+                <% if status == 'running' %>
                 <%= button_to "Restart",{action: :restart },{method: :get, class: "btn-lg btn-primary" }%>
                 <% end %>
             </div>
 
             <div style="float: left; width: auto;">
-                <% if @container.info['State']['Status'] == 'running' %>
+                <% if status == 'running' %>
             <% else %>
                 <%= button_to "Remove",{action: :remove },{method: :get, class: "btn-lg btn-warning" }%>
                 <% end %>

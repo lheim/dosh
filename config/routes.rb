@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
   get 'container/:id/start' => 'containers#start', as: :container_start
   get 'container/:id/stop' => 'containers#stop', as: :container_stop
+  get 'container/:id/pause' => 'containers#pause', as: :container_pause
+  get 'container/:id/unpause' => 'containers#unpause', as: :cntainer_unpause
   get 'container/:id/restart' => 'containers#restart', as: :container_restart
   get 'container/:id/commit' => 'containers#commit', as: :container_commit
   get 'container/:id/remove' => 'containers#remove', as: :container_remove

@@ -43,6 +43,33 @@ class ContainersController < ApplicationController
     end
   end
 
+  def pause
+    @container = Docker::Container.get(params[:id])
+    @container.pause
+    #redefine @container
+    @container = Docker::Container.get(params[:id])
+    puts state = @container.info['State']['Status']
+    if state == 'paused'
+      redirect_to container_path, success: "container successfully paused."
+    else
+      redirect_to container_path, error: "container failed to pause."
+    end
+  end
+
+
+  def unpause
+    @container = Docker::Container.get(params[:id])
+    @container.unpause
+    #redefine @container
+    @container = Docker::Container.get(params[:id])
+    puts state = @container.info['State']['Status']
+    if state == 'running'
+      redirect_to container_path, success: "container successfully unpaused."
+    else
+      redirect_to container_path, error: "container failed to unpause."
+    end
+  end
+
   def restart
     @container = Docker::Container.get(params[:id])
     @container.restart
