@@ -39,13 +39,20 @@
                 Command to run specified as a string or an array of strings.
             </small>
         </fieldset>
-        <br>
 
         <fieldset class="form-group">
-            <%= label_tag(:memory, "Memory Reservation") %>
+            <%= label_tag(:env, "enviromen variables") %>
+            <%= text_field_tag :env, "", class: 'form-control', placeholder: "FOO=bar BAZ=quux PI=3" , size: 20 %>
+            <small class="text-muted">
+                Set enviroment variables. Seperate with spaces.
+            </small>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <%= label_tag(:memory, "memory reservation") %>
             <%= text_field_tag :memory, "", class: 'form-control', placeholder: "512M" , size: 20 %>
             <small class="text-muted">
-                Memory soft limit in bytes.
+                Memory limit in bytes. M = Mebi, G = Gibi.
             </small>
         </fieldset>
         <br>

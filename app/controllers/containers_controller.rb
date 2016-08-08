@@ -136,8 +136,13 @@ class ContainersController < ApplicationController
     end
 
     #enviroment variables
+
     if !params[:env].blank?
-      container_params['Env'] = params[:env]
+
+      env = Array.new
+      env = params[:env].split
+      container_params['Env'] = env
+
     end
 
 
@@ -232,6 +237,8 @@ class ContainersController < ApplicationController
         container_params['HostConfig']['CpuShares'] = params[:cpushare].to_i
     end
 
+
+    puts 'WHOLE PARAMS THING'
     puts container_params
 
     #try to create container
