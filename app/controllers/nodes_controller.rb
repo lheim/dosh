@@ -21,7 +21,7 @@ class NodesController < ApplicationController
 
     #node is already in db
     if Node.find_by(ip: params[:ip])
-      redirect_to nodes_path, error: "node with ip '#{params[:ip]}'"
+      redirect_to nodes_path, error: "node with ip '#{params[:ip]}' is already in db"
     #new node
     else
       node_params = Hash.new
@@ -44,11 +44,17 @@ class NodesController < ApplicationController
     #save manager url
     manager_url = Docker.url
     #connect to docker engine of node
-    puts Docker.url = "tcp://#{params[:ip]}"
+    Docker.url = "tcp://#{params[:ip]}"
 
     #check for existing agent (norm: is named 'swarm-agent'), jep it's that bad.
     begin
       Timeout.timeout(10) do
+
+        #could search through all containers to find the one with cmd => swarm-agen
+        #soon.
+        #puts all_containers = Docker::Container.all(:all => true)
+        #.find_by()
+
         agent_container = Docker::Container.get('swarm-agent')
 
         state = agent_container.info['State']['Status']
@@ -105,7 +111,7 @@ class NodesController < ApplicationController
 
   end
 
-  def delete
+  def deletefromdb
     if Node.destroy(params[:id])
       redirect_to '/nodes', success: "node (id: '#{params['id']}') was removed from db."
     else

@@ -176,7 +176,7 @@
                               <% if running %>
                                 <button type="button" class="btn btn-warning disabled">node is up</button>
                               <% else %>
-                                <%= button_to "remove from db",{action: :delete, :id => n.id},{method: :post, class: "btn btn-danger" }%>
+                                <%= button_to "remove from db",{action: :deletefromdb, :id => n.id},{method: :post, class: "btn btn-danger" }%>
                               <% end %>
                             </td>
                         </tr>

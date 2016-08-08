@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   post 'node/:id/addtodb' => 'nodes#addtodb', as: :node_addtodb
   post 'node/:name/removefromswarm' => 'nodes#removefromswarm', as: :node_removefromswarm
   post 'node/:id/addtoswarm' => 'nodes#addtoswarm', as: :node_addtoswarm
-  post 'node/:id/delete' => 'nodes#delete', as: :node_delete
+  post 'node/:id/deletefromdb' => 'nodes#deletefromdb', as: :node_deletefromdb
 
 
   #error
