@@ -12,11 +12,11 @@
         </div>
         <div class="panel-body">
             <div style="float: left; width: auto;">
-                <%= button_to "BUTTON 1",{action: :show },{method: :get, class: "btn-lg btn-success" } %>
+                <%= link_to "create container", container_create_path({:image => @image.info['RepoTags'].join('')}), :class => "btn-lg btn-success" %>
             </div>
 
             <div style="float: left; width: auto;">
-                <%= button_to "Delete",{action: :remove},{method: :get, class: "btn-lg btn-danger" }%>
+              <%= link_to "delete", image_remove_path,:class => "btn-lg btn-danger" %>
             </div>
 
             <div style="float: right; width: auto;">
@@ -31,7 +31,7 @@
     </div>
 
 </div>
-<div class="col-md-8">
+<div class="col-md-6">
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -73,6 +73,56 @@
                             </td>
                             <td>
                                 <%= @image.info['Created'].to_time.strftime('%a. %d %b %Y, %H:%M:%S') %>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                additional information
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                      <tr>
+                          <td>
+                              exposed ports
+                          </td>
+                          <td>
+                            <%= @image.json['ContainerConfig']['ExposedPorts'] %>
+                          </td>
+                      </tr>
+                        <tr>
+                            <td>
+                                command
+                            </td>
+                            <td>
+                                <%= @image.json['ContainerConfig']['Cmd']%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                working directory
+                            </td>
+                            <td>
+                              <%= @image.json['ContainerConfig']['WorkingDir']%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                enviroment variables
+                            </td>
+                            <td>
+                              <%= @image.json['ContainerConfig']['Env']%>
                             </td>
                         </tr>
                     </tbody>

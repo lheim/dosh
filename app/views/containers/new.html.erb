@@ -21,7 +21,7 @@
 
         <fieldset class="form-group">
             <%= label_tag(:image, "image") %>
-            <%= select_tag(:image, options_for_select(@images.collect{ |i| [i.json['RepoTags'].join(''), i.json['RepoTags'].join('')]}), class: "form-control input-lg") %>
+            <%= select_tag(:image, options_for_select(@images.collect{ |i| [i.json['RepoTags'].join(''), i.json['RepoTags'].join('')]}, params[:image]), class: "form-control input-lg") %>
         </fieldset>
 
         <fieldset class="form-group">
