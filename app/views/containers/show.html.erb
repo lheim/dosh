@@ -306,7 +306,7 @@
                                     </td>
                                     <td>
                                         <% if !@container.info['HostConfig']['Binds'].blank? %>
-                                        <%= @container.info['HostConfig']['Binds'].join('') %>
+                                        <%= @container.info['HostConfig']['Binds'] %>
                                         <% end %>
                                     </td>
                                 </tr>

@@ -135,8 +135,7 @@ class ContainersController < ApplicationController
       container_params['Cmd'] = params[:command]
     end
 
-    #enviroment variables
-
+    #env variables
     if !params[:env].blank?
 
       env = Array.new
@@ -159,15 +158,14 @@ class ContainersController < ApplicationController
     else
       privi = {"Privileged" => false}
     end
-
     container_params['HostConfig']= privi
 
 
-
+    #network mode (bridge, host, etc.)
     networkmode = {"NetworkMode" => params[:network]}
     container_params['HostConfig'].merge!(networkmode)
 
-
+    #port binding #1
     if !params[:port_in1].blank?
       exposedports = {"#{params[:port_in1]}" => {}}
       container_params['ExposedPorts'] = exposedports
@@ -179,7 +177,7 @@ class ContainersController < ApplicationController
       end
     end
 
-
+    #port binding #2
     if !params[:port_in2].blank?
       exposedports = {"#{params[:port_in2]}" => {}}
       container_params['ExposedPorts'].merge! exposedports
@@ -195,26 +193,29 @@ class ContainersController < ApplicationController
     if ((!params[:volume_host1].blank?) && (!params[:volume_container1].blank?) && (params[:volume_mode1] == "read/write"))
       bindsvalue = {"Binds" => 0}
       container_params['HostConfig'].merge!(bindsvalue)
-      binds = ["#{params[:volume_host1]}:#{params[:volume_container1]}"]
+      binds = Array.new
+      binds[0] = "#{params[:volume_host1]}:#{params[:volume_container1]}"
       container_params['HostConfig']['Binds'] = (binds)
+
+    #readonly
     elsif ((!params[:volume_host1].blank?) && (!params[:volume_container1].blank?) && (params[:volume_mode1] == "read-only"))
       bindsvalue = {"Binds" => 0}
       container_params['HostConfig'].merge!(bindsvalue)
-      binds = ["#{params[:volume_host1]}:#{params[:volume_container1]}:ro"]
-      container_params['HostConfig']['Binds'] = (binds)
+      binds = Array.new
+      binds[0] = "#{params[:volume_host1]}:#{params[:volume_container1]}:ro"
+      container_params['HostConfig']['Binds'] = binds
     end
 
-    puts 'VOLUMES1'
-    puts container_params['HostConfig']
 
-
-    # if ((!params[:volume_host2].blank?) && (!params[:volume_container2].blank?) && (params[:volume_mode2] == "read/write"))
-    #   binds = ["#{params[:volume_host2]}:#{params[:volume_container2]}"]
-    #   container_params['HostConfig']['Binds'].merge!(binds)
-    # elsif ((!params[:volume_host2].blank?) && (!params[:volume_container2].blank?) && (params[:volume_mode2] == "read-only"))
-    #   binds = ["#{params[:volume_host2]}:#{params[:volume_container2]}:ro"]
-    #   container_params['HostConfig']['Binds'].merge!(binds)
-    # end
+    #VOLUME #2
+    if ((!params[:volume_host2].blank?) && (!params[:volume_container2].blank?) && (params[:volume_mode2] == "read/write"))
+      binds[1] = "#{params[:volume_host2]}:#{params[:volume_container2]}"
+      container_params['HostConfig']['Binds'] = binds
+    #readonly
+    elsif ((!params[:volume_host2].blank?) && (!params[:volume_container2].blank?) && (params[:volume_mode2] == "read-only"))
+      binds[1] = "#{params[:volume_host2]}:#{params[:volume_container2]}:ro"
+      container_params['HostConfig']['Binds'] = binds
+    end
 
 
     #memory Reservation

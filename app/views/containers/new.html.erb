@@ -9,6 +9,13 @@
 
     <div class="panel-body">
 
+      <h4>
+        you don't need to fill each form. leave the ones you don't need empty.
+      </h4>
+      <br>
+      <br>
+
+
         <%= form_tag(container_create_path, method: "post") do %>
 
         <fieldset class="form-group">
@@ -44,7 +51,7 @@
             <%= label_tag(:env, "enviromen variables") %>
             <%= text_field_tag :env, "", class: 'form-control', placeholder: "FOO=bar BAZ=quux PI=3" , size: 20 %>
             <small class="text-muted">
-                Set enviroment variables. Seperate with spaces.
+                Set enviroment variables. Seperate with space.
             </small>
         </fieldset>
 
@@ -78,9 +85,9 @@
         </fieldset>
         <fieldset class="form-inline">
             <%= label_tag(:volume_host2, "volume 2") %>
-            <%= text_field_tag :volume_host2, "", class: 'form-control', placeholder: "I DO NOT WORK", size: 20 %>
+            <%= text_field_tag :volume_host2, "", class: 'form-control', placeholder: "/home/user/application", size: 20 %>
             <%= label_tag(:volume_container2, ":") %>
-            <%= text_field_tag :volume_container2, "", class: 'form-control', placeholder: "I DO NOT WORK", size: 20 %>
+            <%= text_field_tag :volume_container2, "", class: 'form-control', placeholder: "/home/user/application", size: 20 %>
             <%= select_tag(:volume_mode2, options_for_select(['read/write', 'read-only']), class: "form-control") %>
         </fieldset>
         <fieldset class="form-group">
