@@ -12,14 +12,18 @@
         </div>
         <div class="panel-body">
 
-          Images: <%= Docker.info['Images'] %>
+          <h3>
+            Images: <%= Docker.info['Images'] %>
+          </h3>
           <br>
-          NCPU: <%= Docker.info['NCPU'] %>
-          <br>
-          NCPU TEST: <%= Docker.info['NCPU'] * 3 %>
+          <h3>
+            Total #CPUs: <%= Docker.info['NCPU'] %>
+          </h3>
 
           <br>
-          MEMORY: <%= number_to_human_size(Docker.info['MemTotal']) %>
+          <h3>
+            Total Memory: <%= number_to_human_size(Docker.info['MemTotal']) %>
+          </h3>
 
         </div>
     </div>

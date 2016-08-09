@@ -9,12 +9,11 @@
 
     <div class="panel-body">
 
-      <h4>
-        you don't need to fill each form. leave the ones you don't need empty.
-      </h4>
-      <br>
-      <br>
-
+        <h4>
+            you don't need to fill each form. leave the ones you don't need blank.
+        </h4>
+        <br>
+        <br>
 
         <%= form_tag(container_create_path, method: "post") do %>
 
@@ -55,6 +54,9 @@
             </small>
         </fieldset>
 
+        <h2>
+            ressources
+        </h2>
         <fieldset class="form-group">
             <%= label_tag(:memory, "memory reservation") %>
             <%= text_field_tag :memory, "", class: 'form-control', placeholder: "512M" , size: 20 %>
@@ -64,17 +66,64 @@
         </fieldset>
         <br>
 
+        <fieldset class="form-inline">
+            <div class="col-md-3">
+                <%= label_tag(:cpushare, "CPU shares") %>
+                <%= text_field_tag :cpushare, "", class: 'form-control', placeholder: "1", size: 5 %>
+            </div>
+
+            <div class="col-md-3">
+                <%= label_tag(:cpuperiod, "CPU period") %>
+                <%= text_field_tag :cpuperiod, "", class: 'form-control', placeholder: "100000", size: 2 %>
+            </div>
+
+            <div class="col-md-3">
+                <%= label_tag(:cpuquota, "CPU quota") %>
+                <%= text_field_tag :cpuquota, "", class: 'form-control', placeholder: "50000", size: 5 %>
+            </div>
+
+            <div class="col-md-3">
+                <%= label_tag(:cpuset, "CPU setCPUS") %>
+                <%= text_field_tag :cpuset, "", class: 'form-control', placeholder: "0, 1", size: 5 %>
+            </div>
+            <br>
+
+            <small class="text-muted">
+                <b>
+                    CpuShares
+                </b>
+                - An integer value containing the container’s CPU Shares (ie. the relative weight vs other containers). In
+                <b>
+                    Swarm Mode
+                </b>
+                the number of reserved cpu cores.
+                <br>
+                <b>
+                    CpuPeriod
+                </b>
+                - The length of a CPU period in microseconds.
+                <br>
+                <b>
+                    CpuQuota
+                </b>
+                - Microseconds of CPU time that the container can get in a CPU period.
+                <br>
+                <b>
+                    CpusetCpus
+                </b>
+                - String value containing the cgroups CpusetCpus to use.
+            </small>
+
+        </fieldset>
+
         <fieldset class="form-group">
             <%= label_tag(:cpushare, "CPU shares") %>
             <%= text_field_tag :cpushare, "", class: 'form-control', placeholder: "612" , size: 20 %>
             <small class="text-muted">
-              'relative weight', relative to the default setting of 1024
-              CpuShares - An integer value containing the container’s CPU Shares (ie. the relative weight vs other containers).
+                'relative weight', relative to the default setting of 1024 CpuShares - An integer value containing the container’s CPU Shares (ie. the relative weight vs other containers).
             </small>
         </fieldset>
         <br>
-
-
 
         <fieldset class="form-inline">
             <%= label_tag(:volume_host1, "volume 1") %>
@@ -105,7 +154,6 @@
         </fieldset>
         <br>
 
-
         <fieldset class="form-inline">
             <%= label_tag(:port_in1, "container port/protocol") %>
             <%= text_field_tag :port_in1, "", class: 'form-control', placeholder: "80/tcp", size: 5 %>
@@ -132,7 +180,6 @@
                 Boolean value, Attach standard streams to a tty, including stdin if it is not closed.
             </small>
         </fieldset>
-
 
         <fieldset class="form-inline">
             <%= label_tag(:privileged, "privileged ") %>

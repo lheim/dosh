@@ -238,6 +238,20 @@ class ContainersController < ApplicationController
         container_params['HostConfig']['CpuShares'] = params[:cpushare].to_i
     end
 
+    #cpu period
+    if !params[:cpuperiod].blank?
+        container_params['HostConfig']['CpuPeriod'] = params[:cpuperiod].to_i
+    end
+
+    #cpuquota
+    if !params[:cpuquota].blank?
+        container_params['HostConfig']['CpuQuota'] = params[:cpuquota].to_i
+    end
+
+    #cpusetcpus
+    if !params[:cpuset].blank?
+        container_params['HostConfig']['CpuShares'] = params[:cpuset]
+    end
 
     puts 'WHOLE PARAMS THING'
     puts container_params

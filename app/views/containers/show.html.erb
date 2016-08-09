@@ -481,11 +481,26 @@
                             </tr>
                             <tr>
                                 <td>
-                                    cpushares
+                                    cpu shares
                                 </td>
                                 <td>
                                     <%= @container.info['HostConfig']['CpuShares'] %>
-                                    of 1024 (default)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    cpu period
+                                </td>
+                                <td>
+                                    <%= @container.info['HostConfig']['CpuPeriod'] %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    available cpus
+                                </td>
+                                <td>
+                                    <%= @container.info['HostConfig']['CpusetCpus'] %>
                                 </td>
                             </tr>
 
@@ -500,7 +515,7 @@
 <!-- BASH TAP -->
 <div id="bash" class="tab-pane fade">
     <h3>bash</h3>
-    <p>to access a terminal of the container. just run 'docker exec -ti name_container bash' on the machine</p>
+    <p>to access a terminal of the container. just run <code>docker exec -ti name_container bash</code> on the docker engine host machine</p>
 </div>
 
 <div class="col-md-12">
