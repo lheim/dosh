@@ -53,7 +53,6 @@
 <% if @info['DriverStatus'][3][1] != 'true' %>
   <% numberofnodes = @info['DriverStatus'][3][1].to_i %>
 
-  <!-- <div class="col-md-<%=12/numberofnodes%>"> -->
 
 <div class="col-md-12">
 
@@ -78,11 +77,12 @@
           <h3 class="panel-title">
               cores
           </h3>
-          
+
           <%=  @info['DriverStatus'][(i*9)+8][1] %>
           <%  cores = @info['DriverStatus'][(i*9)+8][1].split(' / ') %>
 
-          <%= pie_chart({"free cores" => cores[1], "allocated cores" => cores[0]},width: "200px", height: "200px") %>
+          <% free_cores = cores[1].to_i - cores[0].to_i %>
+          <%= pie_chart({"free cores" => free_cores, "allocated cores" => cores[0]},width: "200px", height: "200px") %>
 
 
           <br>
