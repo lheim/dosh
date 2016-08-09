@@ -2,7 +2,54 @@
 <h1 class="page-header">dosh</h1>
 
 
-<%= pie_chart({"Containers running" => Docker.info['ContainersRunning'].to_i, "Containers stopped" => Docker.info['ContainersStopped'].to_i, "Containers paused" => Docker.info['ContainersPaused']}, width: "200px", height: "200px") %>
+<div class="col-md-6">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                basic information
+            </h3>
+        </div>
+        <div class="panel-body">
+
+          Images: <%= Docker.info['Images'] %>
+          <br>
+          NCPU: <%= Docker.info['NCPU'] %>
+          <br>
+          NCPU TEST: <%= Docker.info['NCPU'] * 3 %>
+
+          <br>
+          MEMORY: <%= number_to_human_size(Docker.info['MemTotal']) %>
+
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+              graphs
+            </h3>
+        </div>
+        <div class="panel-body">
+
+          <%= pie_chart({"Containers running" => Docker.info['ContainersRunning'].to_i, "Containers stopped" => Docker.info['ContainersStopped'].to_i, "Containers paused" => Docker.info['ContainersPaused']}, width: "200px", height: "200px") %>
+
+          Total: <%= Docker.info['Containers'] %>
+          Running: <%= Docker.info['ContainersRunning'] %>
+          Paused: <%= Docker.info['ContainersPaused'] %>
+          Stopped: <%= Docker.info['ContainersStopped'] %>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 <% if @info['DriverStatus'][3][1] != 'true' %>
   <% numberofnodes = @info['DriverStatus'][3][1].to_i %>
 
@@ -28,13 +75,41 @@
         <td>
           <!-- <td width="40%"> -->
           <!-- cores -->
+          <h3 class="panel-title">
+              cores
+          </h3>
+          
           <%=  @info['DriverStatus'][(i*9)+8][1] %>
-          <%= pie_chart({"Allocated Cores" => 2, "Free Cores" => 3},width: "200px", height: "200px") %>
+          <%  cores = @info['DriverStatus'][(i*9)+8][1].split(' / ') %>
 
+          <%= pie_chart({"free cores" => cores[1], "allocated cores" => cores[0]},width: "200px", height: "200px") %>
+
+
+          <br>
+          <br>
           <!-- memory -->
-          <%=  @info['DriverStatus'][(i*9)+9][1] %>
+          <h3 class="panel-title">
+              memory
+          </h3>
 
-          <%= pie_chart({"Allocated Memory" => 5, "Free Memory" => 3},width: "200px", height: "200px") %>
+          <%=  @info['DriverStatus'][(i*9)+9][1] %>
+          <%  memory = @info['DriverStatus'][(i*9)+9][1].split(' / ') %>
+
+          <% if memory[0].end_with?("MiB") %>
+            <% memory [0] = memory[0].to_i * 1024 * 1024 %>
+          <% elsif memory[0].end_with?("GiB") %>
+            <% memory [0] =  memory[0].to_i * 1024 * 1024 * 1024 %>
+          <% end %>
+          <% if memory[1].end_with?("MiB") %>
+            <% memory [1] = memory[1].to_i * 1024 * 1024 %>
+          <% elsif memory[1].end_with?("GiB") %>
+            <% memory [1] = memory[1].to_i * 1024 * 1024 * 1024 %>
+          <% end %>
+
+          <!-- calculate free memory -->
+          <% free_memory = memory[1].to_i - memory[0].to_i %>
+
+          <%= pie_chart({"free" => free_memory, "allocated" => memory[0]},width: "200px", height: "200px") %>
         </td>
         <% end %>
       </tr>
@@ -47,13 +122,7 @@ error, no nodes found
 <% end %>
 
 <br>
-Total: <%= Docker.info['Containers'] %>
-Running: <%= Docker.info['ContainersRunning'] %>
-Paused: <%= Docker.info['ContainersPaused'] %>
-Stopped: <%= Docker.info['ContainersStopped'] %>
-Images: <%= Docker.info['Images'] %>
-NCPU: <%= Docker.info['NCPU'] %>
-MEMORY: <%= number_to_human_size(Docker.info['MemTotal']) %>
+
 
 
 
