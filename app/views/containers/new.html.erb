@@ -47,15 +47,15 @@
         </fieldset>
 
         <fieldset class="form-group">
-            <%= label_tag(:env, "enviromen variables") %>
+            <%= label_tag(:env, "environment variables") %>
             <%= text_field_tag :env, "", class: 'form-control', placeholder: "FOO=bar BAZ=quux PI=3" , size: 20 %>
             <small class="text-muted">
-                Set enviroment variables. Seperate with space.
+                Set environment variables. Separate with space.
             </small>
         </fieldset>
 
         <h2>
-            ressources
+            resources
         </h2>
         <fieldset class="form-group">
             <%= label_tag(:memory, "memory reservation") %>
@@ -116,13 +116,7 @@
 
         </fieldset>
 
-        <fieldset class="form-group">
-            <%= label_tag(:cpushare, "CPU shares") %>
-            <%= text_field_tag :cpushare, "", class: 'form-control', placeholder: "612" , size: 20 %>
-            <small class="text-muted">
-                'relative weight', relative to the default setting of 1024 CpuShares - An integer value containing the container’s CPU Shares (ie. the relative weight vs other containers).
-            </small>
-        </fieldset>
+
         <br>
 
         <fieldset class="form-inline">
