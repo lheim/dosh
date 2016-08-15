@@ -11,9 +11,17 @@ class ImagesController < ApplicationController
 
   def pull
 
-    puts params[:name]
+    image_name =  params[:name]
+    if image_name.include? ":latest"
+      puts 'CONTAINS DEFAULT TAG'
+    else
+      image_name << ':latest'
+      puts "ADDED TAG :LATEST #{image_name}"
+    end
+
     Thread.new do
-      image = Docker::Image.create('fromImage' => params[:name])
+      image = Docker::Image.create('fromImage' => image_name)
+      puts "Image #{image} was succesfully downloaded."
     end
 
     redirect_to images_path, success: "image is being pulled. wait some minutes."
