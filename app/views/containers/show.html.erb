@@ -168,6 +168,33 @@
                                         <%= @container.info['HostConfig']['NetworkMode'] %>
                                     </td>
                                 </tr>
+                                <% if @container.info['HostConfig']['NetworkMode'] == 'host'%>
+                                <tr>
+                                    <td>
+                                        port bindings
+                                    </td>
+                                    <td>
+                                        <% if ports = @container.info['HostConfig']['PortBindings'].to_a %>
+                                        <% ports.each do |port| %>
+                                        <p>
+                                            <%= port[0] %>
+                                            exposed to
+                                            <% if port[1] %>
+                                            host:
+                                            <%= port[1][0]['HostPort'] %>
+                                        <% else %>
+                                            <span class="label label-warning">
+                                                no port specified
+                                            </span>
+                                            <% end %>
+                                            <% end %>
+                                        <% else %>
+                                            no open ports
+                                        </p>
+                                        <% end %>
+                                    </td>
+                                </tr>
+                                <% else %>
                                 <tr>
                                     <td>
                                         port bindings
@@ -218,7 +245,7 @@
                                         <%= @container.info['NetworkSettings']['MacAddress']%>
                                     </td>
                                 </tr>
-
+                                <% end %>
                             </tbody>
                         </table>
                     </div>
