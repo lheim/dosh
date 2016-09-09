@@ -424,12 +424,26 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-
+                                <th>
+                                    UID
+                                </th>
                                 <th>
                                     PID
                                 </th>
                                 <th>
-                                    user
+                                    PPID
+                                </th>
+                                <th>
+                                    C
+                                </th>
+                                <th>
+                                    STIME
+                                </th>
+                                <th>
+                                    tty
+                                </th>
+                                <th>
+                                    time
                                 </th>
                                 <th>
                                     command
@@ -440,13 +454,28 @@
                             <% @container.top.each do |process| %>
                             <tr class="table">
                                 <td>
+                                    <%= process["UID"]%>
+                                </td>
+                                <td>
                                     <%= process["PID"]%>
                                 </td>
                                 <td>
-                                    <%= process["USER"]%>
+                                    <%= process["PPID"]%>
                                 </td>
                                 <td>
-                                    <%= process["COMMAND"]%>
+                                    <%= process["C"]%>
+                                </td>
+                                <td>
+                                    <%= process["STIME"]%>
+                                </td>
+                                <td>
+                                    <%= process["TTY"]%>
+                                </td>
+                                <td>
+                                    <%= process["TIME"]%>
+                                </td>
+                                <td>
+                                    <%= process["CMD"]%>
                                 </td>
                             </tr>
                             <% end %>
