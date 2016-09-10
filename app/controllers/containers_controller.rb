@@ -114,6 +114,8 @@ class ContainersController < ApplicationController
   #page to create a new container
   def new
     @images = Docker::Image.all
+    @usrps = Usrp.all
+    @nodes = Node.all
   end
 
   def create
@@ -136,13 +138,34 @@ class ContainersController < ApplicationController
     end
 
     #env variables
-    if !params[:env].blank?
-
+    if !params[:env].blank? || !params[:nodes].blank? || !params[:usrp].blank?
       env = Array.new
-      env = params[:env].split
+      if !params[:env].blank?
+        env = params[:env].split
+      end
+
+      if !params[:nodes].blank?
+
+        constraint = params[:node].split
+        env.push("constraint:node==#{constraint[0]}")
+
+      end
+
+
+      if !params[:usrp].blank?
+
+        usrp = params[:usrp][/\(.*?\)/].delete('()')
+        puts usrp
+        env.push("USRP_IP=#{usrp}")
+
+      end
+
+
       container_params['Env'] = env
 
     end
+
+
 
 
     #tty enabled
