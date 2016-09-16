@@ -1,5 +1,4 @@
 <h1>USRP discovery</h1>
-
 <div class="col-md-6">
 
     <div class="panel panel-default">
@@ -7,39 +6,32 @@
             <h3 class="panel-title">
                 USRP discovery
                 <div class="pull-right">
-                  <%= button_to "refresh",{action: :index },{method: :get, class: "btn-md btn-primary" }%>
+                  <%= button_to "refresh",{action: :index },{method: :get, class: "btn btn-primary" }%>
                 </div>
 
             </h3>
         </div>
         <div class="panel-body">
+          <pre>
 
-          <p>using uhd</p>
-          OUT1:
-          <p> <%=   @stdout  %> </p>
-          ERR1:
-          <p> <%=   @stderr %> </p>
-          STAT1:
-          <p> <%=   @status %> </p>
+            OUT1:
+            <p> <%=   @stdout  %> </p>
+            ERR1:
+            <p> <%=   @stderr %> </p>
+            STAT1:
+            <p> <%=   @status %> </p>
 
-
-
-
+          </pre>
 
           <%= form_for(@usrp) do |f| %>
-            <div class="field">
-              <%= f.label :ip %><br>
-              <%= f.text_field :ip %>
-            </div>
-            <div class="field">
-              <%= f.label :model %><br>
-              <%= f.text_field :model %>
-            </div>
+          <fieldset class="form-group">
+              <%= label_tag(:usrp_ip, "USRP ip") %>
+              <%= select_tag(:usrp_ip, options_for_select(@found_usrps.collect{|i| [i[1]["addr"]]}), class: "form-control input") %>
+          </fieldset>
             <div class="actions">
-              <%= f.submit "Create", class: "btn btn-primary" %>
+              <%= f.submit "add to database", class: "btn btn-primary" %>
             </div>
           <% end %>
-
 
         </div>
     </div>
@@ -67,6 +59,9 @@
                               alive?
                           </th>
                           <th>
+                              probe
+                          </th>
+                          <th>
                               start container
                           </th>
                           <th>
@@ -86,6 +81,7 @@
                             </td>
                             <td>
                               <%= u.created_at %>
+                              <!-- TODO -->
                               <% if 1 %>
                                 <span class="label label-success">
                                   up
@@ -96,15 +92,49 @@
                               </span>
                             </td>
                             <td>
-                              <%= button_to "create",{action: :index, :id => u.id},{method: :get, class: "btn-xs btn-primary" }%>
+                              <%= button_to "probe",{action: :probe, :id => u.id, :usrp_ip => u.ip},{method: :post, class: "btn btn-primary" }%>
                             </td>
                             <td>
-                              <%= button_to "remove",{action: :remove, :id => u.id},{method: :post, class: "btn-xs btn-danger" }%>
+                              <!-- TODO -->
+                              <%= button_to "create",{action: :index, :id => u.id},{method: :get, class: "btn btn-primary" }%>
+                            </td>
+                            <td>
+                              <%= button_to "remove",{action: :remove, :id => u.id},{method: :post, class: "btn btn-danger" }%>
                             </td>
                         </tr>
                         <% end %>
                     </tbody>
                 </table>
+            </div>
+      </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                USRP probe
+            </h3>
+        </div>
+        <div class="panel-body">
+
+
+
+              <pre>
+              <% if @stdout_probe.blank? %>
+              <%= @stdout_probe %>
+              <%= @stderr_probe %>
+              <%= @status_probe %>
+                IT IS BLANK, GODDAMNIT
+              <% else %>
+                <%= @stdout_probe %>
+                <%= @stderr_probe %>
+                <%= @status_probe %>
+              <% end %>
+
+              </pre>
+
+
             </div>
       </div>
     </div>
