@@ -26,7 +26,7 @@
 
             <fieldset class="form-group">
                 <%= label_tag(:image, "image") %>
-                <%= select_tag(:image, options_for_select(@images.collect{ |i| [i.json['RepoTags'].join('')]}, params[:image]), class: "form-control input-lg") %>
+                <%= select_tag(:image, options_for_select(@images.collect{ |i| [i.json['RepoTags'].join('')]}, params[:image]), class: "form-control input-lg", :style => "width:500px") %>
             </fieldset>
 
             <fieldset class="form-group">
@@ -132,7 +132,6 @@
                 </small>
             </fieldset>
 
-            <%= submit_tag "create", class:  "btn btn-primary"%>
 
         </div>
     </div>
@@ -152,7 +151,7 @@
 
             <fieldset class="form-group">
                 <%= label_tag(:node, "nodes from the node database") %>
-                <%= select_tag(:node, options_for_select(@nodes.collect{ |i| [i.nodename + " (" + i.ip + ")"]}, params[:image]), class: "form-control input", :include_blank => '- none -' ) %>
+                <%= select_tag(:node, options_for_select(@nodes.collect{ |i| [i.nodename + " (" + i.ip + ")"]}, params[:image]), class: "form-control input", :include_blank => '- none -', :style => "width:300px") %>
             </fieldset>
 
             <h2>
@@ -161,7 +160,7 @@
 
             <fieldset class="form-group">
                 <%= label_tag(:usrp, "USRPs from the USRP database") %>
-                <%= select_tag(:usrp, options_for_select(@usrps.collect{ |i| [i.model + " (" + i.ip + ")"]}, params[:image]), class: "form-control input", :include_blank => '- none -' ) %>
+                <%= select_tag(:usrp, options_for_select(@usrps.collect{ |i| [i.model + " (" + i.ip + ")"]}, params[:image]), class: "form-control input", :include_blank => '- none -', :style => "width:300px") %>
             </fieldset>
 
         </div>
@@ -248,5 +247,6 @@
 
     </div>
 </div>
+<%= submit_tag "create", class:  "btn-lg btn-primary"%>
 
 <% end %>

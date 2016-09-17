@@ -2,37 +2,43 @@
 <div class="col-md-6">
 
     <div class="panel panel-default">
-        <div class="panel-heading">
+        <div class="panel-heading" style="height: 50px">
             <h3 class="panel-title">
-                USRP discovery
+                USRP discovery/probe
                 <div class="pull-right">
-                  <%= button_to "refresh",{action: :index },{method: :get, class: "btn btn-primary" }%>
+                  <%= link_to "discover", usrps_path({:discover => true}), :class => "btn btn-primary" %>
                 </div>
 
             </h3>
         </div>
         <div class="panel-body">
           <pre>
-
-            OUT1:
-            <p> <%=   @stdout  %> </p>
-            ERR1:
-            <p> <%=   @stderr %> </p>
-            STAT1:
-            <p> <%=   @status %> </p>
-
+            <% if !@stdout.blank? %>
+<%= @stdout %>
+            <% elsif !@stdout_probe.blank? %>
+<%= @stdout_probe %>
+            <% else %>
+click discover or probe a USRP from the database.
+            <% end %>
           </pre>
+          <!-- <pre>
+            <%= @stderr %>
+          </pre>
+          <pre>
+            <%= @status %>
+          </pre> -->
+          <div class="pull-down">
 
           <%= form_for(@usrp) do |f| %>
           <fieldset class="form-group">
               <%= label_tag(:usrp_ip, "USRP ip") %>
-              <%= select_tag(:usrp_ip, options_for_select(@found_usrps.collect{|i| [i[1]["addr"]]}), class: "form-control input") %>
-          </fieldset>
+              <%= select_tag(:usrp_ip, options_for_select(@found_usrps.collect{|i| [i[1]["addr"]]}), class: "form-control input", :include_blank => '- none -', :style => "width:200px") %>
+            </fieldset>
             <div class="actions">
               <%= f.submit "add to database", class: "btn btn-primary" %>
             </div>
           <% end %>
-
+        </div>
         </div>
     </div>
 
@@ -59,6 +65,12 @@
                               alive?
                           </th>
                           <th>
+                              assigned to
+                          </th>
+                          <th>
+                              created at
+                          </th>
+                          <th>
                               probe
                           </th>
                           <th>
@@ -72,6 +84,8 @@
                     <tbody>
                       <% @usrps.each do |u| %>
                         <tr>
+                            <!-- check if device is online  -->
+                            <% up = ping(u.ip)  %>
                             <td>
 
                               <%= u.ip %>
@@ -80,9 +94,8 @@
                               <%= u.model %>
                             </td>
                             <td>
-                              <%= u.created_at %>
-                              <!-- TODO -->
-                              <% if 1 %>
+                              <!-- TODO PING THEM -->
+                              <% if up %>
                                 <span class="label label-success">
                                   up
                               <% else %>
@@ -92,7 +105,13 @@
                               </span>
                             </td>
                             <td>
-                              <%= button_to "probe",{action: :probe, :id => u.id, :usrp_ip => u.ip},{method: :post, class: "btn btn-primary" }%>
+                              <%= u.assigned %> <!-- CLICKABLE AND LINK TO CONTAINER  -->
+                            </td>
+                            <td>
+                              <%= u.created_at %>
+                            </td>
+                            <td>
+                              <%= link_to "probeN", usrps_path({:probe_ip => u.ip}), :class => "btn btn-success" %>
                             </td>
                             <td>
                               <!-- TODO -->
@@ -105,36 +124,6 @@
                         <% end %>
                     </tbody>
                 </table>
-            </div>
-      </div>
-    </div>
-</div>
-<div class="col-md-6">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                USRP probe
-            </h3>
-        </div>
-        <div class="panel-body">
-
-
-
-              <pre>
-              <% if @stdout_probe.blank? %>
-              <%= @stdout_probe %>
-              <%= @stderr_probe %>
-              <%= @status_probe %>
-                IT IS BLANK, GODDAMNIT
-              <% else %>
-                <%= @stdout_probe %>
-                <%= @stderr_probe %>
-                <%= @status_probe %>
-              <% end %>
-
-              </pre>
-
-
             </div>
       </div>
     </div>

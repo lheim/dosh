@@ -31,7 +31,7 @@ Rails.application.routes.draw do
 
   #usrps
   get 'usrps' => 'usrps#index', as: :usrps
-  post 'usrp/:id/probe' => 'usrps#probe', as: :usrp_probe
+  #post 'usrp/:id/probe' => 'usrps#probe', as: :usrp_probe
   post 'usrp/:id/remove' => 'usrps#remove', as: :usrp_remove
   post 'usrps' => 'usrps#create', as: :usrps_create
 

@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20160718190711) do
   create_table "usrps", force: :cascade do |t|
     t.string   "ip"
     t.string   "model"
+    t.string   "assigned"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
