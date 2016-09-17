@@ -27,7 +27,12 @@ class NodesController < ApplicationController
       node_params = Hash.new
       node_params['nodename'] = params['nodename']
       node_params['ip'] = params['ip']
-      node_params['os'] = params['os']
+      node_params['containers'] = params['containers']
+      node_params['cpu'] = params['cpu']
+      node_params['memory'] = params['memory']
+      node_params['docker_version'] = params['docker_version']
+
+
 
       @node = Node.new(node_params)
 

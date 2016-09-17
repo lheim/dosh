@@ -94,7 +94,6 @@ click discover or probe a USRP from the database.
                               <%= u.model %>
                             </td>
                             <td>
-                              <!-- TODO PING THEM -->
                               <% if up %>
                                 <span class="label label-success">
                                   up
@@ -105,17 +104,30 @@ click discover or probe a USRP from the database.
                               </span>
                             </td>
                             <td>
+                              <% begin %>
                               <%= link_to u.assigned, container_path(:id => Docker::Container.get(u.assigned).id.truncate(12, omission: '')) %>
+                              <% rescue %>
+                              <%= u.assigned %>
+                              <% end %>
                             </td>
                             <td>
                               <%= u.created_at%>
                             </td>
                             <td>
-                              <%= link_to "probe", usrps_path({:probe_ip => u.ip}), :class => "btn btn-success" %>
+                              <% if up %>
+                                <%= link_to "probe", usrps_path({:probe_ip => u.ip}), :class => "btn btn-success" %>
+                              <% else %>
+                                <button type="button" class="btn btn-warning disabled">down</button>
+                              <% end %>
                             </td>
                             <td>
-                              <% model = (u.model + " (" + u.ip + ")") %>
-                              <%= link_to "create", container_create_path({:usrp=> model}), :class => "btn btn-primary" %>
+                              <% if up %>
+                                <% model = (u.model + " (" + u.ip + ")") %>
+                                <%= link_to "create", container_create_path({:usrp=> model}), :class => "btn btn-primary" %>
+                              <% else %>
+                                <button type="button" class="btn btn-warning disabled">down</button>
+                              <% end %>
+
                             </td>
                             <td>
                               <%= button_to "remove",{action: :remove, :id => u.id},{method: :post, class: "btn btn-danger" }%>

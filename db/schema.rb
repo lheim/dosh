@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 20160718190711) do
     t.string   "cpu"
     t.string   "memory"
     t.string   "docker_version"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "usrps", force: :cascade do |t|

@@ -64,25 +64,25 @@
                                 <%=  @info['DriverStatus'][(i*9)+6][1] %>
                             </td>
                             <td>
-                                <%=  @info['DriverStatus'][(i*9)+7][1] %>
+                                <%=  containers = @info['DriverStatus'][(i*9)+7][1] %>
                             </td>
                             <td>
-                                <%=  @info['DriverStatus'][(i*9)+8][1] %>
+                                <%=  cpu = @info['DriverStatus'][(i*9)+8][1] %>
                             </td>
                             <td>
-                                <%=  @info['DriverStatus'][(i*9)+9][1] %>
+                                <%=  memory = @info['DriverStatus'][(i*9)+9][1] %>
                             </td>
                             <td>
-                                <%= os = @info['DriverStatus'][(i*9)+10][1].truncate(10) %>
+                                <%= @info['DriverStatus'][(i*9)+10][1].truncate(10) %>
                             </td>
                             <td>
-                                <%=  @info['DriverStatus'][(i*9)+12][1] %>
+                                <%=  version =@info['DriverStatus'][(i*9)+12][1] %>
                             </td>
                             <td>
-                              <%= button_to "remove",{action: :removefromswarm, :name => nodename, :nodename => nodename,:ip => ip, :os => os },{method: :post, class: "btn btn-danger btn-md" }%>
+                              <%= button_to "remove",{action: :removefromswarm, :id => i, :ip => ip},{method: :post, class: "btn btn-danger btn-md" }%>
                             </td>
                             <td>
-                              <%= button_to "add to db",{action: :addtodb,:id => i, :nodename => nodename, :ip => ip, :os => os },{method: :post, class: "btn btn-success btn-md" }%>
+                              <%= button_to "add to db",{action: :addtodb,:id => i, :ip => ip, :nodename => nodename, :containers => containers, :cpu => cpu, :memory => memory, :docker_version => version },{method: :post, class: "btn btn-success btn-md" }%>
                             </td>
                           </tr>
                           <% end %>
@@ -122,10 +122,16 @@
                                 ip
                             </th>
                             <th>
-                                os
+                                containers
                             </th>
                             <th>
-                                cert
+                                cpu cores
+                            </th>
+                            <th>
+                                memory
+                            </th>
+                            <th>
+                                docker version
                             </th>
                             <th>
                                 alive
@@ -150,10 +156,16 @@
                                 <%= n.ip %>
                             </td>
                             <td>
-                                <%= n.os %>
+                                <%= n.containers %>
                             </td>
                             <td>
-                                <%= n.cert %>
+                                <%= n.cpu %>
+                            </td>
+                            <td>
+                                <%= n.memory %>
+                            </td>
+                            <td>
+                                <%= n.docker_version %>
                             </td>
                             <td>
                               <% if running %>
