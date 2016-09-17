@@ -160,7 +160,7 @@
 
             <fieldset class="form-group">
                 <%= label_tag(:usrp, "USRPs from the USRP database") %>
-                <%= select_tag(:usrp, options_for_select(@usrps.collect{ |i| [i.model + " (" + i.ip + ")"]}, params[:image]), class: "form-control input", :include_blank => '- none -', :style => "width:300px") %>
+                <%= select_tag(:usrp, options_for_select(@usrps.collect{ |i| [i.model + " (" + i.ip + ")"]}, params[:usrp]), class: "form-control input", :include_blank => '- none -', :style => "width:300px") %>
             </fieldset>
 
         </div>

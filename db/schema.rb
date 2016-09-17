@@ -16,8 +16,10 @@ ActiveRecord::Schema.define(version: 20160718190711) do
   create_table "nodes", force: :cascade do |t|
     t.string   "nodename"
     t.string   "ip"
-    t.string   "os"
-    t.string   "cert"
+    t.string   "containers"
+    t.string   "cpu"
+    t.string   "memory"
+    t.string   "docker_version"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

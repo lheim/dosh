@@ -105,17 +105,17 @@ click discover or probe a USRP from the database.
                               </span>
                             </td>
                             <td>
-                              <%= u.assigned %> <!-- CLICKABLE AND LINK TO CONTAINER  -->
+                              <%= link_to u.assigned, container_path(:id => Docker::Container.get(u.assigned).id.truncate(12, omission: '')) %>
                             </td>
                             <td>
-                              <%= u.created_at %>
+                              <%= u.created_at%>
                             </td>
                             <td>
-                              <%= link_to "probeN", usrps_path({:probe_ip => u.ip}), :class => "btn btn-success" %>
+                              <%= link_to "probe", usrps_path({:probe_ip => u.ip}), :class => "btn btn-success" %>
                             </td>
                             <td>
-                              <!-- TODO -->
-                              <%= button_to "create",{action: :index, :id => u.id},{method: :get, class: "btn btn-primary" }%>
+                              <% model = (u.model + " (" + u.ip + ")") %>
+                              <%= link_to "create", container_create_path({:usrp=> model}), :class => "btn btn-primary" %>
                             </td>
                             <td>
                               <%= button_to "remove",{action: :remove, :id => u.id},{method: :post, class: "btn btn-danger" }%>

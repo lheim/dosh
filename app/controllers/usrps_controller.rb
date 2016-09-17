@@ -82,6 +82,7 @@ class UsrpsController < ApplicationController
     end
 
     usrp_params[:ip] = params[:usrp_ip]
+    usrp_params[:assigned] = '- free -'
 
     @usrp = Usrp.new(usrp_params)
     if @usrp.save

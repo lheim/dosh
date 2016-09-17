@@ -155,8 +155,10 @@ class ContainersController < ApplicationController
       if !params[:usrp].blank?
 
         usrp = params[:usrp][/\(.*?\)/].delete('()')
-        puts usrp
         env.push("USRP_IP=#{usrp}")
+
+        # add this container id to USRP DB
+
 
       end
 
@@ -289,14 +291,26 @@ class ContainersController < ApplicationController
 
     #set the name of the container
     if !params[:name].blank?
-      @container.rename(params[:name])
-      name = params[:name]
-
+      begin
+        @container.rename(params[:name])
+        name = params[:name]
+      rescue => error
+        redirect_to '/containers', error: "name error message: '#{error}'"
+        return
+      end
     #no name given, name is randomly chosen
     else
-      name = @container.info['id'].truncate(12, omission: '')
+        name = @container.info['id'].truncate(12, omission: '')
     end
 
+    # add container to USRP DB if USRP was assigned
+    if !params[:usrp].blank?
+      usrpDB = Usrp.find_by(ip: usrp)
+      usrpDB.assigned = name
+      if !usrpDB.save
+        redirect_to containers_path, error: "container '#{name}' was successfully created. BUT assigned container is not written to USRP db."
+      end
+    end
 
     redirect_to containers_path, success: "container '#{name}' was successfully created."
 
