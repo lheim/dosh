@@ -1,5 +1,13 @@
 <h1 class="header">Container:
-    <%= @container.info['Name'][1..-1] %>
+    <%= @name %>
+    <div style="float: right; width: auto;">
+      assigned USRP:
+      <% if !@usrp.blank? %>
+      <%= link_to @usrp.ip, usrps_path(:probe_ip => @usrp.ip)%>
+      <% else %>
+      - none -
+      <% end %>
+    </div>
 </h1>
 
 <div class="col-md-12">
@@ -48,12 +56,10 @@
             </div>
 
             <div style="float: right; width: auto;">
-
                 <%= form_tag(container_path, method: "post") do %>
                 <%= text_field_tag :name, "",  placeholder: "new_name" %>
-                <%= submit_tag "rename", class:  "btn-lg btn-info"%>
+                <%= submit_tag "rename", class: "btn-lg btn-info"%>
                 <% end %>
-
             </div>
 
         </div>
