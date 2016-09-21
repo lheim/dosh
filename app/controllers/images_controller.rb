@@ -30,6 +30,12 @@ class ImagesController < ApplicationController
 
   def show
     @image = Docker::Image.get(params[:id])
+
+    @containers = Docker::Container.all(:all => true)
+
+
+    # puts @containers = Docker::Container.all(all: true, filters: { created: ["runnidngd"] }.to_json)
+
   end
 
   def remove

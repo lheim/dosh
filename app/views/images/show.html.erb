@@ -131,3 +131,70 @@
         </div>
     </div>
 </div>
+<div class="col-md-12">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                containers
+            </h3>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped">
+              <thead>
+                  <tr>
+                      <th>
+                          id
+                      </th>
+                      <th>
+                          container name
+                      </th>
+                      <th>
+                          image repo:tag
+                      </th>
+                      <th>
+                          status
+                      </th>
+                      <th>
+                          command
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <% @containers.each do |container| %>
+                  <% if container.info['ImageID'].truncate(12, omission: '') == params[:id] %>
+                    <tr>
+                      <td>
+                          <span class="glyphicon glyphicon-search"></span>
+                          <%= link_to container.id.truncate(12, omission:''), container_path(:id => container.id.truncate(12, omission: '')) %>
+                      </td>
+                      <td>
+                          <%= link_to container.info['Names'].join(''), container_path(:id => container.id.truncate(12, omission: '')) %>
+                      </td>
+                      <td>
+                          <span class="glyphicon glyphicon-search"></span>
+                          <%= link_to container.info['Image'], image_path(:id => container.info['ImageID'].truncate(12, omission: ''))%>
+                      </td>
+                      <td>
+                          <span class="glyphicon glyphicon-time"></span>
+                          <% if container.info['Status'].include? "Up" %>
+                          <span class="label label-success">
+                          <% else %>
+                              <span class="label label-warning">
+                                  <% end %>
+
+                                  <%= container.info['Status'] %>
+                              </span>
+                        </td>
+                        <td width="40%">
+                              <span class="glyphicon glyphicon-console"></span>
+                              <%= container.info['Command'] %>
+                        </td>
+                      </tr>
+                      <% end %>
+                      <% end %>
+                  </tbody>
+              </table>
+        </div>
+    </div>
+</div>

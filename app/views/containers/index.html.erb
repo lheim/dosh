@@ -32,9 +32,8 @@
             </tr>
         </thead>
         <tbody>
-            <% @containers.each do |container| %>
-            <tr class="table-danger">
-
+          <% @containers.each do |container| %>
+            <tr>
                 <td>
                     <span class="glyphicon glyphicon-search"></span>
                     <%= link_to container.id.truncate(12, omission:''), container_path(:id => container.id.truncate(12, omission: '')) %>
@@ -62,7 +61,7 @@
                         <%= container.info['Command'] %>
                   </td>
                 </tr>
-                <% end %>
+            <% end %>
             </tbody>
         </table>
     </div>
