@@ -12,7 +12,7 @@ class ContainersController < ApplicationController
   def show
     @container = Docker::Container.get(params[:id])
     @logs = @container.logs(stdout: true, stderr: true)
-
+    puts @container
     #@container.tap(&:start).attach(stdin: StringIO.new("foo\nbar\n"))
   end
 

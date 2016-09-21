@@ -1,5 +1,5 @@
 <h1 class="header">Container:
-    <%= @container.info['Name'] %>
+    <%= @container.info['Name'][1..-1] %>
 </h1>
 
 <div class="col-md-12">
@@ -571,7 +571,7 @@
 <!-- BASH TAP -->
 <div id="bash" class="tab-pane fade">
     <h3>bash</h3>
-    <p>to access a terminal of the container. just run <code>docker exec -ti name_container bash</code> on the docker engine host machine</p>
+    <p>to access a terminal of the container run: <code>docker exec -ti <%= @container.info['Name'][1..-1] %> bash</code> on the docker engine host machine</p>
 </div>
 
 <div class="col-md-12">
