@@ -4,6 +4,7 @@ class CreateUsrps < ActiveRecord::Migration
 
       t.string :ip
       t.string :model
+      t.string :assigned
 
       t.timestamps null: false
     end

@@ -4,8 +4,10 @@ class CreateNodes < ActiveRecord::Migration
 
       t.string :nodename
       t.string :ip
-      t.string :os
-      t.string :cert
+      t.string :containers
+      t.string :cpu
+      t.string :memory
+      t.string :docker_version
 
       t.timestamps null: false
     end
