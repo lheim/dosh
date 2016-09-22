@@ -1,5 +1,13 @@
 <h1 class="header">Container:
-    <%= @container.info['Name'] %>
+    <%= @name %>
+    <div style="float: right; width: auto;">
+      assigned USRP:
+      <% if !@usrp.blank? %>
+      <%= link_to @usrp.ip, usrps_path(:probe_ip => @usrp.ip)%>
+      <% else %>
+      - none -
+      <% end %>
+    </div>
 </h1>
 
 <div class="col-md-12">
@@ -48,12 +56,10 @@
             </div>
 
             <div style="float: right; width: auto;">
-
                 <%= form_tag(container_path, method: "post") do %>
                 <%= text_field_tag :name, "",  placeholder: "new_name" %>
-                <%= submit_tag "rename", class:  "btn-lg btn-info"%>
+                <%= submit_tag "rename", class: "btn-lg btn-info"%>
                 <% end %>
-
             </div>
 
         </div>
@@ -571,7 +577,7 @@
 <!-- BASH TAP -->
 <div id="bash" class="tab-pane fade">
     <h3>bash</h3>
-    <p>to access a terminal of the container. just run <code>docker exec -ti name_container bash</code> on the docker engine host machine</p>
+    <p>to access a terminal of the container run: <code>docker exec -ti <%= @container.info['Name'][1..-1] %> bash</code> on the docker engine host machine</p>
 </div>
 
 <div class="col-md-12">

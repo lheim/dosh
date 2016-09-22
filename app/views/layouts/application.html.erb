@@ -99,6 +99,12 @@
                     <%= Docker.version['Os'] %>
                     <%= Docker.version['Arch'] %>
                 </strong>
+                URL
+                <strong>
+                <%= Docker.url %>
+                </strong>
+
+
                 <% rescue %>
                 <strong>
                     no docker engine found.
