@@ -9,6 +9,7 @@ WORKDIR /dosh
 ENV RAILS_ENV development
 
 RUN bundle install
+RUN rake db:reset
 RUN rake db:migrate
 RUN rake db:seed
 
