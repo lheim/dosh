@@ -10,7 +10,12 @@ class ContainersController < ApplicationController
   end
 
   def show
-    @container = Docker::Container.get(params[:id])
+    begin
+      @container = Docker::Container.get(params[:id])
+    rescue => error
+      redirect_to '/error', error: "error: #{error}"
+      return
+    end
     @logs = @container.logs(stdout: true, stderr: true)
     @name = @container.info['Name'][1..-1]
 

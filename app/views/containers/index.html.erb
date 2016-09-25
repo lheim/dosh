@@ -34,29 +34,28 @@
         <tbody>
           <% @containers.each do |container| %>
             <tr>
-                <td>
+                <td width="10%">
                     <span class="glyphicon glyphicon-search"></span>
                     <%= link_to container.id.truncate(12, omission:''), container_path(:id => container.id.truncate(12, omission: '')) %>
                 </td>
-                <td>
+                <td width="15%">
                     <%= link_to container.info['Names'].join(''), container_path(:id => container.id.truncate(12, omission: '')) %>
                 </td>
-                <td>
+                <td width="10%">
                     <span class="glyphicon glyphicon-search"></span>
                     <%= link_to container.info['Image'], image_path(:id => container.info['ImageID'].truncate(12, omission: ''))%>
                 </td>
-                <td>
+                <td width="13%">
                     <span class="glyphicon glyphicon-time"></span>
                     <% if container.info['Status'].include? "Up" %>
-                    <span class="label label-success">
+                        <span class="label label-success">
                     <% else %>
                         <span class="label label-warning">
-                            <% end %>
-
+                    <% end %>
                             <%= container.info['Status'] %>
                         </span>
                   </td>
-                  <td width="40%">
+                  <td width="10%">
                         <span class="glyphicon glyphicon-console"></span>
                         <%= container.info['Command'] %>
                   </td>
