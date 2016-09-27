@@ -110,7 +110,7 @@
                     <b>
                         CpusetCpus
                     </b>
-                    - Specify which CPUs by processor number (0=1st, n=nth cpu) in which to allow execution (contiguous range: "0-3", or discontiguous: "0,3,4" ranges) 
+                    - Specify which CPUs by processor number (0=1st, n=nth cpu) in which to allow execution (contiguous range: "0-3", or discontiguous: "0,3,4" ranges)
                 </small>
 
             </fieldset>
@@ -126,7 +126,7 @@
 
             <fieldset class="form-inline">
                 <%= label_tag(:privileged, "privileged ") %>
-                <%= select_tag(:privileged, options_for_select(['true', 'false']), class: "form-control input-sm") %>
+                <%= select_tag(:privileged, options_for_select(['false', 'true']), class: "form-control input-sm") %>
                 <small class="text-muted">
                     Gives the container full access to the host. Specified as a boolean value.
                 </small>
@@ -150,8 +150,11 @@
             </h2>
 
             <fieldset class="form-group">
-                <%= label_tag(:node, "nodes from the node database") %>
-                <%= select_tag(:node, options_for_select(@nodes.collect{ |i| [i.nodename + " (" + i.ip + ")"]}, params[:image]), class: "form-control input", :include_blank => '- none -', :style => "width:300px") %>
+                <%= label_tag(:node, "available nodes from the node database") %>
+                <%= select_tag(:node, options_for_select(@nodes.collect{ |i| [i.nodename + " (" + i.ip + ")"] if (i.status == 'up')}.compact, params[:image]), class: "form-control input", :include_blank => '- none -', :style => "width:300px") %>
+                <small class="text-muted">
+                    Assign the container to a specified node, instead of using the native spread strategy.
+                </small>
             </fieldset>
 
             <h2>
@@ -159,8 +162,11 @@
             </h2>
 
             <fieldset class="form-group">
-                <%= label_tag(:usrp, "USRPs from the USRP database") %>
-                <%= select_tag(:usrp, options_for_select(@usrps.collect{ |i| [i.model + " (" + i.ip + ")"]}, params[:usrp]), class: "form-control input", :include_blank => '- none -', :style => "width:300px") %>
+                <%= label_tag(:usrp, "free USRPs from the database") %>
+                <%= select_tag(:usrp, options_for_select(@usrps.collect{|i| [i.model+ " (" + i.ip + ")"] if (i.assigned == '- free -')}.compact, params[:usrp]), class: "form-control input", :include_blank => '- none -', :style => "width:300px") %>
+                <small class="text-muted">
+                    Assign a USRP to a container. The USRP IP is passed as an environment variable and the assignment will be saved in the database.
+                </small>
             </fieldset>
 
         </div>
@@ -247,6 +253,9 @@
 
     </div>
 </div>
-<%= submit_tag "create", class:  "btn-lg btn-primary"%>
+<div style="float: right; width: auto;">
+  <%= submit_tag "create", class:  "btn-lg btn-primary"%>
+
+</div>
 
 <% end %>

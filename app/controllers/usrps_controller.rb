@@ -88,6 +88,7 @@ class UsrpsController < ApplicationController
 
     usrp_params[:ip] = params[:usrp_ip]
     usrp_params[:assigned] = '- free -'
+    usrp_parmas[:status] = 'up'
 
     @usrp = Usrp.new(usrp_params)
     if @usrp.save
@@ -108,6 +109,18 @@ class UsrpsController < ApplicationController
     end
   end
 
+  def free
+    if usrpDB = Usrp.find(params[:id])
+      usrpDB.assigned = '- free -'
+      if usrpDB.save
+        redirect_to '/usrps', success: "USRP (id: '#{params[:id]}') is now free."
+      else
+        redirect_to '/usrps', error: "failed to free USRP."
+      end
+    else
+      redirect_to '/usrps', error: "failed to free USRP."
+    end
+  end
 
 # to edit
   # private

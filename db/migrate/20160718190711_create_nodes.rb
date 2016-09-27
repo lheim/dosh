@@ -8,6 +8,7 @@ class CreateNodes < ActiveRecord::Migration
       t.string :cpu
       t.string :memory
       t.string :docker_version
+      t.string :status
 
       t.timestamps null: false
     end

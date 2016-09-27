@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   get 'usrps' => 'usrps#index', as: :usrps
   #post 'usrp/:id/probe' => 'usrps#probe', as: :usrp_probe
   post 'usrp/:id/remove' => 'usrps#remove', as: :usrp_remove
+  post 'usrp/:id/free' => 'usrps#free', as: :usrps_free
   post 'usrps' => 'usrps#create', as: :usrps_create
 
   #nodes
