@@ -25,7 +25,7 @@ or using the DOCKER_HOST environment variable:
 
 ```bash
 docker pull lheim/dosh-automated:usrp
-docker run --name dosh -d -p 3000:3000 -e "DOCKER_HOST=tcp://192.168.1.100:3376" lheim/dosh-automated:usrp
+docker run --name dosh -d -p 3000:3000 -e "DOCKER_HOST=https://192.168.1.100:3376" lheim/dosh-automated:usrp
 ```
 
 ###latest version
