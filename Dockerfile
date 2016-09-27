@@ -1,7 +1,7 @@
 FROM rails:4.2.5
 MAINTAINER lennart.heim@rwth-aachen.de
 
-
+RUN apt-get update
 RUN apt-get install libuhd-dev libuhd003 uhd-host
 RUN git clone https://github.com/lheim/dosh
 
