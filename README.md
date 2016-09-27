@@ -41,5 +41,5 @@ docker run --name dosh -d -p 3000:3000 -e "DOCKER_HOST=$(DOCKER_HOST)" lheim/dos
 ```
 
 ##usage
-you can access the server via http://localhost:3000 or http://CONTAINER_IP:3000
+you can access the server via http://localhost:3000 or http://CONTAINER_IP:3000.
 the rest is pretty straight forward.
