@@ -286,7 +286,7 @@ class ContainersController < ApplicationController
 
     #cpusetcpus
     if !params[:cpuset].blank?
-        container_params['HostConfig']['CpuShares'] = params[:cpuset]
+        container_params['HostConfig']['CpusetCpus'] = params[:cpuset]
     end
 
     puts 'WHOLE PARAMS THING'
