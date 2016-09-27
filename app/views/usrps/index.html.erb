@@ -110,7 +110,7 @@ click discover or probe a USRP from the database.
                               <% begin %>
                                 <%= link_to u.assigned, container_path(:id => Docker::Container.get(u.assigned).id.truncate(12, omission: '')) %>
                               <% rescue %>
-                                <%= u.assigned %>
+                                <%= u.assigned = '- free -'%>
                               <% end %>
                             </td>
                             <td>
