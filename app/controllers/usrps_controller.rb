@@ -36,6 +36,7 @@ class UsrpsController < ApplicationController
 
       rescue Errno::ENOENT
         redirect_to '/', error: "uhd is not installed on the system."
+        return
       end
     end
 
@@ -52,6 +53,7 @@ class UsrpsController < ApplicationController
 
       rescue Errno::ENOENT
         redirect_to '/', error: "uhd is not installed on the system."
+        return
       end
 
     end
@@ -61,7 +63,10 @@ class UsrpsController < ApplicationController
 
   #add discovered usrp to database
   def create
-
+    if params[:usrp_ip].blank?
+      redirect_to '/usrps', error: "the USRP ip selection is not valid."
+      return
+    end
     # check for more info with usrp probe
     begin
       puts "uhd_usrp_probe --arg=\"addr=#{params[:usrp_ip]}\""
@@ -103,10 +108,6 @@ class UsrpsController < ApplicationController
     end
   end
 
-  #create a new container with given usrp
-  def create_container
-
-  end
 
 # to edit
   # private
