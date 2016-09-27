@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   root 'home#index', as: :home
 
 
@@ -43,7 +44,7 @@ Rails.application.routes.draw do
   post 'node/:id/addtoswarm' => 'nodes#addtoswarm', as: :node_addtoswarm
   post 'node/:id/deletefromdb' => 'nodes#deletefromdb', as: :node_deletefromdb
 
-
+  get 'help' => 'help#index', as: :help
   #error
   get 'error' => 'error#index', as: :error
 

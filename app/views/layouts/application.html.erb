@@ -58,16 +58,10 @@
                         <li class="<%= 'active' if current_page?(usrps_path) %>">
                             <%= link_to "USRPs", usrps_path %>
                         </li>
-                        <li>
-                            <%= link_to "Settings", home_path %>
-                        </li>
-                        <li>
-                            <%= link_to "Help", "https://github.com/lheim/dosh", :target => "_blank" %>
+                        <li class="<%= 'active' if current_page?(help_path) %>">
+                            <%= link_to "Help", help_path %>
                         </li>
                     </ul>
-                    <form class="navbar-form navbar-right">
-                        <input type="text" class="form-control" placeholder="Search...">
-                    </form>
                 </div>
             </div>
         </nav>
