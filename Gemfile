@@ -16,8 +16,6 @@ gem 'chartkick'
 #execute commands (find usrp, ping nodes)
 #using open3
 
-
-
 #end my GEMS
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
