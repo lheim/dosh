@@ -2,9 +2,9 @@ FROM lheim/rails_uhd:0.1
 MAINTAINER lennart.heim@rwth-aachen.de
 
 
-RUN git clone https://github.com/lheim/dosh
+RUN cd / && git clone https://github.com/lheim/dosh
 
-WORKDIR dosh
+WORKDIR /dosh
 
 ENV RAILS_ENV development
 
