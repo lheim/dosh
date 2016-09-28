@@ -1,4 +1,4 @@
-FROM lheim/rails_uhd:0.1
+FROM lheim/rails_uhd:latest
 MAINTAINER lennart.heim@rwth-aachen.de
 
 
