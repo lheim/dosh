@@ -21,7 +21,7 @@ example usage for a linux system where you mount the docker socket from the host
 docker pull lheim/dosh-automated:usrp
 docker run --name dosh -d -p 3000:3000 -v /var/run/docker.sock:/var/run/docker.sock lheim/dosh-automated:usrp
 ```
-or using the DOCKER_HOST environment variable:
+or using the DOCKER_HOST environment variable (necessary for docker swarm):
 
 ```bash
 docker pull lheim/dosh-automated:usrp
