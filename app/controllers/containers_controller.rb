@@ -125,7 +125,12 @@ class ContainersController < ApplicationController
       @container = Docker::Container.get(params[:id])
       state = @container.info['State']['Status']
       if state == 'exited' || state == 'created'
-      @container.remove
+        # remove assigned usrp
+        if usrpDB = Usrp.find_by(assigned: @container.info['Name'][1..-1])
+          usrpDB.assigned = '- free -'
+          usrpDB.save
+        end
+        @container.remove
         redirect_to containers_path, success: "container was successfully removed."
       elsif state == 'running'
         redirect_to container_path, error: "stop the container first before removing."
@@ -351,7 +356,8 @@ class ContainersController < ApplicationController
       end
     #no name given, name is randomly chosen
     else
-        name = @container.info['id'].truncate(12, omission: '')
+        container = Docker::Container.get(@container.info['id'].truncate(12, omission: ''))
+        name = container.info['Name'][1..-1]
     end
 
     # add container to USRP DB if USRP was assigned
