@@ -60,7 +60,7 @@ class ImagesController < ApplicationController
       @image = Docker::Image.get(params[:id])
       puts params[:name]
       @image.tag('repo' => params[:name], 'force' => true)
-      redirect_to image_path, success: "image successfully renamed"
+      redirect_to image_path, success: "image successfully tagged."
     rescue => error
       redirect_to '/error', error: "error: #{error}"
     end
