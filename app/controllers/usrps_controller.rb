@@ -67,6 +67,7 @@ class UsrpsController < ApplicationController
       return
     elsif Usrp.find_by(ip: params[:usrp_ip]) # already in db?
       redirect_to usrps_path, error: "USRP with ip '#{params[:usrp_ip]}' is already in db."
+      return
     else # then create usrp entry
       begin
         # check for more info with usrp probe
