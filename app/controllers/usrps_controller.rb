@@ -65,7 +65,7 @@ class UsrpsController < ApplicationController
     if params[:usrp_ip].blank? # no entry
       redirect_to '/usrps', error: "the USRP ip selection is not valid."
       return
-    elsif Node.find_by(ip: params[:usrp_ip]) # already in db?
+    elsif Usrp.find_by(ip: params[:usrp_ip]) # already in db?
       redirect_to usrps_path, error: "USRP with ip '#{params[:usrp_ip]}' is already in db."
     else # then create usrp entry
       begin
