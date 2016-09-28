@@ -38,10 +38,10 @@
                                 os
                             </th>
                             <th>
-                                server docker version
+                                docker version
                             </th>
                             <th>
-                                remove from swarm
+                                detach from swarm
                             </th>
                             <th>
                                 add to database
@@ -82,7 +82,7 @@
                               <%= button_to "remove",{action: :removefromswarm, :id => i, :ip => ip},{method: :post, class: "btn btn-danger btn-md" }%>
                             </td>
                             <td>
-                              <%= button_to "add to db",{action: :addtodb,:id => i, :ip => ip, :nodename => nodename, :containers => containers, :cpu => cpu, :memory => memory, :docker_version => version },{method: :post, class: "btn btn-success btn-md" }%>
+                              <%= button_to "add",{action: :addtodb,:id => i, :ip => ip, :nodename => nodename, :containers => containers, :cpu => cpu, :memory => memory, :docker_version => version },{method: :post, class: "btn btn-success btn-md" }%>
                             </td>
                           </tr>
                           <% end %>
@@ -137,7 +137,7 @@
                                 status
                             </th>
                             <th>
-                                add to swarm
+                                attach to swarm
                             </th>
                             <th>
                                 remove from db
@@ -183,12 +183,12 @@
                               <% if running %>
                                 <%= button_to "add to swarm",{action: :addtoswarm, :id => n.id, :ip => n.ip},{method: :post, class: "btn btn-success" }%>
                               <% else %>
-                                <button type="button" class="btn btn-warning disabled">node down</button>
+                                <button type="button" class="btn btn-success disabled">node is down</button>
                               <% end %>
                             </td>
                             <td>
                               <% if running %>
-                                <button type="button" class="btn btn-warning disabled">node is up</button>
+                                <button type="button" class="btn btn-danger disabled">node is up</button>
                               <% else %>
                                 <%= button_to "remove from db",{action: :deletefromdb, :id => n.id},{method: :post, class: "btn btn-danger" }%>
                               <% end %>

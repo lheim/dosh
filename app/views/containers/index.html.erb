@@ -9,7 +9,6 @@
         </div>
     </h1>
 </div>
-
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
@@ -34,18 +33,18 @@
         <tbody>
           <% @containers.each do |container| %>
             <tr>
-                <td width="10%">
+                <td width="15%">
                     <span class="glyphicon glyphicon-search"></span>
                     <%= link_to container.id.truncate(12, omission:''), container_path(:id => container.id.truncate(12, omission: '')) %>
                 </td>
                 <td width="15%">
                     <%= link_to container.info['Names'].join(''), container_path(:id => container.id.truncate(12, omission: '')) %>
                 </td>
-                <td width="10%">
+                <td width="15%">
                     <span class="glyphicon glyphicon-search"></span>
                     <%= link_to container.info['Image'], image_path(:id => container.info['ImageID'].truncate(12, omission: ''))%>
                 </td>
-                <td width="13%">
+                <td width="15%">
                     <span class="glyphicon glyphicon-time"></span>
                     <% if container.info['Status'].include? "Up" %>
                         <span class="label label-success">
@@ -55,7 +54,7 @@
                             <%= container.info['Status'] %>
                         </span>
                   </td>
-                  <td width="10%">
+                  <td width="40%">
                         <span class="glyphicon glyphicon-console"></span>
                         <%= container.info['Command'] %>
                   </td>

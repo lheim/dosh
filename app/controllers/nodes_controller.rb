@@ -54,7 +54,7 @@ class NodesController < ApplicationController
 
     #check for existing agent (norm: is named 'swarm-agent'), jep it's that bad.
     begin
-      Timeout.timeout(10) do
+      Timeout.timeout(5) do
 
         #could search through all containers to find the one with cmd => swarm-agen
         #soon.
@@ -96,7 +96,7 @@ class NodesController < ApplicationController
 
     #check for existing agent (norm: is named 'swarm-agent'), jep it's that bad.
     begin
-      Timeout.timeout(10) do
+      Timeout.timeout(5) do
         agent_container = Docker::Container.get('swarm-agent')
 
         state = agent_container.info['State']['Status']

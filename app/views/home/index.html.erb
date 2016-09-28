@@ -1,202 +1,197 @@
 <div class="center-block">
-<h1 class="page-header">dosh</h1>
+    <h1 class="page-header">dosh</h1>
 
+    <div class="col-md-6">
 
-<div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    swarm resource information
+                </h3>
+            </div>
+            <div class="panel-body">
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                basic information
-            </h3>
-        </div>
-        <div class="panel-body">
+                <h3>
+                    Number of Images:
+                    <%= Docker.info['Images'] %>
+                </h3>
+                <br>
+                <h3>
+                    Number of available CPU cores:
+                    <%= Docker.info['NCPU'] %>
+                </h3>
 
-          <h3>
-            Images: <%= Docker.info['Images'] %>
-          </h3>
-          <br>
-          <h3>
-            Total #CPUs: <%= Docker.info['NCPU'] %>
-          </h3>
+                <br>
+                <h3>
+                     Available memory:
+                    <%= number_to_human_size(Docker.info['MemTotal']) %>
+                </h3>
 
-          <br>
-          <h3>
-            Total Memory: <%= number_to_human_size(Docker.info['MemTotal']) %>
-          </h3>
-
-        </div>
-    </div>
-</div>
-<div class="col-md-6">
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-              graphs
-            </h3>
-        </div>
-        <div class="panel-body">
-
-          <%= pie_chart({"Containers running" => Docker.info['ContainersRunning'].to_i, "Containers stopped" => Docker.info['ContainersStopped'].to_i, "Containers paused" => Docker.info['ContainersPaused']}, width: "200px", height: "200px") %>
-
-          Total: <%= Docker.info['Containers'] %>
-          Running: <%= Docker.info['ContainersRunning'] %>
-          Paused: <%= Docker.info['ContainersPaused'] %>
-          Stopped: <%= Docker.info['ContainersStopped'] %>
-
+            </div>
         </div>
     </div>
-</div>
+    <div class="col-md-6">
 
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    container states overview
+                </h3>
+            </div>
+            <div class="panel-body">
 
+                <%= pie_chart({"Containers running" => Docker.info['ContainersRunning'].to_i, "Containers stopped" => Docker.info['ContainersStopped'].to_i, "Containers paused" => Docker.info['ContainersPaused']}, width: "200px", height: "200px") %>
 
+                Total:
+                <%= Docker.info['Containers'] %>
+                Running:
+                <%= Docker.info['ContainersRunning'] %>
+                Paused:
+                <%= Docker.info['ContainersPaused'] %>
+                Stopped:
+                <%= Docker.info['ContainersStopped'] %>
 
-
-
-<% if @info['DriverStatus'][3][1] != 'true' %>
-  <% numberofnodes = @info['DriverStatus'][3][1].to_i %>
-
-
-<div class="col-md-12">
-
-<div class="table-responsive">
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <% for i in 0..(numberofnodes-1) %>
-        <th>
-          <%= @info['DriverStatus'][(i*9)+4][0] %>
-          <%= @info['DriverStatus'][(i*9)+4][1] %>
-        </th>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <% for i in 0..(numberofnodes-1) %>
-        <td>
-          <!-- <td width="40%"> -->
-          <!-- cores -->
-          <h3 class="panel-title">
-              cores
-          </h3>
-
-          <%=  @info['DriverStatus'][(i*9)+8][1] %>
-          <%  cores = @info['DriverStatus'][(i*9)+8][1].split(' / ') %>
-
-          <% free_cores = cores[1].to_i - cores[0].to_i %>
-          <%= pie_chart({"free cores" => free_cores, "allocated cores" => cores[0]},width: "200px", height: "200px") %>
-
-
-          <br>
-          <br>
-          <!-- memory -->
-          <h3 class="panel-title">
-              memory
-          </h3>
-
-          <%=  @info['DriverStatus'][(i*9)+9][1] %>
-          <%  memory = @info['DriverStatus'][(i*9)+9][1].split(' / ') %>
-
-          <% if memory[0].end_with?("MiB") %>
-            <% memory [0] = memory[0].to_i * 1024 * 1024 %>
-          <% elsif memory[0].end_with?("GiB") %>
-            <% memory [0] =  memory[0].to_i * 1024 * 1024 * 1024 %>
-          <% end %>
-          <% if memory[1].end_with?("MiB") %>
-            <% memory [1] = memory[1].to_i * 1024 * 1024 %>
-          <% elsif memory[1].end_with?("GiB") %>
-            <% memory [1] = memory[1].to_i * 1024 * 1024 * 1024 %>
-          <% end %>
-
-          <!-- calculate free memory -->
-          <% free_memory = memory[1].to_i - memory[0].to_i %>
-
-          <%= pie_chart({"free" => free_memory, "allocated" => memory[0]},width: "200px", height: "200px") %>
-        </td>
-        <% end %>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-<% else %>
-error, no nodes found
-<% end %>
-
-<br>
-
-
-
-
-
-<div class="row">
-
-  <h1 class="header">Containers
-
-    <div class="pull-right">
-
-      <%= button_to "create new container", container_create_path, {:method => "get",class: "btn btn-primary"} %>
-
+            </div>
+        </div>
     </div>
-  </h1>
-</div>
 
-<div class="table-responsive">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>
-          id
-        </th>
-        <th>
-          container name
-        </th>
-        <th>
-          image repo:tag
-        </th>
-        <th>
-          status
-        </th>
-        <th>
-          command
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @containers.each do |container| %>
-        <tr class="table-danger">
+    <div class="container">
+        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#graphs">toggle node resource graphs</button>
+        <div id="graphs" class="collapse">
 
-        <td>
-          <span class="glyphicon glyphicon-search"></span>
-          <%= link_to container.id.truncate(12, omission:''), container_path(:id => container.id.truncate(12, omission: '')) %>
-        </td>
-        <td>
-          <%= link_to container.info['Names'].join(''), container_path(:id => container.id.truncate(12, omission: '')) %>
-        </td>
-        <td>
-          <span class="glyphicon glyphicon-search"></span>
-          <%= link_to container.info['Image'], image_path(:id => container.info['ImageID'].truncate(12, omission: ''))%>
-        </td>
-        <td>
-          <span class="glyphicon glyphicon-time"></span>
-          <% if container.info['Status'].include? "Up" %>
-            <span class="label label-success">
-          <% else %>
-            <span class="label label-warning">
-          <% end %>
+            <% if @info['DriverStatus'][3][1] != 'true' %>
+            <% numberofnodes = @info['DriverStatus'][3][1].to_i %>
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <% for i in 0..(numberofnodes-1) %>
+                                <th>
+                                    <%= @info['DriverStatus'][(i*9)+4][0] %>
+                                    <%= @info['DriverStatus'][(i*9)+4][1] %>
+                                </th>
+                                <% end %>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <% for i in 0..(numberofnodes-1) %>
+                                <td>
+                                    <!-- <td width="40%"> -->
+                                    <!-- cores -->
+                                    <h3 class="panel-title">
+                                        cores
+                                    </h3>
 
-          <%= container.info['Status'] %>
-          </span>
-        </td>
-          <td width="40%">
-          <span class="glyphicon glyphicon-console"></span>
-          <%= container.info['Command'] %>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-</div>
+                                    <%=  @info['DriverStatus'][(i*9)+8][1] %>
+                                    <%  cores = @info['DriverStatus'][(i*9)+8][1].split(' / ') %>
+
+                                    <% free_cores = cores[1].to_i - cores[0].to_i %>
+                                    <%= pie_chart({"free cores" => free_cores, "allocated cores" => cores[0]},width: "200px", height: "200px") %>
+
+                                    <br>
+                                    <br>
+                                    <!-- memory -->
+                                    <h3 class="panel-title">
+                                        memory
+                                    </h3>
+
+                                    <%=  @info['DriverStatus'][(i*9)+9][1] %>
+                                    <%  memory = @info['DriverStatus'][(i*9)+9][1].split(' / ') %>
+
+                                    <% if memory[0].end_with?("MiB") %>
+                                      <% memory [0] = memory[0].to_i * 1024 * 1024 %>
+                                    <% elsif memory[0].end_with?("GiB") %>
+                                      <% memory [0] =  memory[0].to_i * 1024 * 1024 * 1024 %>
+                                    <% end %>
+                                    <% if memory[1].end_with?("MiB") %>
+                                      <% memory [1] = memory[1].to_i * 1024 * 1024 %>
+                                    <% elsif memory[1].end_with?("GiB") %>
+                                      <% memory [1] = memory[1].to_i * 1024 * 1024 * 1024 %>
+                                    <% end %>
+                                    <!-- calculate free memory -->
+                                    <% free_memory = memory[1].to_i - memory[0].to_i %>
+                                    <%= pie_chart({"free" => free_memory, "allocated" => memory[0]},width: "200px", height: "200px") %>
+                                </td>
+                                <% end %>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            <% else %>
+                error, no nodes found
+            <% end %>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+
+        <h1 class="header">Containers
+
+            <div class="pull-right">
+
+                <%= button_to "create new container", container_create_path, {:method => "get",class: "btn btn-primary"} %>
+
+            </div>
+        </h1>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        id
+                    </th>
+                    <th>
+                        container name
+                    </th>
+                    <th>
+                        image repo:tag
+                    </th>
+                    <th>
+                        status
+                    </th>
+                    <th>
+                        command
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @containers.each do |container| %>
+                <tr>
+                    <td width="15%">
+                        <span class="glyphicon glyphicon-search"></span>
+                        <%= link_to container.id.truncate(12, omission:''), container_path(:id => container.id.truncate(12, omission: '')) %>
+                    </td>
+                    <td width="15%">
+                        <%= link_to container.info['Names'].join(''), container_path(:id => container.id.truncate(12, omission: '')) %>
+                    </td>
+                    <td width="15%">
+                        <span class="glyphicon glyphicon-search"></span>
+                        <%= link_to container.info['Image'], image_path(:id => container.info['ImageID'].truncate(12, omission: ''))%>
+                    </td>
+                    <td width="15%">
+                        <span class="glyphicon glyphicon-time"></span>
+                        <% if container.info['Status'].include? "Up" %>
+                        <span class="label label-success">
+                        <% else %>
+                            <span class="label label-warning">
+                                <% end %>
+                                <%= container.info['Status'] %>
+                            </span>
+                        </td>
+                        <td width="40%">
+                            <span class="glyphicon glyphicon-console"></span>
+                            <%= container.info['Command'] %>
+                        </td>
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>

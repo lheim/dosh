@@ -60,44 +60,43 @@ class UsrpsController < ApplicationController
 
   end
 
-
   #add discovered usrp to database
   def create
-    if params[:usrp_ip].blank?
+    if params[:usrp_ip].blank? # no entry
       redirect_to '/usrps', error: "the USRP ip selection is not valid."
       return
-    end
-    # check for more info with usrp probe
-    begin
-      puts "uhd_usrp_probe --arg=\"addr=#{params[:usrp_ip]}\""
-      @stdout_probe, @stderr_probe, @status_probe = Open3.capture3("uhd_usrp_probe --arg=\"addr=#{params[:usrp_ip]}\"")
+    elsif Node.find_by(ip: params[:usrp_ip]) # already in db?
+      redirect_to usrps_path, error: "USRP with ip '#{params[:usrp_ip]}' is already in db."
+    else # then create usrp entry
+      begin
+        # check for more info with usrp probe
+        @stdout_probe, @stderr_probe, @status_probe = Open3.capture3("uhd_usrp_probe --arg=\"addr=#{params[:usrp_ip]}\"")
 
-      usrp_params = Hash.new
+        usrp_params = Hash.new
 
-      @stdout_probe.each_line do |line|
-        # new uhd device
-        if line.include? 'Mboard'
-          usrp_params[:model] = line.split[3]
-          break
+        @stdout_probe.each_line do |line|
+          # new uhd device
+          if line.include? 'Mboard'
+            usrp_params[:model] = line.split[3]
+            break
+          end
         end
+
+      rescue Errno::ENOENT
+        redirect_to '/', error: "uhd is not installed on the system."
       end
 
-    rescue Errno::ENOENT
-      redirect_to '/', error: "uhd is not installed on the system."
+      usrp_params[:ip] = params[:usrp_ip]
+      usrp_params[:assigned] = '- free -'
+      usrp_params[:status] = 'up'
+
+      @usrp = Usrp.new(usrp_params)
+      if @usrp.save
+        redirect_to usrps_path(probe_ip: usrp_params[:ip]), success: "USRP '#{usrp_params[:ip]}' added to db."
+      else
+        render 'index', error: "failed to add USRP to db."
+      end
     end
-
-    usrp_params[:ip] = params[:usrp_ip]
-    usrp_params[:assigned] = '- free -'
-    usrp_params[:status] = 'up'
-
-    @usrp = Usrp.new(usrp_params)
-    if @usrp.save
-      redirect_to usrps_path(probe_ip: usrp_params[:ip]), success: "USRP '#{usrp_params[:ip]}' added to db"
-    else
-      render 'index', error: "failed to add usrp to db"
-    end
-
-
   end
 
   #delete usrp entry from database

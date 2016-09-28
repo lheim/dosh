@@ -29,97 +29,136 @@ class ContainersController < ApplicationController
 
 
   def start
-    @container = Docker::Container.get(params[:id])
-    @container.start
-    #redefine @container
-    @container = Docker::Container.get(params[:id])
-    state = @container.info['State']['Status']
-    if state == 'running'
-      redirect_to container_path, success: "container successfully started."
-    else
-      redirect_to container_path, error: "container failed to start."
+    begin
+      @container = Docker::Container.get(params[:id])
+      @container.start
+      #redefine @container
+      @container = Docker::Container.get(params[:id])
+      state = @container.info['State']['Status']
+      if state == 'running'
+        redirect_to container_path, success: "container successfully started."
+      else
+        redirect_to container_path, error: "container failed to start."
+      end
+    rescue => error
+      redirect_to '/error', error: "error: #{error}"
+      return
     end
   end
 
   def stop
-    @container = Docker::Container.get(params[:id])
-    @container.stop
-    #redefine @container
-    @container = Docker::Container.get(params[:id])
-    state = @container.info['State']['Status']
-    if state == 'exited'
-      redirect_to container_path, success: "container successfully stopped."
-    else
-      redirect_to container_path, error: "container failed to stop."
+    begin
+      @container = Docker::Container.get(params[:id])
+      @container.stop
+
+      #redefine @container
+      @container = Docker::Container.get(params[:id])
+      state = @container.info['State']['Status']
+      if state == 'exited'
+        redirect_to container_path, success: "container successfully stopped."
+      else
+        redirect_to container_path, error: "container failed to stop."
+      end
+    rescue => error
+      redirect_to '/error', error: "error: #{error}"
+      return
     end
   end
 
   def pause
-    @container = Docker::Container.get(params[:id])
-    @container.pause
-    #redefine @container
-    @container = Docker::Container.get(params[:id])
-    puts state = @container.info['State']['Status']
-    if state == 'paused'
-      redirect_to container_path, success: "container successfully paused."
-    else
-      redirect_to container_path, error: "container failed to pause."
+    begin
+      @container = Docker::Container.get(params[:id])
+      @container.pause
+      #redefine @container
+      @container = Docker::Container.get(params[:id])
+      puts state = @container.info['State']['Status']
+      if state == 'paused'
+        redirect_to container_path, success: "container successfully paused."
+      else
+        redirect_to container_path, error: "container failed to pause."
+      end
+    rescue => error
+      redirect_to '/error', error: "error: #{error}"
+      return
     end
   end
 
 
   def unpause
-    @container = Docker::Container.get(params[:id])
-    @container.unpause
-    #redefine @container
-    @container = Docker::Container.get(params[:id])
-    puts state = @container.info['State']['Status']
-    if state == 'running'
-      redirect_to container_path, success: "container successfully unpaused."
-    else
-      redirect_to container_path, error: "container failed to unpause."
+    begin
+      @container = Docker::Container.get(params[:id])
+      @container.unpause
+      #redefine @container
+      @container = Docker::Container.get(params[:id])
+      puts state = @container.info['State']['Status']
+      if state == 'running'
+        redirect_to container_path, success: "container successfully unpaused."
+      else
+        redirect_to container_path, error: "container failed to unpause."
+      end
+    rescue => error
+      redirect_to '/error', error: "error: #{error}"
+      return
     end
   end
 
   def restart
-    @container = Docker::Container.get(params[:id])
-    @container.restart
-    #redefine @container
-    @container = Docker::Container.get(params[:id])
-    state = @container.info['State']['Status']
-    if state == 'running'
-      redirect_to container_path, success: "container successfully restarted."
-    else
-      redirect_to container_path, error: "container failed to restart."
+    begin
+      @container = Docker::Container.get(params[:id])
+      @container.restart
+      #redefine @container
+      @container = Docker::Container.get(params[:id])
+      state = @container.info['State']['Status']
+      if state == 'running'
+        redirect_to container_path, success: "container successfully restarted."
+      else
+        redirect_to container_path, error: "container failed to restart."
+      end
+    rescue => error
+      redirect_to '/error', error: "error: #{error}"
+      return
     end
   end
 
   def remove
-    @container = Docker::Container.get(params[:id])
-    state = @container.info['State']['Status']
-    if state == 'exited' || state == 'created'
-    @container.remove
-      redirect_to containers_path, success: "container was successfully removed."
-    elsif state == 'running'
-      redirect_to container_path, error: "stop the container first before removing."
-    else
-      redirect_to container_path, error: "unknown error: couldn't be removed. container status is unknown."
+    begin
+      @container = Docker::Container.get(params[:id])
+      state = @container.info['State']['Status']
+      if state == 'exited' || state == 'created'
+      @container.remove
+        redirect_to containers_path, success: "container was successfully removed."
+      elsif state == 'running'
+        redirect_to container_path, error: "stop the container first before removing."
+      else
+        redirect_to container_path, error: "unknown error: couldn't be removed. container status is unknown."
+      end
+    rescue => error
+      redirect_to '/error', error: "error: #{error}"
+      return
     end
   end
 
   def commit
-    @container = Docker::Container.get(params[:id])
-    @container.commit
-    redirect_to container_path, success: "container successfully committed."
+    begin
+      @container = Docker::Container.get(params[:id])
+      @container.commit
+      redirect_to container_path, success: "container successfully committed."
+    rescue => error
+      redirect_to '/error', error: "error: #{error}"
+      return
+    end
   end
 
 
   def rename
-
-    @container = Docker::Container.get(params[:id])
-    @container.rename(params[:name])
-
-    redirect_to container_path, success: "container succesfully renamed to '#{params[:name]}'."
+    begin
+      @container = Docker::Container.get(params[:id])
+      @container.rename(params[:name])
+      redirect_to container_path, success: "container succesfully renamed to '#{params[:name]}'."
+    rescue => error
+      redirect_to '/error', error: "error: #{error}"
+      return
+    end
   end
 
   #page to create a new container
@@ -294,7 +333,7 @@ class ContainersController < ApplicationController
 
     #try to create container
     begin
-      Timeout.timeout(1) do
+      Timeout.timeout(3) do
         @container = Docker::Container.create(container_params)
       end
     rescue => error
@@ -308,8 +347,7 @@ class ContainersController < ApplicationController
         @container.rename(params[:name])
         name = params[:name]
       rescue => error
-        redirect_to '/containers', error: "name error message: '#{error}'"
-        return
+        name = @container.info['id'].truncate(12, omission: '')
       end
     #no name given, name is randomly chosen
     else
@@ -322,6 +360,7 @@ class ContainersController < ApplicationController
       usrpDB.assigned = name
       if !usrpDB.save
         redirect_to containers_path, error: "container '#{name}' was successfully created. BUT assigned container is not written to USRP db."
+        return
       end
     end
 

@@ -25,8 +25,16 @@ or using the DOCKER_HOST environment variable:
 
 ```bash
 docker pull lheim/dosh-automated:usrp
-docker run --name dosh -d -p 3000:3000 --net=host -e "DOCKER_HOST=https://192.168.1.100:3376" lheim/dosh-automated:usrp
+docker run --name dosh -d -p 3000:3000 --net=host -e "DOCKER_HOST=tcp://192.168.1.100:3376" lheim/dosh-automated:usrp
 ```
+
+if needed mount the usb devices to avoid UHD errors:
+
+```bash
+docker pull lheim/dosh-automated:usrp
+docker run --name dosh -d -p 3000:3000 --net=host -v /dev/bus/usb:/dev/bus/usb -e "DOCKER_HOST=tcp://192.168.1.100:3376" lheim/dosh-automated:usrp
+```
+
 
 ###latest version
 the container https://hub.docker/com/r/lheim/dosh-automated is always up to date and is being rebuild every time this repo is updated.

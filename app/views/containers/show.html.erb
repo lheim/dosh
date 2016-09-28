@@ -72,7 +72,7 @@
         <a data-toggle="tab" href="#info">information</a>
     </li>
     <li>
-        <a data-toggle="tab" href="#bash">bash</a>
+        <a data-toggle="tab" href="#bash">bash/log</a>
     </li>
 </ul>
 
@@ -484,34 +484,38 @@
                             </tr>
                         </thead>
                         <tbody>
+                          <% begin %>
                             <% @container.top.each do |process| %>
-                            <tr class="table">
-                                <td>
-                                    <%= process["UID"]%>
-                                </td>
-                                <td>
-                                    <%= process["PID"]%>
-                                </td>
-                                <td>
-                                    <%= process["PPID"]%>
-                                </td>
-                                <td>
-                                    <%= process["C"]%>
-                                </td>
-                                <td>
-                                    <%= process["STIME"]%>
-                                </td>
-                                <td>
-                                    <%= process["TTY"]%>
-                                </td>
-                                <td>
-                                    <%= process["TIME"]%>
-                                </td>
-                                <td>
-                                    <%= process["CMD"]%>
-                                </td>
-                            </tr>
+                              <tr class="table">
+                                  <td>
+                                      <%= process["UID"]%>
+                                  </td>
+                                  <td>
+                                      <%= process["PID"]%>
+                                  </td>
+                                  <td>
+                                      <%= process["PPID"]%>
+                                  </td>
+                                  <td>
+                                      <%= process["C"]%>
+                                  </td>
+                                  <td>
+                                      <%= process["STIME"]%>
+                                  </td>
+                                  <td>
+                                      <%= process["TTY"]%>
+                                  </td>
+                                  <td>
+                                      <%= process["TIME"]%>
+                                  </td>
+                                  <td>
+                                      <%= process["CMD"]%>
+                                  </td>
+                              </tr>
                             <% end %>
+                          <% rescue %>
+                            container nearly instantly finished.
+                          <% end %>
                         </tbody>
                     </table>
                 </div>
@@ -576,23 +580,24 @@
 </div>
 <!-- BASH TAP -->
 <div id="bash" class="tab-pane fade">
-    <h3>bash</h3>
+    <h3>bash/log</h3>
     <p>to access a terminal of the container run: <code>docker exec -ti <%= @container.info['Name'][1..-1] %> bash</code> on the docker engine host machine</p>
-</div>
 
-<div class="col-md-12">
+    <div class="col-md-12">
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                log
-            </h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    log
+                </h3>
+            </div>
+            <div class="panel-body">
+                <pre>
+                  <%=  @logs %>
+                </pre>
+            </div>
         </div>
-        <div class="panel-body">
-            <pre>
-              <%=  @logs %>
-            </pre>
-        </div>
+
     </div>
 
 </div>

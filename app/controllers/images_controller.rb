@@ -12,16 +12,18 @@ class ImagesController < ApplicationController
   def pull
 
     image_name =  params[:name]
-    if image_name.include? ":latest"
-      puts 'CONTAINS DEFAULT TAG'
-    else
+    if !image_name.include? ":latest"
       image_name << ':latest'
-      puts "ADDED TAG :LATEST #{image_name}"
     end
 
     Thread.new do
-      image = Docker::Image.create('fromImage' => image_name)
-      puts "Image #{image} was succesfully downloaded."
+      begin
+        image = Docker::Image.create('fromImage' => image_name)
+        puts "Image #{image} was succesfully downloaded."
+      rescue => error
+        redirect_to '/error', error: "error: #{error}"
+        return
+      end
     end
 
     redirect_to images_path, success: "image is being pulled. wait some minutes."
@@ -44,18 +46,24 @@ class ImagesController < ApplicationController
   end
 
   def remove
-    @image = Docker::Image.get(params[:id])
-    @image.remove(:force => true)
-
-    redirect_to images_path, success: "image successfully removed."
+    begin
+      @image = Docker::Image.get(params[:id])
+      @image.remove # (:force => true)
+      redirect_to images_path, success: "image successfully removed."
+    rescue => error
+      redirect_to '/error', error: "error: #{error}"
+    end
   end
 
   def tag
-    @image = Docker::Image.get(params[:id])
-    puts params[:name]
-    @image.tag('repo' => params[:name], 'force' => true)
-
-    redirect_to image_path, success: "image successfully renamed"
+    begin
+      @image = Docker::Image.get(params[:id])
+      puts params[:name]
+      @image.tag('repo' => params[:name], 'force' => true)
+      redirect_to image_path, success: "image successfully renamed"
+    rescue => error
+      redirect_to '/error', error: "error: #{error}"
+    end
   end
 
 
