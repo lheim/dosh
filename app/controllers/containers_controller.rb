@@ -286,7 +286,7 @@ class ContainersController < ApplicationController
 
     #cpusetcpus
     if !params[:cpuset].blank?
-        container_params['HostConfig']['CpuShares'] = params[:cpuset]
+        container_params['HostConfig']['CpusetCpus'] = params[:cpuset]
     end
 
     puts 'WHOLE PARAMS THING'
@@ -294,7 +294,9 @@ class ContainersController < ApplicationController
 
     #try to create container
     begin
-      @container = Docker::Container.create(container_params)
+      Timeout.timeout(1) do
+        @container = Docker::Container.create(container_params)
+      end
     rescue => error
       redirect_to '/containers', error: "error message: '#{error}'"
       return

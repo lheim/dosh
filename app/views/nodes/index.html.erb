@@ -134,7 +134,7 @@
                                 docker version
                             </th>
                             <th>
-                                alive
+                                status
                             </th>
                             <th>
                                 add to swarm
@@ -170,10 +170,12 @@
                             <td>
                               <% if running %>
                                 <span class="label label-success">
-                                  <%= status = 'up' %>
+                                  <% status = 'up' %>
+                                  <%= n.status = 'up' %>
                               <% else %>
                                 <span class="label label-warning">
-                                  <%= status = 'down' %>
+                                  <% status = 'down' %>
+                                  <%= n.status = 'down' %>
                               <% end %>
                                 </span>
                           </td>

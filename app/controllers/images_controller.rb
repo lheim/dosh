@@ -29,7 +29,12 @@ class ImagesController < ApplicationController
 
 
   def show
-    @image = Docker::Image.get(params[:id])
+    begin
+      @image = Docker::Image.get(params[:id])
+    rescue => error
+      redirect_to '/error', error: "error: #{error}"
+      return
+    end
 
     @containers = Docker::Container.all(:all => true)
 

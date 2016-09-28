@@ -31,6 +31,7 @@ class NodesController < ApplicationController
       node_params['cpu'] = params['cpu']
       node_params['memory'] = params['memory']
       node_params['docker_version'] = params['docker_version']
+      node_params['status'] = 'up'
 
 
 

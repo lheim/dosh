@@ -1,5 +1,5 @@
 <h1>USRP discovery</h1>
-<div class="col-md-6">
+<div class="col-md-4">
 
     <div class="panel panel-default">
         <div class="panel-heading" style="height: 50px">
@@ -43,7 +43,7 @@ click discover or probe a USRP from the database.
     </div>
 
 </div>
-<div class="col-md-6">
+<div class="col-md-8">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">
@@ -62,10 +62,13 @@ click discover or probe a USRP from the database.
                               model
                           </th>
                           <th>
-                              alive?
+                              status
                           </th>
                           <th>
                               assigned to
+                          </th>
+                          <th>
+                              free USRP
                           </th>
                           <th>
                               created at
@@ -96,19 +99,26 @@ click discover or probe a USRP from the database.
                             <td>
                               <% if up %>
                                 <span class="label label-success">
-                                  up
+                                  <%= u.status = 'up' %>
                               <% else %>
                                 <span class="label label-warning">
-                                  down
+                                  <%= u.status = 'down' %>
                               <% end %>
                               </span>
                             </td>
                             <td>
                               <% begin %>
-                              <%= link_to u.assigned, container_path(:id => Docker::Container.get(u.assigned).id.truncate(12, omission: '')) %>
+                                <%= link_to u.assigned, container_path(:id => Docker::Container.get(u.assigned).id.truncate(12, omission: '')) %>
                               <% rescue %>
-                              <%= u.assigned %>
+                                <%= u.assigned = '- free -'%>
                               <% end %>
+                            </td>
+                            <td>
+                                <% if u.assigned == '- free -' %>
+                                  <button type="button" class="btn btn-warning disabled">free</button>
+                                <% else %>
+                                  <%= button_to "free",{action: :free, :id => u.id},{method: :post, class: "btn btn-warning" }%>
+                                <% end %>
                             </td>
                             <td>
                               <%= u.created_at%>
@@ -117,7 +127,7 @@ click discover or probe a USRP from the database.
                               <% if up %>
                                 <%= link_to "probe", usrps_path({:probe_ip => u.ip}), :class => "btn btn-success" %>
                               <% else %>
-                                <button type="button" class="btn btn-warning disabled">down</button>
+                                <button type="button" class="btn btn-success disabled">probe</button>
                               <% end %>
                             </td>
                             <td>
@@ -125,7 +135,7 @@ click discover or probe a USRP from the database.
                                 <% model = (u.model + " (" + u.ip + ")") %>
                                 <%= link_to "create", container_create_path({:usrp=> model}), :class => "btn btn-primary" %>
                               <% else %>
-                                <button type="button" class="btn btn-warning disabled">down</button>
+                                <button type="button" class="btn btn-primary disabled">assign</button>
                               <% end %>
                             </td>
                             <td>
