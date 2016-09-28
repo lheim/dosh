@@ -7,7 +7,6 @@ RUN git clone https://github.com/lheim/dosh
 WORKDIR dosh
 
 ENV RAILS_ENV development
-ENV DOCKER_HOST tcp://192.168.99.100:3376
 
 RUN bundle install
 
