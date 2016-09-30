@@ -34,7 +34,7 @@ class UsrpsController < ApplicationController
           end
         end
 
-      rescue Errno::ENOENT
+      rescue
         redirect_to '/', error: "uhd is not installed on the system."
         return
       end
@@ -45,13 +45,8 @@ class UsrpsController < ApplicationController
     # CHECK IF PROBE
     if !params[:probe_ip].blank?
       begin
-        puts "uhd_usrp_probe --arg=\"addr=#{params[:probe_ip]}\""
-        @stdout_probe,@@stderr_probe, @status_probe = Open3.capture3("uhd_usrp_probe --arg=\"addr=#{params[:probe_ip]}\"")
-
-        puts @stdout_probe, @stderr_probe, @status_probe
-
-
-      rescue Errno::ENOENT
+        @stdout_probe,@stderr_probe, @status_probe = Open3.capture3("uhd_usrp_probe --arg=\"addr=#{params[:probe_ip]}\"")
+      rescue
         redirect_to '/', error: "uhd is not installed on the system."
         return
       end

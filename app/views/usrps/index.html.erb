@@ -15,8 +15,10 @@
           <pre>
             <% if !@stdout.blank? %>
 <%= @stdout %>
+<%= @stderr %>
             <% elsif !@stdout_probe.blank? %>
 <%= @stdout_probe %>
+<%= @stderr_probe %>
             <% else %>
 click discover or probe a USRP from the database.
             <% end %>
