@@ -584,7 +584,10 @@
 <!-- BASH TAP -->
 <div id="bash" class="tab-pane fade">
     <h3>bash/log</h3>
-    <p>to access a terminal of the container run: <code>docker exec -ti <%= @container.info['Name'][1..-1] %> bash</code> on the docker engine host machine</p>
+    <p>to access a terminal of this container run: <code>docker exec -ti <%= @container.info['Name'][1..-1] %> bash</code> on the docker engine host machine.</p>
+    <p>otherwise you can also run it from your machine. make sure you have the docker engine on your machine installed: <%= link_to 'Install Docker Engine', 'https://docs.docker.com/engine/installation/', :target => '_blank' %>.</p>
+    <p> then set your environment variable: <code>export DOCKER_HOST=<%= Docker.url %></code> if here wrongly indicated set the <code>DOCKER_HOST</code> to the ip of your docker engine (if it is a single engine port <code>:2236</code>, otherwise a swarm <code>:3376</code>).</p>
+    <p> now you can access a terminal: <code>docker exec -ti <%= @container.info['Name'][1..-1] %> bash</code>. </p>
 
     <div class="col-md-12">
 
