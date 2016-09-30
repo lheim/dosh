@@ -100,7 +100,9 @@
                                         id
                                     </td>
                                     <td>
+                                        <% if !@container.id.blank? %>
                                         <%= @container.id.truncate(12, omission:'') %>
+                                        <% end %>
                                     </td>
                                 </tr>
                                 <tr>
@@ -140,7 +142,9 @@
                                         command
                                     </td>
                                     <td>
+                                        <% if !@container.info['Config']['Cmd'].blank? %>
                                         <%= @container.info['Config']['Cmd'].join('') %>
+                                        <% end %>
                                     </td>
                                 </tr>
                             </tbody>
