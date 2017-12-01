@@ -8,7 +8,7 @@ it is made to work within a docker swarm setup.
 ### branches
 #### master and docker-usrp:
 as you can read in the title of my thesis, part of my setup are the 'SDR-Based Experiments'. this branch got more features which are necessary to discover USRPs (UHD driver) and allow the assignment of USRPs to containers.
-####docker-normal:
+#### docker-normal:
 normal docker web dashboard with all basic features. none additional features to set up SDR experiments.
 
 
